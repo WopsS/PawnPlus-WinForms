@@ -1,0 +1,5 @@
+﻿<SyntaxModes version="1.0">
+  <Mode file       = "PAWN-Mode.xshd"
+	      name       = "PAWN"
+	      extensions = ".pwn"/>
+</SyntaxModes>

@@ -68,6 +68,12 @@ namespace PawnPlus
             _argumentStartOffset = argumentStartOffset;
         }
 
+        /// <summary>
+        /// Format the method for insight.
+        /// </summary>
+        /// <param name="MethodName">Name of the method.</param>
+        /// <param name="Method">Pass the current informations from MethodInformations class</param>
+        /// <returns>Formated method.</returns>
         private string FormatProvider(string MethodName, MethodInformations Method)
         {
             string Result = null;

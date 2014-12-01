@@ -102,7 +102,7 @@ namespace PawnPlus
 
         private void Main_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Application.Exit();
+            //Application.Exit(); Commented for a while.
         }
 
         private IDockContent GetLayout(string LayoutString)
@@ -555,7 +555,7 @@ namespace PawnPlus
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            this.Close();
         }
 
         private void projectExplorerToolStripMenuItem_Click(object sender, EventArgs e)
@@ -634,8 +634,8 @@ namespace PawnPlus
 
             while (!Compiling.HasExited)
             {
-                Program.main.ProjectInformation["CompileErrors"] = Compiling.StandardError.ReadToEnd();
-                Program.main.ProjectInformation["Output"] = Compiling.StandardOutput.ReadToEnd();
+                this.ProjectInformation["CompileErrors"] = Compiling.StandardError.ReadToEnd();
+                this.ProjectInformation["Output"] = Compiling.StandardOutput.ReadToEnd();
             }
 
             File.Delete(TempFile);
@@ -644,7 +644,7 @@ namespace PawnPlus
 
         private void CompilerWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            if (Program.main.ProjectInformation["CompileErrors"].Length > 0)
+            if (this.ProjectInformation["CompileErrors"].Length > 0)
                 ApplicationStatus.setApplicationStatus(ApplicationStatus.Status.CompiledWithErrors, true);
             else
                 ApplicationStatus.setApplicationStatus(ApplicationStatus.Status.Compiled, true);
@@ -771,59 +771,117 @@ namespace PawnPlus
         /// <param name="ProjectPath">Path to the file with 'pawnplusproject' extension.</param>
         public void LoadProject(string ProjectPath)
         {
+            string CurrentFilePath = null, CurrentAttribute = null;
+            string[] FilePath = new string[2];
+
             this.CloseProject();
 
             if (ProjectPath != null)
             {
-                using (XmlReader ProjectReader = XmlReader.Create(ProjectPath))
+                XmlTextReader ProjectReader = new XmlTextReader(ProjectPath);
+
+                while (ProjectReader.Read())
                 {
-                    while (ProjectReader.Read())
+                    switch (ProjectReader.Name.ToString())
                     {
-                        if (ProjectReader.IsStartElement())
-                        {
-                            switch (ProjectReader.Name.ToString())
+                        case "Name":
+                            this.ProjectInformation.Add("Name", ProjectReader.ReadString());
+                            break;
+
+                        case "File":
+                            try
                             {
-                                case "Name":
-                                    this.ProjectInformation.Add("Name", ProjectReader.ReadString());
-                                    break;
+                                CurrentAttribute = ProjectReader.GetAttribute("Active");
+                                CurrentFilePath = ProjectReader.ReadString();
 
-                                case "OpenedFile":
-                                    this.ProjectOpenedFiles.Add(ProjectReader.ReadString());
-                                    break;
+                                if (CurrentAttribute == "1")
+                                {
+                                    FilePath[0] = CurrentFilePath;
+                                    FilePath[1] = "true";
+                                }
+
+                                
+                                this.OpenFile(CurrentFilePath);
                             }
-                        }
+                            catch (Exception)
+                            {
+                                // File dosen't exist.
+                            }
+
+                            break;
                     }
-
-                    if(this.ProjectInformation.ContainsKey("Path") == false)
-                        this.ProjectInformation.Add("Path", Path.GetDirectoryName(ProjectPath));
-                    else
-                        this.ProjectInformation["Path"] = Path.GetDirectoryName(ProjectPath);
-
-                    // PawnPlusProject = Path to file with .pawnplusproject extension.
-                    this.ProjectInformation.Add("PawnPlusProject", ProjectPath);
-                    this.ProjectInformation.Add("CompileErrors", String.Empty);
-                    this.ProjectInformation.Add("Output", String.Empty);
-
-                    if (this.ProjectInformation["Path"].Length != 0)
-                        Program.projectexplorer.LoadDirectory(Program.projectexplorer.FileTree, this.ProjectInformation["Path"]);
-
-                    this.setMenuStripItemsStatus(true, true, true);
-
-                    this.FormName.Text = "PawnPlus - " +this.ProjectInformation["Name"];
                 }
+
+                if (FilePath[1] == "true")
+                {
+                    this.CodeEditors[FilePath[0]].Activate();
+                    this.CodeEditors[FilePath[0]].Select();
+                    this.CodeEditors[FilePath[0]].Focus();
+                }
+
+                if (this.ProjectInformation.ContainsKey("Path") == false)
+                    this.ProjectInformation.Add("Path", Path.GetDirectoryName(ProjectPath));
+                else
+                    this.ProjectInformation["Path"] = Path.GetDirectoryName(ProjectPath);
+
+                // PawnPlusProject = Path to file with .pawnplusproject extension.
+                this.ProjectInformation.Add("PawnPlusProject", ProjectPath);
+                this.ProjectInformation.Add("CompileErrors", String.Empty);
+                this.ProjectInformation.Add("Output", String.Empty);
+
+                if (this.ProjectInformation["Path"].Length != 0)
+                    Program.projectexplorer.LoadDirectory(Program.projectexplorer.FileTree, this.ProjectInformation["Path"]);
+
+                this.setMenuStripItemsStatus(true, true, true);
+
+                this.FormName.Text = "PawnPlus - " + this.ProjectInformation["Name"];
             }
         }
 
-        // UNDONE: Add atribute 'OpenedFiles' to open files which was opened last session.
         /// <summary>
         /// Close current project.
         /// </summary>
-        /// 
+        /// <returns>true is all files is saved, false otherwise.</returns>
         public bool CloseProject()
         {
             this.setMenuStripItemsStatus(false, true);
 
             bool isUnsaved = false;
+
+            if (this.ProjectInformation.ContainsKey("PawnPlusProject") == true)
+            {
+                string ProjectPath = Path.Combine(this.ProjectInformation["Path"], this.ProjectInformation["PawnPlusProject"]);
+
+                XmlDocument ProjectXML = new XmlDocument();
+                ProjectXML.LoadXml(File.ReadAllText(ProjectPath));
+
+                XmlNode Project = ProjectXML.DocumentElement;
+
+                XmlElement OpenedFiles = ProjectXML.CreateElement("OpenedFiles");
+
+                if (ProjectXML.SelectSingleNode("//OpenedFiles") == null)
+                    Project.AppendChild(OpenedFiles);
+                else
+                    Project.ReplaceChild(OpenedFiles, ProjectXML.SelectSingleNode("//OpenedFiles"));
+
+                foreach (KeyValuePair<string, CodeEditor> CodeEditor in this.CodeEditors.ToList())
+                {
+                    XmlNode CurrentFile = ProjectXML.CreateElement("File");
+                    CurrentFile.InnerText = CodeEditor.Value.FilePath;
+
+                    if (CodeEditor.Value == this.dockPanel.ActiveDocument)
+                    {
+                        XmlNode Attribute = ProjectXML.CreateNode(XmlNodeType.Attribute, "Active", String.Empty);
+                        Attribute.Value = "1";
+
+                        CurrentFile.Attributes.SetNamedItem(Attribute);
+                    }
+
+                    OpenedFiles.AppendChild(CurrentFile);
+                }
+
+                ProjectXML.Save(ProjectPath);
+            }
 
             foreach (KeyValuePair<string, CodeEditor> CodeEditor in this.CodeEditors.ToList())
             {
@@ -847,25 +905,8 @@ namespace PawnPlus
                 isUnsaved = false;
             }
 
-            if (this.ProjectInformation.ContainsKey("PawnPlusProject") == true)
-            {
-                //string ProjectPath = Path.Combine(this.ProjectInformation["Path"], this.ProjectInformation["PawnPlusProject"]);
-
-                //XmlDocument ProjectXML = new XmlDocument();
-                //ProjectXML.LoadXml(File.ReadAllText(ProjectPath));
-
-                //XmlNode Project = ProjectXML.DocumentElement;
-
-                //XmlElement OpenedFiles = ProjectXML.CreateElement("OpenedFiles");
-                //OpenedFiles.InnerText = "PawnPlus Test";
-
-                //OpenedFiles.AppendChild(OpenedFiles);
-                //ProjectXML.Save(ProjectPath);
-
-                this.ProjectInformation = new Dictionary<string, string>();
-            }
-
             this.CodeEditors = new Dictionary<string, CodeEditor>();
+            this.ProjectInformation = new Dictionary<string, string>();
             Program.projectexplorer.FileTree.Nodes.Clear();
 
             this.FormName.Text = "PawnPlus";
@@ -886,8 +927,7 @@ namespace PawnPlus
                 this.CodeEditors.Add(FilePath, new CodeEditor());
                 this.CodeEditors[FilePath].Text = FilePath;
                 this.CodeEditors[FilePath].DockHandler.TabText = FileName;
-                this.CodeEditors[FilePath].CodeBox.Encoding = Encoding.UTF8;
-                this.CodeEditors[FilePath].CodeBox.LoadFile(FilePath, false, false);
+                this.CodeEditors[FilePath].CodeBox.Document.TextContent = File.ReadAllText(FilePath, Encoding.UTF8);
                 this.CodeEditors[FilePath].InitialContent = this.CodeEditors[FilePath].CodeBox.Document.TextContent;
                 this.CodeEditors[FilePath].FilePath = FilePath;
                 this.CodeEditors[FilePath].checkInitialContent();
@@ -912,7 +952,7 @@ namespace PawnPlus
         /// <param name="Path">Path to the file.</param>
         public void SaveFile(string Path)
         {
-            this.CodeEditors[Path].CodeBox.SaveFile(Path);
+            File.WriteAllText(Path, this.CodeEditors[Path].CodeBox.Document.TextContent, Encoding.UTF8);
             this.CodeEditors[Path].InitialContent = this.CodeEditors[Path].CodeBox.Document.TextContent;
             this.CodeEditors[Path].checkInitialContent();
         }

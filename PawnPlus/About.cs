@@ -52,7 +52,7 @@ namespace PawnPlus
         private string UppercaseFirst(string Text)
         {
             if (String.IsNullOrEmpty(Text))
-                return string.Empty;
+                return String.Empty;
 
             return char.ToUpper(Text[0]) + Text.Substring(1);
         }

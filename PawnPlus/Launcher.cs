@@ -100,6 +100,10 @@ namespace PawnPlus
             Thread.Sleep(100);
 
             BackgroundWorker.ReportProgress(100, "Complete");
+
+            while (true) // Do this because another way will give some exceptions.
+                if (Program.main.IsDisposed == true)
+                    Application.Exit();
         }
 
         private void BackgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)

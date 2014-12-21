@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PawnPlus", "PawnPlus\PawnPlus.csproj", "{DB2AC41E-2BB2-4C63-B736-A09A11D3FEE1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PawnPlus.Core", "PawnPlus.Core\PawnPlus.Core.csproj", "{343C96BB-371A-4BD6-B3B0-2B2FF792B726}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,6 +18,10 @@ Global
 		{DB2AC41E-2BB2-4C63-B736-A09A11D3FEE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB2AC41E-2BB2-4C63-B736-A09A11D3FEE1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DB2AC41E-2BB2-4C63-B736-A09A11D3FEE1}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{343C96BB-371A-4BD6-B3B0-2B2FF792B726}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{343C96BB-371A-4BD6-B3B0-2B2FF792B726}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{343C96BB-371A-4BD6-B3B0-2B2FF792B726}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{343C96BB-371A-4BD6-B3B0-2B2FF792B726}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

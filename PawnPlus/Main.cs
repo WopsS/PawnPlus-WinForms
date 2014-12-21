@@ -19,7 +19,12 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace PawnPlus
 {
-    // FEATURE: Add auto downloader to download request files from pawnplus.eu.
+    /* 
+     * FEATURE: Add auto downloader to download requested files from pawnplus.eu.
+     * FEATURE: Multilanguage applicatoin use 'Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("de");' to set language and get specific string from language resource.
+     * BUG: Application doesn't close sometimes. 
+     */
+
     public partial class Main : Form
     {
         public bool CloseApplication = false;
@@ -35,7 +40,9 @@ namespace PawnPlus
         /// </summary>
         public string CodeEditorPath = null;
 
-        DeserializeDockContent DockContentLayout;
+        public ApplicationStatus applicationStatus;
+
+        private DeserializeDockContent DockContentLayout;
 
         public Main()
         {
@@ -43,6 +50,7 @@ namespace PawnPlus
 
             DockContentLayout = new DeserializeDockContent(GetLayout);
             this.MaximumSize = Screen.PrimaryScreen.WorkingArea.Size;
+            this.applicationStatus = new ApplicationStatus(this.StatusBar, this.StatusLabel);
         }
 
         private void Main_Load(object sender, EventArgs e)
@@ -535,22 +543,22 @@ namespace PawnPlus
 
         private void projectToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            ApplicationStatus.setApplicationStatus(ApplicationStatus.Status.OpeningProject, false);
+            Program.main.applicationStatus.setApplicationStatus(ApplicationStatusType.OpeningProject, false);
 
             DialogResult Result = ProjectOpenFileDialog.ShowDialog(this);
 
             if (Result == DialogResult.Cancel || Result == DialogResult.OK)
-                ApplicationStatus.setApplicationStatus(ApplicationStatus.Status.Ready, false);
+                Program.main.applicationStatus.setApplicationStatus(ApplicationStatusType.Ready, false);
         }
 
         private void fileToolStripMenuItem2_Click(object sender, EventArgs e)
         {
-            ApplicationStatus.setApplicationStatus(ApplicationStatus.Status.OpeningFile, false);
+            Program.main.applicationStatus.setApplicationStatus(ApplicationStatusType.OpeningFile, false);
 
             DialogResult Result = FileOpenFileDialog.ShowDialog(this);
 
             if (Result == DialogResult.Cancel || Result == DialogResult.OK)
-                ApplicationStatus.setApplicationStatus(ApplicationStatus.Status.Ready, false);
+                Program.main.applicationStatus.setApplicationStatus(ApplicationStatusType.Ready, false);
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -592,7 +600,7 @@ namespace PawnPlus
                 return;
             else if (this.CodeEditors[this.CodeEditorPath].CodeBox.Document.TextLength == 0)
             {
-                ApplicationStatus.setApplicationStatus(ApplicationStatus.Status.TextLength, true);
+                Program.main.applicationStatus.setApplicationStatus(ApplicationStatusType.TextLength, true);
 
                 return;
             }
@@ -607,7 +615,7 @@ namespace PawnPlus
 
             this.saveToolStripMenuItem.Enabled = false;
 
-            ApplicationStatus.setApplicationStatus(ApplicationStatus.Status.Compiling, false);
+            Program.main.applicationStatus.setApplicationStatus(ApplicationStatusType.Compiling, false);
 
             CompilerWorker.RunWorkerAsync();
 
@@ -645,9 +653,9 @@ namespace PawnPlus
         private void CompilerWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             if (this.ProjectInformation["CompileErrors"].Length > 0)
-                ApplicationStatus.setApplicationStatus(ApplicationStatus.Status.CompiledWithErrors, true);
+                Program.main.applicationStatus.setApplicationStatus(ApplicationStatusType.CompiledWithErrors, true);
             else
-                ApplicationStatus.setApplicationStatus(ApplicationStatus.Status.Compiled, true);
+                Program.main.applicationStatus.setApplicationStatus(ApplicationStatusType.Compiled, true);
 
             Program.output.setOutputText(ProjectInformation["CompileErrors"].Length == 0 ? "" : ProjectInformation["CompileErrors"] + Environment.NewLine, true);
             Program.output.setOutputText(ProjectInformation["Output"], false);

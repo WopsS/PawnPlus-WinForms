@@ -99,7 +99,6 @@
     <Compile Include="About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\ApplicationStatus.cs" />
     <Compile Include="Classes\MenuStripColorTable.cs" />
     <Compile Include="Classes\MethodInformations.cs" />
     <Compile Include="Classes\MethodInsight.cs" />
@@ -302,6 +301,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\DefaultLayout.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PawnPlus.Core\PawnPlus.Core.csproj">
+      <Project>{343c96bb-371a-4bd6-b3b0-2b2ff792b726}</Project>
+      <Name>PawnPlus.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

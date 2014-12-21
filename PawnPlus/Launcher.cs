@@ -19,7 +19,6 @@ namespace PawnPlus
     public partial class Launcher : Form
     {
         private string ProjectPath = null;
-        private int Seconds = 0;
 
         private StatusControl statuscontrol = new StatusControl();
         private DownloadControl downloadcontrol = new DownloadControl();
@@ -60,17 +59,17 @@ namespace PawnPlus
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            if (ApplicationStatus.StatusFlag == true)
-            {
-                if (this.Seconds == 5)
-                {
-                    this.Seconds = 0;
+            //if (ApplicationStatusTypeFlag == true)
+            //{
+            //    if (this.Seconds == 5)
+            //    {
+            //        this.Seconds = 0;
 
-                    ApplicationStatus.setApplicationStatus(ApplicationStatus.Status.Ready, false);
-                }
+            //        ApplicationStatus.setApplicationStatus(ApplicationStatusType.Ready, false);
+            //    }
 
-                this.Seconds++;
-            }
+            //    this.Seconds++;
+            //}
             //else if (Program.main.IsDisposed == true)
             //    Application.Exit();
         }
@@ -115,26 +114,12 @@ namespace PawnPlus
                 this.Hide();
                 Program.main.Show();
                 Program.main.BringToFront();
-
-                this.ChangeTimerState(true);
             }
         }
 
         private void UpdateBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             this.CheckingForUpdates(true);
-        }
-
-        /// <summary>
-        /// Change timer state.
-        /// </summary>
-        /// <param name="State">If state is true, the timer will be start, else the timer will stop.</param>
-        public void ChangeTimerState(bool State)
-        {
-            if (State == true)
-                this.Timer.Start();
-            else
-                this.Timer.Stop();
         }
 
         private void getOldSettings()
@@ -206,7 +191,7 @@ namespace PawnPlus
             Program.main.MethodsList = MethodsProvider.InitializeMethods();
             Program.main.VersionLabel.Text = String.Format("Version {0} beta", this.Version);
 
-            ApplicationStatus.setApplicationStatus(ApplicationStatus.Status.Ready, false);
+            Program.main.applicationStatus.setApplicationStatus(ApplicationStatusType.Ready, false);
         }
 
         public string Version

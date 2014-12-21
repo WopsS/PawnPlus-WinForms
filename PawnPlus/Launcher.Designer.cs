@@ -28,12 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Launcher));
             this.Panel = new System.Windows.Forms.Panel();
             this.ControlsPanel = new System.Windows.Forms.Panel();
             this.PhotoLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.Timer = new System.Windows.Forms.Timer(this.components);
             this.BackgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.UpdateBackgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.Panel.SuspendLayout();
@@ -71,11 +69,6 @@
             this.PhotoLayoutPanel.Size = new System.Drawing.Size(512, 112);
             this.PhotoLayoutPanel.TabIndex = 0;
             // 
-            // Timer
-            // 
-            this.Timer.Interval = 1000;
-            this.Timer.Tick += new System.EventHandler(this.Timer_Tick);
-            // 
             // BackgroundWorker
             // 
             this.BackgroundWorker.WorkerReportsProgress = true;
@@ -109,7 +102,6 @@
         #endregion
 
         private System.Windows.Forms.Panel Panel;
-        private System.Windows.Forms.Timer Timer;
         private System.ComponentModel.BackgroundWorker BackgroundWorker;
         private System.Windows.Forms.FlowLayoutPanel PhotoLayoutPanel;
         private System.Windows.Forms.Panel ControlsPanel;

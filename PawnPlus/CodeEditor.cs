@@ -88,15 +88,15 @@ namespace PawnPlus
         {
             // Disabled until all SA-MP function is added.
 
-            //if (TextHelper.FindStringStart(this.CodeBox.Document, this.CodeBox.ActiveTextAreaControl.Caret.Offset) != -1 && TextHelper.FindStringStart(this.CodeBox.Document, this.CodeBox.ActiveTextAreaControl.Caret.Offset) != -1)
-            //    return;
+            if (TextHelper.FindStringStart(this.CodeBox.Document, this.CodeBox.ActiveTextAreaControl.Caret.Offset) != -1 && TextHelper.FindStringStart(this.CodeBox.Document, this.CodeBox.ActiveTextAreaControl.Caret.Offset) != -1)
+                return;
 
-            //if (e.Key == '\0')
-            //    this.CodeBox.ShowCompletionWindow(new CodeCompletionDataProvider(), e.Key, false);
-            //else if (char.IsLetter(e.Key))
-            //    this.CodeBox.ShowCompletionWindow(new CodeCompletionDataProvider(), e.Key, true);
+            if (e.Key == '\0')
+                this.CodeBox.ShowCompletionWindow(new CodeCompletionDataProvider(), e.Key, false);
+            else if (char.IsLetter(e.Key))
+                this.CodeBox.ShowCompletionWindow(new CodeCompletionDataProvider(), e.Key, true);
 
-            //this.checkInitialContent();
+            this.checkInitialContent();
         }
 
         private void CodeBox_InsightRequest(object sender, InsightEventArgs e)

@@ -80,15 +80,16 @@ namespace PawnPlus
 
             Result = String.Format("public {0}({1}){2}{3}{4}", MethodName, String.Join(", ", Method.Parameters), "\n", Method.Description, Environment.NewLine + Environment.NewLine);
 
-            if (Method.Parameters != null)
+            if (Method.Parameters != null && Method.ParametersDescription != null)
             {
                 Result += String.Format("Parameters:{0}", Environment.NewLine);
 
-                for(i = 0; i < Method.Parameters.Length; i++)
+                for (i = 0; i < Method.Parameters.Length; i++)
                     Result += String.Format("{0} - {1}{2}", Method.Parameters[i].Split('=')[0].Trim(), Method.ParametersDescription[i], Environment.NewLine);
             }
 
-            Result += String.Format("{0}Return:{1}", Environment.NewLine, Environment.NewLine);
+
+            Result += String.Format("{0}Return:{1}", Method.ParametersDescription == null ? String.Empty : Environment.NewLine, Environment.NewLine);
 
             if (Method.ReturnValues != null)
             {

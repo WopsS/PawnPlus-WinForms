@@ -927,20 +927,182 @@ namespace PawnPlus
                 }
             });
 
-            #endregion
-
-            Methods.Add("Method", new MethodInformations
+            Methods.Add("db_get_field_assoc", new MethodInformations
             {
-                Description = "Text",
+                Description = "Get the contents of field with specified name.",
                 Parameters = new string[] 
                 {
-                    "Param1", 
-                    "Param2" 
+                    "DBResult:dbresult", "const field[]", "result[]", 
+                    "maxlength",
                 },
                 ParametersDescription = new string[] 
                 { 
-                    "Param1Description",
-                    "Param2Description"
+                    "The result to get the data from", "The fieldname to get the data from", "The result",
+                    "The max length of the field"
+                },
+                ReturnValues = new int[] 
+                { 
+                    0, 
+                    1
+                },
+                ReturnValueDescription = new string[] 
+                { 
+                    "If DBResult:dbresult is a NULL reference or the column index not available.", 
+                    "If successful."
+                }
+            });
+
+            Methods.Add("db_next_row", new MethodInformations
+            {
+                Description = "Moves to the next row of the result allocated from db_query.",
+                Parameters = new string[] 
+                {
+                    "DBResult:dbresult"
+                },
+                ParametersDescription = new string[] 
+                { 
+                    "The result of db_query."
+                },
+                ReturnValues = new int[] 
+                { 
+                    0, 
+                    1
+                },
+                ReturnValueDescription = new string[] 
+                { 
+                    "If DBResult:dbresult is a NULL reference or the last row is reached.", 
+                    "On success."
+                }
+            });
+                   
+            Methods.Add("db_num_fields", new MethodInformations
+            {
+                Description = "Get the number of fields in a result.",
+                Parameters = new string[] 
+                {
+                    "DBResult:dbresult"
+                },
+                ParametersDescription = new string[] 
+                { 
+                    "The result of db_query."
+                },
+                ReturnValues = null,
+                ReturnValueDescription = new string[] 
+                { 
+                    "The number of fields in the result."
+                }
+            });
+
+            Methods.Add("db_num_rows", new MethodInformations
+            {
+                Description = "Get the number of rows in a result.",
+                Parameters = new string[] 
+                {
+                    "DBResult:dbresult"
+                },
+                ParametersDescription = new string[] 
+                { 
+                    "The result of db_query."
+                },
+                ReturnValues = null,
+                ReturnValueDescription = new string[] 
+                { 
+                    "The number of rows in the result."
+                }
+            });
+
+            Methods.Add("db_open", new MethodInformations
+            {
+                Description = "This function is used to open a connection to a SQLite database, which is inside the \"/scriptfiles\" folder",
+                Parameters = new string[] 
+                {
+                    "name[]"
+                },
+                ParametersDescription = new string[] 
+                { 
+                    "File name of the database"
+                },
+                ReturnValues = null,
+                ReturnValueDescription = new string[] 
+                { 
+                    "Returns the handle of the database connection"
+                }
+            });
+
+            Methods.Add("db_query", new MethodInformations
+            {
+                Description = "This function is used to execute an SQL query on an opened SQLite database.",
+                Parameters = new string[] 
+                {
+                    "DB:db", "query[]"
+                },
+                ParametersDescription = new string[] 
+                { 
+                    "The database handle to query.", "The query to execute."
+                },
+                ReturnValues = null,
+                ReturnValueDescription = new string[] 
+                { 
+                    "The query result handle."
+                }
+            });
+
+            Methods.Add("Delete3DTextLabel", new MethodInformations
+            {
+                Description = "Delete a 3D text label (created with Create3DTextLabel).",
+                Parameters = new string[] 
+                {
+                    "Text3D:id"
+                },
+                ParametersDescription = new string[] 
+                { 
+                    "The ID of the 3D text label to delete."
+                },
+                ReturnValues = new int[] 
+                { 
+                    0,
+                    1
+                },
+                ReturnValueDescription = new string[] 
+                { 
+                    "If the 3D text label wasn't deleted.", 
+                    "If the 3D text label was deleted."
+                }
+            });
+
+            Methods.Add("DeletePVar", new MethodInformations
+            {
+                Description = "Deletes a previously set player variable.",
+                Parameters = new string[] 
+                {
+                    "playerid", "varname[]"
+                },
+                ParametersDescription = new string[] 
+                { 
+                    "The ID of the player whose player variable to delete.", "The name of the player variable to delete."
+                },
+                ReturnValues = new int[] 
+                { 
+                    0,
+                    1
+                },
+                ReturnValueDescription = new string[] 
+                { 
+                    "The function failed to execute. Either the player specified isn't connected or there is no variable set with the given name.",
+                    "The function executed successfully. "
+                }
+            });
+
+            Methods.Add("DeletePlayer3DTextLabel", new MethodInformations
+            {
+                Description = "Destroy a 3D text label that was created using CreatePlayer3DTextLabel.",
+                Parameters = new string[] 
+                {
+                    "playerid", "PlayerText3D:id"
+                },
+                ParametersDescription = new string[] 
+                { 
+                    "The ID of the player whose 3D text label to delete.", "The ID of the player's 3D text label to delete."
                 },
                 ReturnValues = new int[] 
                 { 
@@ -948,9 +1110,281 @@ namespace PawnPlus
                 },
                 ReturnValueDescription = new string[] 
                 { 
-                    "Return0"
+                    "The function failed to execute. This means the label specified doesn't exist.",
+                    "The function executed successfully."
                 }
             });
+
+            Methods.Add("deleteproperty", new MethodInformations
+            {
+                Description = "Delete an earlier set property.",
+                Parameters = new string[] 
+                {
+                    "id=0", "const name[]=\"\"", 
+                    "value=cellmin"
+                },
+                ParametersDescription = new string[] 
+                { 
+                    "The virtual machine to use. You should keep this as zero.", "The property's name, you should keep this blank (\"\").", 
+                    "The property's unique ID. Use the hash-function to calculate it from a string."
+                },
+                ReturnValues = null,
+                ReturnValueDescription = new string[] 
+                { 
+                    "If the property does not exist, the function returns 0.",
+                    "The value of the property."
+                }
+            });
+
+            Methods.Add("DestroyMenu", new MethodInformations
+            {
+                Description = "Destroys the specified menu.",
+                Parameters = new string[] 
+                {
+                    "menuid"
+                },
+                ParametersDescription = new string[] 
+                { 
+                    "The menu ID to destroy."
+                },
+                ReturnValues = new int[] 
+                { 
+                    0,
+                    1
+                },
+                ReturnValueDescription = new string[] 
+                { 
+                    "If the destroying was unsuccessful.",
+                    "If the destroying was successful."
+                }
+            });
+
+            Methods.Add("DestroyObject", new MethodInformations
+            {
+                Description = "Destroys (removes) the given object.",
+                Parameters = new string[] 
+                {
+                    "objectid"
+                },
+                ParametersDescription = new string[] 
+                { 
+                    "The objectid from the object you want to delete."
+                },
+                ReturnValues = null,
+                ReturnValueDescription = new string[] 
+                { 
+                    "This function does not return any specific values."
+                }
+            });
+
+            Methods.Add("DestroyPickup", new MethodInformations
+            {
+                Description = "Destroys a pickup created with CreatePickup.",
+                Parameters = new string[] 
+                {
+                    "pickupid"
+                },
+                ParametersDescription = new string[] 
+                { 
+                    "The ID of the pickup to destroy (returned by CreatePickup)."
+                },
+                ReturnValues = null,
+                ReturnValueDescription = new string[] 
+                { 
+                    "This function does not return any specific values."
+                }
+            });
+
+            Methods.Add("DestroyPlayerObject", new MethodInformations
+            {
+                Description = "Destroy a player-object.",
+                Parameters = new string[] 
+                {
+                    "playerid", "objectid"
+                },
+                ParametersDescription = new string[] 
+                { 
+                    "The ID of the player the object is associated to.", "The ID of the player-object to delete (returned by CreatePlayerObject)."
+                },
+                ReturnValues = null,
+                ReturnValueDescription = new string[] 
+                { 
+                    "This function does not return any specific values."
+                }
+            });
+
+            Methods.Add("DestroyVehicle", new MethodInformations
+            {
+                Description = "Destroy a vehicle. Instantly disappears.",
+                Parameters = new string[] 
+                {
+                    "vehicleid"
+                },
+                ParametersDescription = new string[] 
+                { 
+                    "The ID of the vehicle to destroy."
+                },
+                ReturnValues = new int[] 
+                { 
+                    0,
+                    1
+                },
+                ReturnValueDescription = new string[] 
+                { 
+                    "The function failed to execute. The vehicle does not exist.",
+                    "The function executed successfully."
+                }
+            });
+
+            Methods.Add("DetachTrailerFromVehicle", new MethodInformations
+            {
+                Description = "Detach the connection between a vehicle and its trailer, if any.",
+                Parameters = new string[] 
+                {
+                    "vehicleid"
+                },
+                ParametersDescription = new string[] 
+                { 
+                    "ID of the pulling vehicle."
+                },
+                ReturnValues = null,
+                ReturnValueDescription = new string[] 
+                { 
+                    "This function does not return any specific values."
+                }
+            });
+
+            Methods.Add("DisableInteriorEnterExits", new MethodInformations
+            {
+                Description = "Disable all the interior entrances and exits in the game (the yellow arrows at doors).",
+                Parameters = new string[] 
+                {
+                    "This function has no parameters."
+                },
+                ParametersDescription = null,
+                ReturnValues = null,
+                ReturnValueDescription = new string[] 
+                { 
+                    "This function always returns 1."
+                }
+            });
+
+            Methods.Add("DisableMenu", new MethodInformations
+            {
+                Description = "Disable a menu.",
+                Parameters = new string[] 
+                {
+                    "Menu:menuid"
+                },
+                ParametersDescription = new string[] 
+                { 
+                    "The ID of the menu to disable."
+                },
+                ReturnValues = null,
+                ReturnValueDescription = new string[] 
+                { 
+                    "This function does not return any specific values."
+                }
+            });
+
+            Methods.Add("DisableMenuRow", new MethodInformations
+            {
+                Description = "Disable a specific row in a menu for all players. It will be greyed-out and can't be selected by players.",
+                Parameters = new string[] 
+                {
+                    "Menu:menuid", "row"
+                },
+                ParametersDescription = new string[] 
+                { 
+                    "The ID of the menu to disable a row of. Ensure this is valid, as an invalid menu ID will crash the entire server.", "The ID of the row to disable (rows start at 0)."
+                },
+                ReturnValues = null,
+                ReturnValueDescription = new string[] 
+                { 
+                    "This function always returns 1, even if the function fails. If an invalid row is specified, nothing will happen. If an invalid menu ID is specified, the server will crash."
+                }
+            });
+
+            Methods.Add("DisableNameTagLOS", new MethodInformations
+            {
+                Description = "Disables the nametag Line-Of-Sight checking so that players can see nametags through objects.",
+                Parameters = new string[] 
+                {
+                    "This function has no parameters."
+                },
+                ParametersDescription = null,
+                ReturnValues = null,
+                ReturnValueDescription = new string[] 
+                { 
+                    "This function does not return any specific values."
+                }
+            });
+
+            Methods.Add("DisablePlayerCheckpoint", new MethodInformations
+            {
+                Description = "Disables (hides/destroys) a player's set checkpoint. Players can only have a single checkpoint set at a time. Checkpoints don't need to be disabled before setting another one.",
+                Parameters = new string[] 
+                {
+                    "playerid"
+                },
+                ParametersDescription = new string[] 
+                { 
+                    "The ID of the player whose checkpoint to disable."
+                },
+                ReturnValues = new int[] 
+                { 
+                    0,
+                    1
+                },
+                ReturnValueDescription = new string[] 
+                { 
+                    "The function failed to execute. This means the player is not connected.",
+                    "The function executed successfully. Success is also returned if the player doesn't have a checkpoint shown already."
+                }
+            });
+
+            Methods.Add("DisablePlayerRaceCheckpoint", new MethodInformations
+            {
+                Description = "Disable any initialized race checkpoints for a specific player, since you can only have one at any given time.",
+                Parameters = new string[] 
+                {
+                    "playerid"
+                },
+                ParametersDescription = new string[] 
+                { 
+                    "The player to disable the current checkpoint for."
+                },
+                ReturnValues = null,
+                ReturnValueDescription = new string[] 
+                { 
+                    "This function does not return any specific values."
+                }
+            });
+
+            #endregion
+            
+            //Methods.Add("Method", new MethodInformations
+            //{
+            //    Description = "Text",
+            //    Parameters = new string[] 
+            //    {
+            //        "Param1", 
+            //        "Param2" 
+            //    },
+            //    ParametersDescription = new string[] 
+            //    { 
+            //        "Param1Description",
+            //        "Param2Description"
+            //    },
+            //    ReturnValues = new int[] 
+            //    { 
+            //        0,
+            //    },
+            //    ReturnValueDescription = new string[] 
+            //    { 
+            //        "Return0"
+            //    }
+            //});
 
 
             //Methods.Add("Method", new MethodInformations

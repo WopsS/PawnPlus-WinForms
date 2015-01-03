@@ -110,7 +110,7 @@ namespace PawnPlus
 
         private void Main_FormClosed(object sender, FormClosedEventArgs e)
         {
-            //Application.Exit(); Commented for a while.
+            Application.Exit();
         }
 
         private IDockContent GetLayout(string LayoutString)
@@ -820,6 +820,8 @@ namespace PawnPlus
                     }
                 }
 
+                ProjectReader.Close();
+
                 if (FilePath[1] == "true")
                 {
                     this.CodeEditors[FilePath[0]].Activate();
@@ -888,7 +890,14 @@ namespace PawnPlus
                     OpenedFiles.AppendChild(CurrentFile);
                 }
 
-                ProjectXML.Save(ProjectPath);
+                try
+                {
+                    ProjectXML.Save(ProjectPath);
+                }
+                catch(Exception e)
+                {
+                    MessageBox.Show("Unexpected error: " + Environment.NewLine + e.ToString());
+                }
             }
 
             foreach (KeyValuePair<string, CodeEditor> CodeEditor in this.CodeEditors.ToList())

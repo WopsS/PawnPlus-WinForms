@@ -19,12 +19,6 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace PawnPlus
 {
-    /* 
-     * FEATURE: Add auto downloader to download requested files from pawnplus.eu.
-     * FEATURE: Multilanguage applicatoin use 'Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("de");' to set language and get specific string from language resource.
-     * BUG: Application doesn't close sometimes. 
-     */
-
     public partial class Main : Form
     {
         public bool CloseApplication = false;
@@ -944,12 +938,14 @@ namespace PawnPlus
                 this.CodeEditors.Add(FilePath, new CodeEditor());
                 this.CodeEditors[FilePath].Text = FilePath;
                 this.CodeEditors[FilePath].DockHandler.TabText = FileName;
-                this.CodeEditors[FilePath].CodeBox.Document.TextContent = File.ReadAllText(FilePath, Encoding.UTF8);
+
+                this.CodeEditors[FilePath].CodeBox.Document.TextContent = Encoding.GetEncoding(1252).GetString(File.ReadAllBytes(FilePath));
+
                 this.CodeEditors[FilePath].InitialContent = this.CodeEditors[FilePath].CodeBox.Document.TextContent;
                 this.CodeEditors[FilePath].FilePath = FilePath;
                 this.CodeEditors[FilePath].checkInitialContent();
 
-                if(Path.GetExtension(FilePath) == ".pwn")
+                if (Path.GetExtension(FilePath) == ".pwn")
                     this.CodeEditors[FilePath].Icon = Properties.Resources.FileGroup_10135_32x_icon;
                 else if (Path.GetExtension(FilePath) == ".inc")
                     this.CodeEditors[FilePath].Icon = Properties.Resources.gear_32xLG_icon;
@@ -969,7 +965,7 @@ namespace PawnPlus
         /// <param name="Path">Path to the file.</param>
         public void SaveFile(string Path)
         {
-            File.WriteAllText(Path, this.CodeEditors[Path].CodeBox.Document.TextContent, Encoding.UTF8);
+            File.WriteAllText(Path, this.CodeEditors[Path].CodeBox.Document.TextContent, Encoding.GetEncoding(1252));
             this.CodeEditors[Path].InitialContent = this.CodeEditors[Path].CodeBox.Document.TextContent;
             this.CodeEditors[Path].checkInitialContent();
         }

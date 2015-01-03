@@ -13,13 +13,13 @@
 	!define MUI_HEADERIMAGE_RIGHT
 	!define MUI_HEADERIMAGE_BITMAP "..\Images\PawnPlus_Install_Banner.bmp"  
 	
-	!define CurrentVersion 0.4.6.0
+	!define CurrentVersion 0.4.7.0
 	!insertmacro VersionCompare
 ;--------------------------------
 ;General
 
 	Name "PawnPlus"
-	OutFile "PawnPlus-Setup-0.4.6.exe"
+	OutFile "PawnPlus-Setup-0.4.7.exe"
 	
 	InstallDir "$PROGRAMFILES\PawnPlus"
 	
@@ -116,10 +116,7 @@
 	!insertmacro MUI_LANGUAGE "Afrikaans"
 	!insertmacro MUI_LANGUAGE "Catalan"
 	!insertmacro MUI_LANGUAGE "Esperanto"
-	!insertmacro MUI_LANGUAGE "Asturian"
 	!insertmacro MUI_LANGUAGE "Basque"
-	!insertmacro MUI_LANGUAGE "Pashto"
-	!insertmacro MUI_LANGUAGE "Vietnamese"
 	!insertmacro MUI_LANGUAGE "Welsh"
 
 ;--------------------------------
@@ -163,7 +160,7 @@ Section "PawnPlus Section" PawnPlusSection
 		WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\PawnPlus" "DisplayName" "PawnPlus"
 		WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\PawnPlus" "DisplayVersion" "${CurrentVersion}"
 		WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\PawnPlus" "DisplayIcon" "$INSTDIR\PawnPlus.exe"
-		WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\PawnPlus" "Publisher" "Dima Octavian"
+		WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\PawnPlus" "Publisher" "PawnPlus"
 		WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\PawnPlus" "UninstallString" "$INSTDIR\Uninstall.exe"
 	
 		WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\PawnPlus" "Install Location" $INSTDIR

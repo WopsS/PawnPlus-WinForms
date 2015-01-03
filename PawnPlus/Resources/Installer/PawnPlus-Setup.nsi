@@ -13,13 +13,13 @@
 	!define MUI_HEADERIMAGE_RIGHT
 	!define MUI_HEADERIMAGE_BITMAP "..\Images\PawnPlus_Install_Banner.bmp"  
 	
-	!define CurrentVersion 0.4.7.0
+	!define CurrentVersion 0.4.8.0
 	!insertmacro VersionCompare
 ;--------------------------------
 ;General
 
 	Name "PawnPlus"
-	OutFile "PawnPlus-Setup-0.4.7.exe"
+	OutFile "PawnPlus-Setup-0.4.8.exe"
 	
 	InstallDir "$PROGRAMFILES\PawnPlus"
 	

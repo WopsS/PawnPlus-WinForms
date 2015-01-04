@@ -13,19 +13,20 @@
 	!define MUI_HEADERIMAGE_RIGHT
 	!define MUI_HEADERIMAGE_BITMAP "..\Images\PawnPlus_Install_Banner.bmp"  
 	
-	!define CurrentVersion 0.4.8.0
+	!define CurrentVersion 0.4.8.1
 	!insertmacro VersionCompare
 ;--------------------------------
 ;General
 
 	Name "PawnPlus"
-	OutFile "PawnPlus-Setup-0.4.8.exe"
+	OutFile "PawnPlus-Setup-0.4.8.1.exe"
 	
 	InstallDir "$PROGRAMFILES\PawnPlus"
 	
 	InstallDirRegKey HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\PawnPlus" "Install Location"
 
 	RequestExecutionLevel admin
+	
 ;--------------------------------
 ;Interface Settings
 
@@ -166,6 +167,11 @@ Section "PawnPlus Section" PawnPlusSection
 		WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\PawnPlus" "Install Location" $INSTDIR
 	
 		WriteUninstaller "$INSTDIR\Uninstall.exe"
+		
+		AccessControl::GrantOnFile "$INSTDIR" "ListDirectory + GenericRead + GenericExecute + GenericWrite + GenericExecute"
+		AccessControl::GrantOnFile "$INSTDIR" "(Users)" "FullAccess"
+		AccessControl::GrantOnFile "$INSTDIR" "(BU)" "FullAccess"
+		AccessControl::EnableFileInheritance "$INSTDIR"
 
 SectionEnd
 

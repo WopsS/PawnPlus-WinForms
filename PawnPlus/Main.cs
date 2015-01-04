@@ -127,6 +127,8 @@ namespace PawnPlus
         private Point FormStartResize, FormResizePoints, FormMousePosition;
 
         private bool FormMoving, FormRezising, FormRezisingLeft, FormRezisingRight, FormRezisingTop, FormRezisingBottom, FormRezisingTopRight, FormRezisingTopLeft, FormRezisingBottomRight, FormRezisingBottomLeft;
+        
+        const int WS_MINIMIZEBOX = 0x20000, CS_DBLCLKS = 0x8;
 
         private void Main_MouseDown(object sender, MouseEventArgs e)
         {
@@ -395,6 +397,18 @@ namespace PawnPlus
         private void CloseButton_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        protected override CreateParams CreateParams // With this form can be minimized from the taskbar.
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.Style |= WS_MINIMIZEBOX;
+                cp.ClassStyle |= CS_DBLCLKS;
+
+                return cp;
+            }
         }
 
         #endregion

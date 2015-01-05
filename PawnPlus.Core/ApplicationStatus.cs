@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace PawnPlus
+namespace PawnPlus.Core
 {
     public enum ApplicationStatusType
     {

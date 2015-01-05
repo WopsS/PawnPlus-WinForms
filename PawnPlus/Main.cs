@@ -1,6 +1,8 @@
 ﻿using DigitalRune.Windows.TextEditor;
 using DigitalRune.Windows.TextEditor.Actions;
 using DigitalRune.Windows.TextEditor.Document;
+using PawnPlus.Core;
+using PawnPlus.Core.Document;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

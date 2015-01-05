@@ -83,16 +83,6 @@ namespace PawnPlus.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap field_16xLG {
-            get {
-                object obj = ResourceManager.GetObject("field_16xLG", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap FileGroup_10135_32x {
             get {
                 object obj = ResourceManager.GetObject("FileGroup_10135_32x", resourceCulture);
@@ -183,16 +173,6 @@ namespace PawnPlus.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap method_16xLG {
-            get {
-                object obj = ResourceManager.GetObject("method_16xLG", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap MinimizeButton {
             get {
                 object obj = ResourceManager.GetObject("MinimizeButton", resourceCulture);
@@ -206,16 +186,6 @@ namespace PawnPlus.Properties {
         internal static System.Drawing.Bitmap PawnPlus {
             get {
                 object obj = ResourceManager.GetObject("PawnPlus", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap text_16xLG {
-            get {
-                object obj = ResourceManager.GetObject("text_16xLG", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -3,10 +3,9 @@ using DigitalRune.Windows.TextEditor;
 using DigitalRune.Windows.TextEditor.Document;
 using DigitalRune.Windows.TextEditor.Folding;
 
-
-namespace PawnPlus
+namespace PawnPlus.Core.Document
 {
-    class CodeFoldingStrategy : IFoldingStrategy
+    public class CodeFoldingStrategy : IFoldingStrategy
     {
         public List<Fold> GenerateFolds(IDocument document, string fileName, object parseInformation)
         {

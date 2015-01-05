@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace PawnPlus
+namespace PawnPlus.Core.Document
 {
-    class MenuStripColorTable : ProfessionalColorTable
+    public class MenuStripColorTable : ProfessionalColorTable
     {
         public override Color ImageMarginGradientBegin
         {

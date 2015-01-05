@@ -5,6 +5,7 @@ using DigitalRune.Windows.TextEditor.Formatting;
 using DigitalRune.Windows.TextEditor.Highlighting;
 using DigitalRune.Windows.TextEditor.Insight;
 using DigitalRune.Windows.TextEditor.Utilities;
+using PawnPlus.Core.Document;
 using System;
 using System.Collections;
 using System.Collections.Generic;

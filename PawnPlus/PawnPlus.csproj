@@ -99,19 +99,12 @@
     <Compile Include="About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\MenuStripColorTable.cs" />
-    <Compile Include="Classes\MethodInformations.cs" />
-    <Compile Include="Classes\MethodInsight.cs" />
-    <Compile Include="Classes\MethodsProvider.cs" />
-    <Compile Include="Classes\CustomResourceSyntaxModeProvider.cs" />
     <Compile Include="CodeEditor.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="CodeEditor.Designer.cs">
       <DependentUpon>CodeEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\CodeCompletionDataProvider.cs" />
-    <Compile Include="Classes\FoldingStrategy.cs" />
     <Compile Include="CreateFile.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -247,7 +240,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <EmbeddedResource Include="Resources\DefaultFilterscript.pwn" />
-    <EmbeddedResource Include="Resources\PAWN-Mode.xshd" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -279,10 +271,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Icons\text_16xLG_icon.ico" />
-    <None Include="Resources\Images\text_16xLG.png" />
     <None Include="Resources\Images\PawnPlus.png" />
     <None Include="Resources\Images\MinimizeButton.png" />
-    <None Include="Resources\Images\method_16xLG.png" />
     <None Include="Resources\Images\MaximizeButton.png" />
     <None Include="Resources\Images\LauncherImage.png" />
     <None Include="Resources\Images\Icon.png" />
@@ -291,13 +281,11 @@
     <None Include="Resources\Images\folder_Closed_32xLG.png" />
     <None Include="Resources\Images\FileGroup_10135_32x.png" />
     <None Include="Resources\Images\field_16xLG.png" />
-    <None Include="Resources\Images\CloseButton.png" />
     <None Include="Resources\Images\application_32xLG.png" />
     <None Include="Resources\Icons\Error.ico" />
     <EmbeddedResource Include="Resources\DefaultGameMode.pwn" />
     <None Include="Resources\Icons\FileGroup_10135_32x_icon.ico" />
     <None Include="Resources\Icons\gear_32xLG_icon.ico" />
-    <EmbeddedResource Include="Resources\SyntaxModes.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\DefaultLayout.xml" />
@@ -308,6 +296,7 @@
       <Name>PawnPlus.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

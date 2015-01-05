@@ -4,12 +4,30 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace PawnPlus
+namespace PawnPlus.Core.Document
 {
+    public class MethodInformations
+    {
+        public string Description { get; set; }
+
+        public string[] Parameters { get; set; }
+
+        public string[] ParametersDescription { get; set; }
+
+        public int[] ReturnValues { get; set; }
+
+        public string[] ReturnValueDescription { get; set; }
+    }
+
     public class MethodsProvider
     {
-        private static Dictionary<string, MethodInformations> Methods = new Dictionary<string, MethodInformations>();
+        public static Dictionary<string, MethodInformations> Methods = new Dictionary<string, MethodInformations>();
+        private static int i = 0;
 
+        /// <summary>
+        /// Return all SA-MP functions.
+        /// </summary>
+        /// <returns></returns>
         public static Dictionary<string, MethodInformations> InitializeMethods()
         {
             #region Scripting Functions A
@@ -1411,6 +1429,42 @@ namespace PawnPlus
             //});
 
             return Methods;
+        }
+
+        /// <summary>
+        /// Format the method for insight.
+        /// </summary>
+        /// <param name="MethodName">Name of the method.</param>
+        /// <param name="Method">Pass the current informations from MethodInformations class</param>
+        /// <returns>Formated method.</returns>
+        public static string FormatProvider(string MethodName, MethodInformations Method)
+        {
+            string Result = null;
+
+            Result = String.Format("public {0}({1}){2}{3}{4}", MethodName, String.Join(", ", Method.Parameters), "\n", Method.Description, Environment.NewLine + Environment.NewLine);
+
+            if (Method.Parameters != null && Method.ParametersDescription != null)
+            {
+                Result += String.Format("Parameters:{0}", Environment.NewLine);
+
+                for (i = 0; i < Method.Parameters.Length; i++)
+                    Result += String.Format("{0} - {1}{2}", Method.Parameters[i].Split('=')[0].Trim(), Method.ParametersDescription[i], Environment.NewLine);
+            }
+
+            Result += String.Format("{0}Return:{1}", Method.ParametersDescription == null ? String.Empty : Environment.NewLine, Environment.NewLine);
+
+            if (Method.ReturnValues != null)
+            {
+                for (i = 0; i < Method.ReturnValues.Length; i++)
+                    Result += String.Format("{0} - {1}{2}", Method.ReturnValues[i], Method.ReturnValueDescription[i], Environment.NewLine);
+            }
+            else
+            {
+                for (i = 0; i < Method.ReturnValueDescription.Length; i++)
+                    Result += String.Format("{0}{1}", Method.ReturnValueDescription[i], Environment.NewLine);
+            }
+
+            return Result;
         }
     }
 }

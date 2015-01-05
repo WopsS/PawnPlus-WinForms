@@ -1,4 +1,6 @@
 ﻿using Microsoft.Win32;
+using PawnPlus.Core;
+using PawnPlus.Core.Document;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

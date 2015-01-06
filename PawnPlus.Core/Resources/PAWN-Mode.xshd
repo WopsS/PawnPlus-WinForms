@@ -38,19 +38,19 @@
 
       <KeyWords name = "PreprocessorDirectives" bold="false" italic="false" color="Blue">
         <Key word = "#define" />
-        <Key word = "#elif" />
-        <Key word = "#else" />
-        <Key word = "#endif" />
-        <Key word = "#error" />
+        <Key word = "#assert" />
         <Key word = "#if" />
-        <Key word = "#ifdef" />
-        <Key word = "#ifndef" />
-        <Key word = "#import" />
-        <Key word = "#line" />
+        <Key word = "#else" />
+        <Key word = "#elseif" />
+        <Key word = "#emit" />
+        <Key word = "#endif" />
+        <Key word = "#endinput" />
+        <Key word = "#endscript" />
+        <Key word = "#error" />
+        <Key word = "#include" />
         <Key word = "#pragma" />
-        <Key word = "#warning" />
+        <Key word = "#tryinclude" />
         <Key word = "#undef" />
-        <Key word = "#using" />
       </KeyWords>
 
       <KeyWords name = "Punctuation" bold = "false" italic = "false" color = "Black">
@@ -79,86 +79,23 @@
         <Key word = "&amp;" />
       </KeyWords>
 
-      <KeyWords name = "ManagedKeyWords" bold="false" italic="false" color="Blue">
-        <Key word = "__abstract" />
-        <Key word = "__box" />
-        <Key word = "__delegate" />
-        <Key word = "__gc" />
-        <Key word = "__identifier" />
-        <Key word = "__nogc" />
-        <Key word = "__pin" />
-        <Key word = "__property" />
-        <Key word = "__sealed" />
-        <Key word = "__try_cast" />
-        <Key word = "__typeof" />
-        <Key word = "__value" />
-
-
-        <Key word = "__event" />
-        <Key word = "__hook" />
-        <Key word = "__raise" />
-        <Key word = "__unhook" />
-
-        <Key word = "__interface" />
-      </KeyWords>
-
-      <KeyWords name = "AccessKeywords" bold="false" italic="false" color="Blue">
-        <Key word = "this" />
-      </KeyWords>
-
-      <KeyWords name = "OperatorKeywords" bold="false" italic="false" color="Black">
-        <Key word = "and" />
-        <Key word = "and_eq" />
-
-        <Key word = "bitand" />
-        <Key word = "bitor" />
-
-        <Key word = "new" />
-        <Key word = "not" />
-        <Key word = "not_eq" />
-        <Key word = "or" />
-        <Key word = "or_eq" />
-        <Key word = "xor" />
-        <Key word = "xor_eq" />
-      </KeyWords>
-
-      <KeyWords name = "NameSpaces" bold="false" italic="false" color="Blue">
-        <Key word = "using" />
-        <Key word = "namespace" />
-      </KeyWords>
-
-      <KeyWords name = "Friends" bold="false" italic="false" color="Blue">
-        <Key word = "friend" />
-      </KeyWords>
-
       <KeyWords name = "AccessModifiers" bold="false" italic="false" color="Blue">
-        <Key word = "private" />
-        <Key word = "protected" />
+        <Key word = "forward" />
         <Key word = "public" />
-
-        <Key word = "const" />
-        <Key word = "volatile" />
-
-        <Key word = "static" />
+        <Key word = "stock" />
       </KeyWords>
 
       <KeyWords name = "Types" bold="false" italic="false" color="Blue">
         <Key word = "bool" />
-        <Key word = "char" />
-        <Key word = "unsigned" />
-        <Key word = "union" />
-        <Key word = "virtual" />
         <Key word = "double" />
         <Key word = "float" />
-        <Key word = "short" />
-        <Key word = "signed" />
-        <Key word = "void" />
-        <Key word = "class" />
+        <Key word = "Float" />
         <Key word = "new" />
-        <Key word = "forward" />
-
+        <Key word = "Text" />
+        
         <Key word = "enum" />
         <Key word = "struct" />
+        <Key word = "const" />
       </KeyWords>
 
       <KeyWords name = "Literals" bold="false" italic="false" color="Blue">
@@ -194,28 +131,7 @@
       </KeyWords>
 
       <KeyWords name = "KEYWORD1" bold="false" italic="false" color="Blue">
-        <Key word = "asm" />
-        <Key word = "auto" />
-        <Key word = "compl" />
-        <Key word = "mutable" />
-        <Key word = "const_cast" />
-        <Key word = "delete" />
-        <Key word = "dynamic_cast" />
-        <Key word = "explicit" />
-        <Key word = "export" />
-        <Key word = "extern" />
-        <Key word = "inline" />
-        <Key word = "int" />
-        <Key word = "long" />
-        <Key word = "operator" />
-        <Key word = "register" />
-        <Key word = "reinterpret_cast" />
         <Key word = "sizeof" />
-        <Key word = "static_cast" />
-        <Key word = "template" />
-        <Key word = "typedef" />
-        <Key word = "typeid" />
-        <Key word = "typename" />
       </KeyWords>
     </RuleSet>
 

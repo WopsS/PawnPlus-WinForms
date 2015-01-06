@@ -34,7 +34,7 @@ namespace PawnPlus
             output = new Output();
             findreplace = new FindReplace();
 
-            if (args.Count() != 0)
+            if (args.Count() > 0)
                 Application.Run(new Launcher(args[0]));
             else
                 Application.Run(new Launcher());

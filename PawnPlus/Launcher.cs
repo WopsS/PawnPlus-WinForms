@@ -59,23 +59,6 @@ namespace PawnPlus
             }
         }
 
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            //if (ApplicationStatusTypeFlag == true)
-            //{
-            //    if (this.Seconds == 5)
-            //    {
-            //        this.Seconds = 0;
-
-            //        ApplicationStatus.setApplicationStatus(ApplicationStatusType.Ready, false);
-            //    }
-
-            //    this.Seconds++;
-            //}
-            //else if (Program.main.IsDisposed == true)
-            //    Application.Exit();
-        }
-
         private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker.ReportProgress(1, "Checking for old version...");
@@ -101,10 +84,6 @@ namespace PawnPlus
             Thread.Sleep(100);
 
             BackgroundWorker.ReportProgress(100, "Complete");
-
-            while (true) // Do this because another way will give some exceptions.
-                if (Program.main.IsDisposed == true)
-                    Application.Exit();
         }
 
         private void BackgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)

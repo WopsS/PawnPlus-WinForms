@@ -31,9 +31,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Launcher));
             this.Panel = new System.Windows.Forms.Panel();
             this.ControlsPanel = new System.Windows.Forms.Panel();
+            this.PhotoLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.BackgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.UpdateBackgroundWorker = new System.ComponentModel.BackgroundWorker();
-            this.PhotoLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.Panel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -58,16 +58,6 @@
             this.ControlsPanel.Size = new System.Drawing.Size(512, 28);
             this.ControlsPanel.TabIndex = 1;
             // 
-            // BackgroundWorker
-            // 
-            this.BackgroundWorker.WorkerReportsProgress = true;
-            this.BackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BackgroundWorker_DoWork);
-            this.BackgroundWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.BackgroundWorker_ProgressChanged);
-            // 
-            // UpdateBackgroundWorker
-            // 
-            this.UpdateBackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.UpdateBackgroundWorker_DoWork);
-            // 
             // PhotoLayoutPanel
             // 
             this.PhotoLayoutPanel.BackColor = System.Drawing.Color.Transparent;
@@ -78,6 +68,16 @@
             this.PhotoLayoutPanel.Name = "PhotoLayoutPanel";
             this.PhotoLayoutPanel.Size = new System.Drawing.Size(512, 112);
             this.PhotoLayoutPanel.TabIndex = 0;
+            // 
+            // BackgroundWorker
+            // 
+            this.BackgroundWorker.WorkerReportsProgress = true;
+            this.BackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BackgroundWorker_DoWork);
+            this.BackgroundWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.BackgroundWorker_ProgressChanged);
+            // 
+            // UpdateBackgroundWorker
+            // 
+            this.UpdateBackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.UpdateBackgroundWorker_DoWork);
             // 
             // Launcher
             // 

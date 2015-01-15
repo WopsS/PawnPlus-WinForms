@@ -502,6 +502,9 @@ namespace PawnPlus
                 Program.findreplace.FindWhat.Select();
                 Program.findreplace.Show(this);
             }
+
+            if (this.CodeEditors[this.CodeEditorPath].CodeBox.ActiveTextAreaControl.TextArea.SelectionManager.HasSomethingSelected == true)
+                Program.findreplace.FindWhat.Text = this.CodeEditors[this.CodeEditorPath].CodeBox.ActiveTextAreaControl.TextArea.SelectionManager.SelectedText;
         }
 
         private void findNextToolStripMenuItem_Click(object sender, EventArgs e)
@@ -537,6 +540,9 @@ namespace PawnPlus
                 Program.findreplace.FindWhat2.Select();
                 Program.findreplace.Show(this);
             }
+
+            if (this.CodeEditors[this.CodeEditorPath].CodeBox.ActiveTextAreaControl.TextArea.SelectionManager.HasSomethingSelected == true)
+                Program.findreplace.FindWhat2.Text = this.CodeEditors[this.CodeEditorPath].CodeBox.ActiveTextAreaControl.TextArea.SelectionManager.SelectedText;
         }
 
         private void goToToolStripMenuItem_Click(object sender, EventArgs e)

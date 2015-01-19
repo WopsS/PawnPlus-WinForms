@@ -48,6 +48,14 @@ namespace PawnPlus
             BackgroundWorker.RunWorkerAsync();
         }
 
+        private void Launcher_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.Hide();
+
+            if (Program.main.CloseApplication == false)
+                e.Cancel = true;
+        }
+
         private void StatusPanel_Paint(object sender, PaintEventArgs e)
         {
             int Thickness = 1;
@@ -138,7 +146,6 @@ namespace PawnPlus
 
                 if (this.Version.CompareTo(NewVersion) < 0)
                 {
-
                     this.Invoke(new MethodInvoker(delegate
                     {
                         this.Height = 190;
@@ -161,10 +168,23 @@ namespace PawnPlus
 
                     while (this.downloadcontrol.webClient.IsBusy == true) { }
                 }
-                else if (this.Version.CompareTo(NewVersion) > 0 && isUserAction == true)
+                else if (this.Version.CompareTo(NewVersion) == 0 && isUserAction == true)
+                {
+                    this.Invoke(new MethodInvoker(delegate
+                    {
+                        this.ControlsPanel.Controls.Clear();
+                        this.Panel.Paint += new System.Windows.Forms.PaintEventHandler(this.StatusPanel_Paint);
+
+                         this.Hide();
+                    }));
+
                     MessageBox.Show("No update is available.");
+                }
             }
-            catch (Exception) { }
+            catch (Exception e) 
+            { 
+                MessageBox.Show(e.ToString()); 
+            }
         }
 
         private void PreparingProgram()

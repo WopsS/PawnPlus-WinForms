@@ -93,6 +93,7 @@
             this.Name = "Launcher";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PawnPlus - Launcher";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Launcher_FormClosing);
             this.Load += new System.EventHandler(this.Launcher_Load);
             this.Panel.ResumeLayout(false);
             this.ResumeLayout(false);

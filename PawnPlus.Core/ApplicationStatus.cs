@@ -23,17 +23,11 @@ namespace PawnPlus.Core
 
     public class ApplicationStatus
     {
-        private BackgroundWorker backgroundWorker;
         private StatusStrip statusStrip;
         private ToolStripLabel toolStripLabel;
 
         public ApplicationStatus(StatusStrip statusStrip, ToolStripLabel toolStripLabel)
         {
-            this.backgroundWorker = new BackgroundWorker();
-
-            this.backgroundWorker.DoWork += new DoWorkEventHandler(backgroundWorker_DoWork);
-            this.backgroundWorker.WorkerSupportsCancellation = true;
-
             this.statusStrip = statusStrip;
             this.toolStripLabel = toolStripLabel;
         }
@@ -49,11 +43,8 @@ namespace PawnPlus.Core
             this.statusStrip.BackColor = getStatusColor(NewStatus);
             this.toolStripLabel.Text = getStatusText(NewStatus);
 
-            if (backgroundWorker.IsBusy == true)
-                backgroundWorker.CancelAsync();
-
             if (StatusFlag == true)
-                backgroundWorker.RunWorkerAsync();
+                this.setApplicationStatus(ApplicationStatusType.Ready, false);
         }
 
         /// <summary>
@@ -96,13 +87,6 @@ namespace PawnPlus.Core
                 return Color.FromArgb(170, 0, 0);
 
             return Color.FromArgb(0, 122, 204);
-        }
-
-        private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            Thread.Sleep(5000);
-
-            this.setApplicationStatus(ApplicationStatusType.Ready, false);
         }
     }
 }

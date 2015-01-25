@@ -27,7 +27,7 @@ namespace PawnPlus.Core.Document
 
         public override string GetInsightData(int number)
         {
-            return (_insightText != null) ? _insightText[number] : string.Empty;
+            return (_insightText != null) ? _insightText[number] : String.Empty;
         }
 
         public override void SetupDataProvider(string fileName)

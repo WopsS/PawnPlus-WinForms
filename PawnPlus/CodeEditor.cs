@@ -58,7 +58,9 @@ namespace PawnPlus
                 dialogResult = MessageBox.Show(this, "Do you want to save your changes?", "Save changes", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
 
                 if (dialogResult == DialogResult.Yes)
+                {
                     Program.main.SaveFile(this.Text);
+                }
                 else if (dialogResult == DialogResult.Cancel)
                 {
                     e.Cancel = true;
@@ -87,9 +89,7 @@ namespace PawnPlus
 
         private void CodeBox_CompletionRequest(object sender, CompletionEventArgs e)
         {
-            // Disabled until all SA-MP function is added.
-
-            if (TextHelper.FindStringStart(this.CodeBox.Document, this.CodeBox.ActiveTextAreaControl.Caret.Offset) != -1 && TextHelper.FindStringStart(this.CodeBox.Document, this.CodeBox.ActiveTextAreaControl.Caret.Offset) != -1)
+            if (TextHelper.FindStringStart(this.CodeBox.Document, this.CodeBox.ActiveTextAreaControl.Caret.Offset) != -1 && TextHelper.FindStringEnd(this.CodeBox.Document, this.CodeBox.ActiveTextAreaControl.Caret.Offset) != -1)
                 return;
 
             if (e.Key == '\0')
@@ -102,7 +102,7 @@ namespace PawnPlus
 
         private void CodeBox_InsightRequest(object sender, InsightEventArgs e)
         {
-                this.CodeBox.ShowInsightWindow(new MethodInsight());
+            this.CodeBox.ShowInsightWindow(new MethodInsight());
         }
 
         private void UpdateFoldings_DoWork(object sender, DoWorkEventArgs e)

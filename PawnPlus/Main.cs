@@ -469,20 +469,33 @@ namespace PawnPlus
 
         private void cutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Cut cut = new Cut();
-            cut.Execute(this.CodeEditors[this.CodeEditorPath].CodeBox);
+            if (this.CodeEditors[this.CodeEditorPath].IsActivated == true)
+            {
+                Cut cut = new Cut();
+                cut.Execute(this.CodeEditors[this.CodeEditorPath].CodeBox);
+            }
         }
 
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Copy copy = new Copy();
-            copy.Execute(this.CodeEditors[this.CodeEditorPath].CodeBox);
+            if (this.CodeEditors[this.CodeEditorPath].IsActivated == true)
+            {
+                Copy copy = new Copy();
+                copy.Execute(this.CodeEditors[this.CodeEditorPath].CodeBox);
+            }
+            else if (Program.output.IsActivated == true)
+            {
+                Program.output.OutputBox.Copy();
+            }
         }
 
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Paste paste = new Paste();
-            paste.Execute(this.CodeEditors[this.CodeEditorPath].CodeBox);
+            if (this.CodeEditors[this.CodeEditorPath].IsActivated == true)
+            {
+                Paste paste = new Paste();
+                paste.Execute(this.CodeEditors[this.CodeEditorPath].CodeBox);
+            }
         }
 
         private void findToolStripMenuItem_Click(object sender, EventArgs e)
@@ -613,7 +626,9 @@ namespace PawnPlus
         private void compileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (this.CodeEditorPath == null)
+            {
                 return;
+            }
             else if (this.CodeEditors[this.CodeEditorPath].CodeBox.Document.TextLength == 0)
             {
                 Program.main.applicationStatus.setApplicationStatus(ApplicationStatusType.TextLength, true);
@@ -621,9 +636,13 @@ namespace PawnPlus
                 return;
             }
             else if (Path.GetExtension(this.CodeEditors[this.CodeEditorPath].FilePath) != ".pwn")
+            {
                 return;
+            }
             else if (CompilerWorker.IsBusy == true)
+            {
                 return;
+            }
 
             Program.output.setOutputText(String.Empty, true);
 
@@ -641,15 +660,12 @@ namespace PawnPlus
         {
             Process Compiling = new Process();
 
-            string TempFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Path.GetFileNameWithoutExtension(this.CodeEditorPath) + ".pwn");
             string AmxPath = Path.Combine(Path.GetDirectoryName(this.CodeEditorPath), Path.GetFileNameWithoutExtension(this.CodeEditorPath));
 
-            StreamWriter PFile = new StreamWriter(TempFile, false, Encoding.Default);
-            PFile.Write(this.CodeEditors[this.CodeEditorPath].CodeBox.Document.TextContent);
-            PFile.Close();
+            this.SaveAllFiles(false);
 
             Compiling.StartInfo.FileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Pawn", Properties.Settings.Default["CompilerName"].ToString());
-            Compiling.StartInfo.Arguments = String.Format("{0} {1} {2} {3}", Path.GetFileNameWithoutExtension(this.CodeEditorPath) + ".pwn", "-o\"" + AmxPath + "\"", "-;+ -(+", Properties.Settings.Default["CompilerArguments"].ToString());
+            Compiling.StartInfo.Arguments = String.Format("{0} {1} {2} {3}", "\"" + this.CodeEditorPath + "\"", "-o\"" + AmxPath + "\"", "-;+ -(+", Properties.Settings.Default["CompilerArguments"].ToString());
             Compiling.StartInfo.UseShellExecute = false;
             Compiling.StartInfo.CreateNoWindow = true;
             Compiling.StartInfo.RedirectStandardError = true;
@@ -661,9 +677,6 @@ namespace PawnPlus
                 this.ProjectInformation["CompileErrors"] = Compiling.StandardError.ReadToEnd();
                 this.ProjectInformation["Output"] = Compiling.StandardOutput.ReadToEnd();
             }
-
-            File.Delete(TempFile);
-
         }
 
         private void CompilerWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -955,13 +968,13 @@ namespace PawnPlus
         {
             if (this.CodeEditors.ContainsKey(FilePath) == false)
             {
-                string FileName = Path.GetFileName(FilePath);
+                string FileName = Path.GetFileName(FilePath), FileText = Encoding.GetEncoding(1252).GetString(File.ReadAllBytes(FilePath));
 
                 this.CodeEditors.Add(FilePath, new CodeEditor());
                 this.CodeEditors[FilePath].Text = FilePath;
                 this.CodeEditors[FilePath].DockHandler.TabText = FileName;
 
-                this.CodeEditors[FilePath].CodeBox.Document.TextContent = Encoding.GetEncoding(1252).GetString(File.ReadAllBytes(FilePath));
+                this.CodeEditors[FilePath].CodeBox.Document.TextContent = FileText;
 
                 this.CodeEditors[FilePath].InitialContent = this.CodeEditors[FilePath].CodeBox.Document.TextContent;
                 this.CodeEditors[FilePath].FilePath = FilePath;

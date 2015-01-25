@@ -70,7 +70,7 @@ namespace PawnPlus
 
             foreach (FileInfo File in directoryInfo.GetFiles())
             {
-                if (File.Extension == ".exe" || File.Extension == ".amx" || File.Extension == ".sql" || File.Extension == ".dll" || File.Extension == ".rec" || File.Extension == ".pawnplusproject" || File.Name == "server-readme.txt" || File.Name == "samp-license.txt")
+                if (File.Extension == ".exe" || File.Extension == ".amx" || File.Extension == ".sql" || File.Extension == ".dll" || File.Extension == ".rec" || File.Extension == ".so" || File.Extension == ".pawnplusproject" || File.Name == "server-readme.txt" || File.Name == "samp-license.txt")
                     continue;
 
                 if (File.Name.Contains(".inc"))

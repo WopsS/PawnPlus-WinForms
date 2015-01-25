@@ -205,6 +205,7 @@ FunctionEnd
 Section "Uninstall"
 
 	RMDir /r "$APPDATA\PawnPlus\"
+	RMDir /r "$LOCALAPPDATA\PawnPlus\"
 
 	Delete "$INSTDIR\Uninstall.exe"
 	

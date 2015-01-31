@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             WeifenLuo.WinFormsUI.Docking.DockPanelSkin dockPanelSkin1 = new WeifenLuo.WinFormsUI.Docking.DockPanelSkin();
             WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin autoHideStripSkin1 = new WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin();
@@ -107,6 +108,7 @@
             this.ProjectOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.FileOpenFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.CompilerWorker = new System.ComponentModel.BackgroundWorker();
+            this.MainTimer = new System.Windows.Forms.Timer(this.components);
             this.PrincipalPanel.SuspendLayout();
             this.ControlPanel.SuspendLayout();
             this.StatusBar.SuspendLayout();
@@ -691,6 +693,7 @@
             dockPaneStripToolWindowGradient1.InactiveTabGradient = tabGradient7;
             dockPaneStripSkin1.ToolWindowGradient = dockPaneStripToolWindowGradient1;
             dockPanelSkin1.DockPaneStripSkin = dockPaneStripSkin1;
+            this.dockPanel.Skin = dockPanelSkin1;
             this.dockPanel.TabIndex = 18;
             this.dockPanel.Theme = this.vS2012LightTheme;
             this.dockPanel.ActiveDocumentChanged += new System.EventHandler(this.dockPanel_ActiveDocumentChanged);
@@ -710,6 +713,10 @@
             this.CompilerWorker.WorkerReportsProgress = true;
             this.CompilerWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.CompilerWorker_DoWork);
             this.CompilerWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.CompilerWorker_RunWorkerCompleted);
+            // 
+            // MainTimer
+            // 
+            this.MainTimer.Tick += new System.EventHandler(this.MainTimer_Tick);
             // 
             // Main
             // 
@@ -811,6 +818,7 @@
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem checkForUpdatesToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.Timer MainTimer;
     }
 }
 

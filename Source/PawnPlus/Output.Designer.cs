@@ -33,12 +33,16 @@
             // 
             // OutputBox
             // 
+            this.OutputBox.BackColor = System.Drawing.SystemColors.Control;
+            this.OutputBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.OutputBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.OutputBox.Font = new System.Drawing.Font("Consolas", 9F);
             this.OutputBox.Location = new System.Drawing.Point(0, 0);
             this.OutputBox.Name = "OutputBox";
             this.OutputBox.Size = new System.Drawing.Size(661, 407);
             this.OutputBox.TabIndex = 0;
             this.OutputBox.Text = "";
+            this.OutputBox.DoubleClick += new System.EventHandler(this.OutputBox_DoubleClick);
             // 
             // Output
             // 
@@ -57,13 +61,6 @@
 
         #endregion
 
-        private System.Windows.Forms.RichTextBox OutputBox;
-
-
-
-
-
-
-
+        public System.Windows.Forms.RichTextBox OutputBox;
     }
 }

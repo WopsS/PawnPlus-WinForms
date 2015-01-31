@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PawnPlus.Core;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -27,7 +28,7 @@ namespace PawnPlus
             Program.main.outputToolStripMenuItem.Checked = false;
         }
 
-        public void setOutputText(string Text, bool canClear)
+        public void SetOutputText(string Text, bool canClear)
         {
             if(canClear == true)
                 this.OutputBox.Clear();
@@ -36,6 +37,7 @@ namespace PawnPlus
                 return;
 
             this.OutputBox.AppendText(Text);
+            this.OutputBox.ScrollToCaret();
         }
 
         private void OutputBox_DoubleClick(object sender, EventArgs e)
@@ -49,11 +51,11 @@ namespace PawnPlus
 
             Match match = Regex.Match(SelectedText, @"(.+)\((.+)\)\s:");
 
-            if (Program.main.CodeEditors.ContainsKey(match.Groups[1].ToString()) == true)
+            if (ApplicationInformations.Informations.CodeEditors.ContainsKey(match.Groups[1].ToString()) == true)
             {
-                Program.main.CodeEditors[match.Groups[1].ToString()].Activate();
-                Program.main.CodeEditors[match.Groups[1].ToString()].Select();
-                Program.main.CodeEditors[match.Groups[1].ToString()].Focus();
+                ApplicationInformations.Informations.CodeEditors[match.Groups[1].ToString()].Activate();
+                ApplicationInformations.Informations.CodeEditors[match.Groups[1].ToString()].Select();
+                ApplicationInformations.Informations.CodeEditors[match.Groups[1].ToString()].Focus();
             }
             else
             {
@@ -65,10 +67,15 @@ namespace PawnPlus
                 { }
             }
 
-            // TODO: Change to selected line error.
-
-            //if (Program.main.CodeEditors.ContainsKey(match.Groups[1].ToString()) == true)
-            //    Program.main.CodeEditors[match.Groups[1].ToString()].CodeBox.ActiveTextAreaControl.Caret.Position = new TextLocation(10000, Convert.ToInt32(match.Groups[2].ToString()) - 1);
+            if (ApplicationInformations.Informations.CodeEditors.ContainsKey(match.Groups[1].ToString()) == true)
+            {
+                try
+                {
+                    ApplicationInformations.Informations.CodeEditors[match.Groups[1].ToString()].ChangeCaretLine(Convert.ToInt32(match.Groups[2].ToString()) - 1);
+                }
+                catch (Exception)
+                { }
+            }
         }
     }
 }

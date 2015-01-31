@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PawnPlus.Core.Forms;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,6 +7,19 @@ using System.Text;
 
 namespace PawnPlus.Core
 {
+    public class CompileInformationsType
+    {
+        /// <summary>
+        /// Get or set informations about compile errors.
+        /// </summary>
+        public string Errors { get; set; }
+
+        /// <summary>
+        /// Get or set output.
+        /// </summary>
+        public string Output { get; set; }
+    }
+
     public class ProjectType
     {
         /// <summary>
@@ -17,6 +31,11 @@ namespace PawnPlus.Core
         /// Get or set project path.
         /// </summary>
         public string Path { get; set; }
+
+        /// <summary>
+        /// Get or set full path to file with extesion "pawnplusproject".
+        /// </summary>
+        public string FullPath { get; set; }
     }
 
     public class CurrentFileType
@@ -32,19 +51,14 @@ namespace PawnPlus.Core
         public string Path { get; set; }
 
         /// <summary>
+        /// Get or set total lines.
+        /// </summary>
+        public int Lines { get; set; }
+
+        /// <summary>
         /// Get or set last time when the file was changed.
         /// </summary>
-        public FileInfo LastWriteTime { get; set; }
-    }
-
-    public class CodeEditorsType
-    {
-        /// <summary>
-        /// Get or set informations about the code editor.
-        /// </summary>
-        public CurrentFileType Informations { get; set; }
-
-        public CodeEditor
+        public FileInfo fileInfo { get; set; }
     }
 
     public class InformationsType
@@ -57,12 +71,17 @@ namespace PawnPlus.Core
         /// <summary>
         /// Get or set informations about active code editor.
         /// </summary>
-        public CurrentFileType CurrentFile { get; set; }
+        public CodeEditor CurrentFile { get; set; }
 
         /// <summary>
         /// Contains all informations about all opened files.
         /// </summary>
-        public List<string> CodeEditors { get; set; }
+        public Dictionary<string, CodeEditor> CodeEditors { get; set; }
+
+        /// <summary>
+        /// Get or set informations about the last compile.
+        /// </summary>
+        public CompileInformationsType CompileInformations { get; set; }
 
         /// <summary>
         /// Class constructor! DON'T CALL IT!
@@ -70,8 +89,9 @@ namespace PawnPlus.Core
         public InformationsType()
         {
             Project = new ProjectType();
-            CurrentFile = new CurrentFileType();
-            CodeEditors = new List<string>();
+            CurrentFile = new CodeEditor();
+            CodeEditors = new Dictionary<string, CodeEditor>();
+            CompileInformations = new CompileInformationsType();
         }
     }
 

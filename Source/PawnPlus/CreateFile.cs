@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PawnPlus.Core;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -44,11 +45,11 @@ namespace PawnPlus
                     using (StreamReader reader = new StreamReader(resourceStream))
                     {
                         this.resourceStream = null;
-                        File.WriteAllText(Path.Combine(Path.Combine(Program.main.ProjectInformation["Path"], "gamemodes"), this.NameText.Text + ".pwn"), reader.ReadToEnd());
+                        File.WriteAllText(Path.Combine(Path.Combine(ApplicationInformations.Informations.Project.Path, "gamemodes"), this.NameText.Text + ".pwn"), reader.ReadToEnd());
                     }
 
-                    Program.projectexplorer.LoadDirectory(Program.projectexplorer.FileTree, Program.main.ProjectInformation["Path"]);
-                    Program.main.OpenFile(Path.Combine(Path.Combine(Program.main.ProjectInformation["Path"], "gamemodes"), this.NameText.Text + ".pwn"));
+                    Program.projectexplorer.LoadDirectory(Program.projectexplorer.FileTree, ApplicationInformations.Informations.Project.Path);
+                    Program.main.OpenFile(Path.Combine(Path.Combine(ApplicationInformations.Informations.Project.Path, "gamemodes"), this.NameText.Text + ".pwn"));
                 }
                 finally
                 {
@@ -66,11 +67,11 @@ namespace PawnPlus
                     using (StreamReader reader = new StreamReader(resourceStream))
                     {
                         this.resourceStream = null;
-                        File.WriteAllText(Path.Combine(Path.Combine(Program.main.ProjectInformation["Path"], "filterscripts"), this.NameText.Text + ".pwn"), reader.ReadToEnd());
+                        File.WriteAllText(Path.Combine(Path.Combine(ApplicationInformations.Informations.Project.Path, "filterscripts"), this.NameText.Text + ".pwn"), reader.ReadToEnd());
                     }
 
-                    Program.projectexplorer.LoadDirectory(Program.projectexplorer.FileTree, Program.main.ProjectInformation["Path"]);
-                    Program.main.OpenFile(Path.Combine(Path.Combine(Program.main.ProjectInformation["Path"], "filterscripts"), this.NameText.Text + ".pwn"));
+                    Program.projectexplorer.LoadDirectory(Program.projectexplorer.FileTree, ApplicationInformations.Informations.Project.Path);
+                    Program.main.OpenFile(Path.Combine(Path.Combine(ApplicationInformations.Informations.Project.Path, "filterscripts"), this.NameText.Text + ".pwn"));
                 }
                 finally
                 {

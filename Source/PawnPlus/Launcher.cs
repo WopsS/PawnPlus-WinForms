@@ -43,7 +43,7 @@ namespace PawnPlus
             this.ControlsPanel.Controls.Add(statuscontrol);
 
             this.Panel.Paint += new System.Windows.Forms.PaintEventHandler(this.StatusPanel_Paint);
-            Program.main.ProjectInformation.Add("Path", this.ProjectPath);
+            ApplicationInformations.Informations.Project.Path = this.ProjectPath;
 
             BackgroundWorker.RunWorkerAsync();
         }
@@ -189,9 +189,7 @@ namespace PawnPlus
 
         private void PreparingProgram()
         {
-            Program.main.MethodsList = MethodsProvider.InitializeMethods();
             Program.main.VersionLabel.Text = String.Format("Version {0} beta", this.Version);
-
             Program.main.applicationStatus.setApplicationStatus(ApplicationStatusType.Ready, false);
         }
 

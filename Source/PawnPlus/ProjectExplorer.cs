@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PawnPlus.Core;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -59,8 +60,8 @@ namespace PawnPlus
         {
             TreeNode ParentDirectoryNode;
 
-            if (directoryInfo.Name == Path.GetFileName(Program.main.ProjectInformation["Path"]))
-                ParentDirectoryNode = new TreeNode(Program.main.ProjectInformation["Name"], 0, 0);
+            if (directoryInfo.Name == Path.GetFileName(ApplicationInformations.Informations.Project.Path))
+                ParentDirectoryNode = new TreeNode(ApplicationInformations.Informations.Project.Name, 0, 0);
             else
                 ParentDirectoryNode = new TreeNode(directoryInfo.Name, 1, 1);
 
@@ -93,13 +94,15 @@ namespace PawnPlus
 
         private void FileTree_DoubleClick(object sender, EventArgs e)
         {
-            if (File.Exists(this.FileTree.SelectedNode.Name) == true && Program.main.CodeEditors.ContainsKey(this.FileTree.SelectedNode.Name) == false)
-                Program.main.OpenFile(this.FileTree.SelectedNode.Name);
-            else if (Program.main.CodeEditors.ContainsKey(this.FileTree.SelectedNode.Name) && Program.main.dockPanel.Documents.Contains(Program.main.CodeEditors[this.FileTree.SelectedNode.Name]) == true)
+            if (File.Exists(this.FileTree.SelectedNode.Name) == true && ApplicationInformations.Informations.CodeEditors.ContainsKey(this.FileTree.SelectedNode.Name) == false)
             {
-                Program.main.CodeEditors[this.FileTree.SelectedNode.Name].Activate();
-                Program.main.CodeEditors[this.FileTree.SelectedNode.Name].Select();
-                Program.main.CodeEditors[this.FileTree.SelectedNode.Name].Focus();
+                Program.main.OpenFile(this.FileTree.SelectedNode.Name);
+            }
+            else if (ApplicationInformations.Informations.CodeEditors.ContainsKey(this.FileTree.SelectedNode.Name) && Program.main.dockPanel.Documents.Contains(ApplicationInformations.Informations.CodeEditors[this.FileTree.SelectedNode.Name]) == true)
+            {
+                ApplicationInformations.Informations.CodeEditors[this.FileTree.SelectedNode.Name].Activate();
+                ApplicationInformations.Informations.CodeEditors[this.FileTree.SelectedNode.Name].Select();
+                ApplicationInformations.Informations.CodeEditors[this.FileTree.SelectedNode.Name].Focus();
             }
         }
 

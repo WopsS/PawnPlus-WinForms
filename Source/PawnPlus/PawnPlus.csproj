@@ -70,7 +70,8 @@
     <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Resources\Icons\Icon.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -145,6 +146,11 @@
       <DependentUpon>ProjectExplorer.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="UserControls\Launcher\DownloadControl.cs">
       <SubType>UserControl</SubType>
@@ -193,14 +199,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <EmbeddedResource Include="UserControls\Launcher\DownloadControl.resx">
       <DependentUpon>DownloadControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -218,12 +219,10 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <EmbeddedResource Include="Resources\DefaultFilterscript.pwn" />
+    <EmbeddedResource Include="Resources\DefaultGameMode.pwn" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Icons\Icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
@@ -248,33 +247,14 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Icons\text_16xLG_icon.ico" />
-    <None Include="Resources\Images\PawnPlus.png" />
-    <None Include="Resources\Images\MinimizeButton.png" />
-    <None Include="Resources\Images\MaximizeButton.png" />
-    <None Include="Resources\Images\LauncherImage.png" />
-    <None Include="Resources\Images\Icon.png" />
-    <None Include="Resources\Images\gear_32xLG.png" />
-    <None Include="Resources\Images\folder_Open_32xLG.png" />
-    <None Include="Resources\Images\folder_Closed_32xLG.png" />
-    <None Include="Resources\Images\FileGroup_10135_32x.png" />
-    <None Include="Resources\Images\field_16xLG.png" />
-    <None Include="Resources\Images\application_32xLG.png" />
-    <None Include="Resources\Icons\Error.ico" />
-    <EmbeddedResource Include="Resources\DefaultGameMode.pwn" />
-    <None Include="Resources\Icons\FileGroup_10135_32x_icon.ico" />
-    <None Include="Resources\Icons\gear_32xLG_icon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\DefaultLayout.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\PawnPlus.Core\PawnPlus.Core.csproj">
       <Project>{343c96bb-371a-4bd6-b3b0-2b2ff792b726}</Project>
       <Name>PawnPlus.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\DefaultLayout.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

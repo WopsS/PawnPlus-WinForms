@@ -30,9 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DigitalRune.Windows.TextEditor">
-      <HintPath>..\PawnPlus\Resources\Plugins\DigitalRune.Windows.TextEditor.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -46,10 +43,6 @@
   <ItemGroup>
     <Compile Include="ApplicationStatus.cs" />
     <Compile Include="Color Tables\MenuStripColorTable.cs" />
-    <Compile Include="Document\CodeCompletionDataProvider.cs" />
-    <Compile Include="Document\CustomResourceSyntaxModeProvider.cs" />
-    <Compile Include="Document\FoldingStrategy.cs" />
-    <Compile Include="Document\MethodInsight.cs" />
     <Compile Include="Document\MethodsProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

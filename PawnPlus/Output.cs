@@ -1,5 +1,4 @@
-﻿using DigitalRune.Windows.TextEditor.Document;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -66,8 +65,10 @@ namespace PawnPlus
                 { }
             }
 
-            if (Program.main.CodeEditors.ContainsKey(match.Groups[1].ToString()) == true)
-                Program.main.CodeEditors[match.Groups[1].ToString()].CodeBox.ActiveTextAreaControl.Caret.Position = new TextLocation(10000, Convert.ToInt32(match.Groups[2].ToString()) - 1);
+            // TODO: Change to selected line error.
+
+            //if (Program.main.CodeEditors.ContainsKey(match.Groups[1].ToString()) == true)
+            //    Program.main.CodeEditors[match.Groups[1].ToString()].CodeBox.ActiveTextAreaControl.Caret.Position = new TextLocation(10000, Convert.ToInt32(match.Groups[2].ToString()) - 1);
         }
     }
 }

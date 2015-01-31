@@ -16,7 +16,6 @@ namespace PawnPlus
         public static Main main;
         public static ProjectExplorer projectexplorer;
         public static Output output;
-        public static FindReplace findreplace;
         public static CreateProject createproject;
         public static CreateFile createfile;
         public static Options options;
@@ -32,7 +31,6 @@ namespace PawnPlus
             main = new Main();
             projectexplorer = new ProjectExplorer();
             output = new Output();
-            findreplace = new FindReplace();
 
             if (args.Count() > 0)
                 Application.Run(new Launcher(args[0]));

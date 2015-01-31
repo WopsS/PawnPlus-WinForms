@@ -1,7 +1,4 @@
-﻿using DigitalRune.Windows.TextEditor;
-using DigitalRune.Windows.TextEditor.Actions;
-using DigitalRune.Windows.TextEditor.Document;
-using PawnPlus.Core;
+﻿using PawnPlus.Core;
 using PawnPlus.Core.Document;
 using System;
 using System.Collections.Generic;
@@ -63,9 +60,6 @@ namespace PawnPlus
             }
 
             #endregion
-
-            Program.findreplace.Show(this);
-            Program.findreplace.Hide();
 
             menuStrip.Renderer = new ToolStripProfessionalRenderer(new MenuStripColorTable());
 
@@ -459,115 +453,52 @@ namespace PawnPlus
 
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.CodeEditors[this.CodeEditorPath].CodeBox.Undo();
+            // TODO: Undo.
         }
 
         private void redoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.CodeEditors[this.CodeEditorPath].CodeBox.Redo();
+            // TODO: Redo.
         }
 
         private void cutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (this.CodeEditors[this.CodeEditorPath].IsActivated == true)
-            {
-                Cut cut = new Cut();
-                cut.Execute(this.CodeEditors[this.CodeEditorPath].CodeBox);
-            }
+            // TODO: Cut.
         }
 
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (this.CodeEditors[this.CodeEditorPath].IsActivated == true)
-            {
-                Copy copy = new Copy();
-                copy.Execute(this.CodeEditors[this.CodeEditorPath].CodeBox);
-            }
-            else if (Program.output.IsActivated == true)
-            {
-                Program.output.OutputBox.Copy();
-            }
+            // TODO: Copy.
         }
 
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (this.CodeEditors[this.CodeEditorPath].IsActivated == true)
-            {
-                Paste paste = new Paste();
-                paste.Execute(this.CodeEditors[this.CodeEditorPath].CodeBox);
-            }
+            // TODO: Paste.
         }
 
         private void findToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (Program.findreplace.IsDisposed == true)
-                Program.findreplace = new FindReplace();
-
-            if (Program.findreplace.Visible == true)
-            {
-                Program.findreplace.TabControl.SelectedIndex = 0;
-                Program.findreplace.FindWhat.Select();
-                Program.findreplace.Activate();
-            }
-            else
-            {
-                Program.findreplace.TabControl.SelectedIndex = 0;
-                Program.findreplace.FindWhat.Select();
-                Program.findreplace.Show(this);
-            }
-
-            if (this.CodeEditors[this.CodeEditorPath].CodeBox.ActiveTextAreaControl.TextArea.SelectionManager.HasSomethingSelected == true)
-                Program.findreplace.FindWhat.Text = this.CodeEditors[this.CodeEditorPath].CodeBox.ActiveTextAreaControl.TextArea.SelectionManager.SelectedText;
+            // TODO: Find.
         }
 
         private void findNextToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (Program.findreplace.IsDisposed == true)
-                Program.findreplace = new FindReplace();
-
-            this.CodeEditors[this.CodeEditorPath].FindNextMatch(Program.findreplace.FindWhat.Text, true, Program.findreplace.casesensitive.Checked, Program.findreplace.matchwholeword.Checked);
+            // TODO: Find next.
         }
 
         private void findPrevToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (Program.findreplace.IsDisposed == true)
-                Program.findreplace = new FindReplace();
-
-            this.CodeEditors[this.CodeEditorPath].FindPrevious(Program.findreplace.FindWhat.Text, true, Program.findreplace.casesensitive.Checked, Program.findreplace.matchwholeword.Checked);
+            // TODO: Find previous.
         }
 
         private void replaceToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (Program.findreplace.IsDisposed == true)
-                Program.findreplace = new FindReplace();
-
-            if (Program.findreplace.Visible == true)
-            {
-                Program.findreplace.TabControl.SelectedIndex = 1;
-                Program.findreplace.FindWhat2.Select();
-                Program.findreplace.Activate();
-            }
-            else
-            {
-                Program.findreplace.TabControl.SelectedIndex = 1;
-                Program.findreplace.FindWhat2.Select();
-                Program.findreplace.Show(this);
-            }
-
-            if (this.CodeEditors[this.CodeEditorPath].CodeBox.ActiveTextAreaControl.TextArea.SelectionManager.HasSomethingSelected == true)
-                Program.findreplace.FindWhat2.Text = this.CodeEditors[this.CodeEditorPath].CodeBox.ActiveTextAreaControl.TextArea.SelectionManager.SelectedText;
+            // TODO: Replace.
         }
 
         private void goToToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            GoToLine gotoline = new GoToLine();
-
-            gotoline.CurrentLineText.Text = (this.CodeEditors[this.CodeEditorPath].CodeBox.ActiveTextAreaControl.TextArea.Caret.Line + 1).ToString();
-            gotoline.MaximumLineText.Text = this.CodeEditors[this.CodeEditorPath].CodeBox.Document.TotalNumberOfLines.ToString();
-            gotoline.GoToLineText.Text = (this.CodeEditors[this.CodeEditorPath].CodeBox.ActiveTextAreaControl.TextArea.Caret.Line + 1).ToString();
-            gotoline.GoToLineText.Select();
-
-            gotoline.ShowDialog(this.CodeEditors[this.CodeEditorPath]);
+            // TODO: Go to line.
         }
 
         private void projectToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -629,12 +560,12 @@ namespace PawnPlus
             {
                 return;
             }
-            else if (this.CodeEditors[this.CodeEditorPath].CodeBox.Document.TextLength == 0)
-            {
-                Program.main.applicationStatus.setApplicationStatus(ApplicationStatusType.TextLength, true);
+            //else if (this.CodeEditors[this.CodeEditorPath].CodeBox.Document.TextLength == 0)
+            //{
+            //    Program.main.applicationStatus.setApplicationStatus(ApplicationStatusType.TextLength, true);
 
-                return;
-            }
+            //    return;
+            //}
             else if (Path.GetExtension(this.CodeEditors[this.CodeEditorPath].FilePath) != ".pwn")
             {
                 return;
@@ -723,10 +654,9 @@ namespace PawnPlus
                 this.saveToolStripMenuItem.Text = String.Format("Save {0}", Path.GetFileName(CodeEditorPath));
                 this.savesAsToolStripMenuItem.Text = String.Format("Save {0} As...", Path.GetFileName(CodeEditorPath));
 
-                IDocument document = this.CodeEditors[this.CodeEditorPath].CodeBox.Document;
-                Caret caret = this.CodeEditors[this.CodeEditorPath].CodeBox.ActiveTextAreaControl.Caret;
+                // TODO: Change line and column informations.
 
-                this.ChangeLineColumn(caret.Line, caret.Column);
+                //this.ChangeLineColumn(caret.Line, caret.Column);
             }
             else
             {
@@ -974,9 +904,8 @@ namespace PawnPlus
                 this.CodeEditors[FilePath].Text = FilePath;
                 this.CodeEditors[FilePath].DockHandler.TabText = FileName;
 
-                this.CodeEditors[FilePath].CodeBox.Document.TextContent = FileText;
+                // TODO: Append file content in text editor.
 
-                this.CodeEditors[FilePath].InitialContent = this.CodeEditors[FilePath].CodeBox.Document.TextContent;
                 this.CodeEditors[FilePath].FilePath = FilePath;
                 this.CodeEditors[FilePath].checkInitialContent();
 
@@ -989,8 +918,7 @@ namespace PawnPlus
 
                 this.CodeEditors[FilePath].Show(this.dockPanel, DockState.Document);
 
-                // Update folds.
-                this.CodeEditors[FilePath].CodeBox.Document.FoldingManager.UpdateFolds(null, null);
+                // TODO: Update folds.
             }
         }
 
@@ -1000,8 +928,9 @@ namespace PawnPlus
         /// <param name="Path">Path to the file.</param>
         public void SaveFile(string Path)
         {
-            File.WriteAllText(Path, this.CodeEditors[Path].CodeBox.Document.TextContent, Encoding.GetEncoding(1252));
-            this.CodeEditors[Path].InitialContent = this.CodeEditors[Path].CodeBox.Document.TextContent;
+            // TODO: Save file.
+
+            //File.WriteAllText(Path, this.CodeEditors[Path].CodeBox.Document.TextContent, Encoding.GetEncoding(1252));
             this.CodeEditors[Path].checkInitialContent();
         }
 

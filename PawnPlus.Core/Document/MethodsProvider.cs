@@ -16,7 +16,6 @@ namespace PawnPlus.Core.Document
     public class MethodsProvider
     {
         public static Dictionary<string, MethodInformations> Methods = new Dictionary<string, MethodInformations>();
-        private static int i = 0;
 
         /// <summary>
         /// Return all SA-MP functions.
@@ -25,13 +24,13 @@ namespace PawnPlus.Core.Document
         public static Dictionary<string, MethodInformations> InitializeMethods()
         {
             Methods.Add("AddMenuItem", new MethodInformations
-{
-    Description = "Adds an item to a specified menu.",
-    Parameters = new string[]
-                {
-                    "Menu:menuid", "column", "title[]", 
-                }
-});
+            {
+                Description = "Adds an item to a specified menu.",
+                Parameters = new string[]
+                            {
+                                "Menu:menuid", "column", "title[]", 
+                            }
+            });
 
             Methods.Add("AddPlayerClass", new MethodInformations
             {

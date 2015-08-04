@@ -29,6 +29,11 @@ namespace PawnPlus
             outputForm.Show(this.dockPanel, DockState.DockBottom);
         }
 
+        private void Main_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.ExitThread(); // Close the entire application.
+        }
+
         #region Main functions
 
         private Rectangle[] Regions = new Rectangle[10];

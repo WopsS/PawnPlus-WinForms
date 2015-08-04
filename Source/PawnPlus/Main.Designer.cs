@@ -607,6 +607,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Main";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
             this.Load += new System.EventHandler(this.Main_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Main_Paint);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Main_MouseDown);

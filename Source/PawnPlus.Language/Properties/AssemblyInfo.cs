@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("PawnPlus.Core")]
+[assembly: AssemblyTitle("PawnPlus.Language")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("PawnPlus.Core")]
+[assembly: AssemblyProduct("PawnPlus.Language")]
 [assembly: AssemblyCopyright("Copyright © Dima Octavian (WopsS) 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("c8f4a17c-2ff7-49f3-ad5f-21234f54a52d")]
+[assembly: Guid("0e913473-949c-4ec6-80f4-965ed670b30c")]
 
 // Version information for an assembly consists of the following four values:
 //

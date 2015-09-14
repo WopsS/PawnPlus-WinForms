@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PawnPlus.Language;
+using System;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace PawnPlus
@@ -14,10 +16,24 @@ namespace PawnPlus
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Launcher launcher = new Launcher();
-            launcher.Show();
+            try
+            {
+                // TODO: Get user language.
+                LanguageManager.SetLanguage(new CultureInfo("en-US"));
+            }
+            catch (Exception)
+            {
+                LanguageManager.SetLanguage(new CultureInfo("en-US"));
+            }
 
-            Application.Run();
+            Launcher launcher = new Launcher();
+            Application.Run(launcher);
+
+            if (launcher.ClosedSafe() == true)
+            {
+                launcher.Dispose();
+                Application.Run(new Main());
+            }
         }
     }
 }

@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("PawnPlus")]
-[assembly: AssemblyCopyright("Copyright © Dima Octavian 2015")]
+[assembly: AssemblyCopyright("Copyright © Dima Octavian (WopsS) 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

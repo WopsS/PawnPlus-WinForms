@@ -1,4 +1,5 @@
 ﻿using PawnPlus.CodeEditor;
+using PawnPlus.Language;
 using System;
 using System.Drawing;
 using System.Text;
@@ -27,6 +28,8 @@ namespace PawnPlus
             projectExplorer.Show(this.dockPanel, DockState.DockLeft);
             editorForm.Show(this.dockPanel, DockState.Document);
             outputForm.Show(this.dockPanel, DockState.DockBottom);
+
+            // TODO: Translate entire application.
         }
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)

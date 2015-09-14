@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using PawnPlus.Core;
 using PawnPlus.Core.UserControls.Launcher;
+using PawnPlus.Language;
 using SharpCompress.Archive;
 using SharpCompress.Archive.Zip;
 using SharpCompress.Common;
@@ -16,8 +17,9 @@ namespace PawnPlus
 {
     public partial class Launcher : Form
     {
-        private StatusControl statusControl;
+        private bool IsSafe = false;
         private DownloadControl downloadControl;
+        private StatusControl statusControl;
 
         public Launcher()
         {
@@ -37,7 +39,7 @@ namespace PawnPlus
 
         private void Launcher_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if(Application.OpenForms.Count == 0)
+            if(this.IsSafe == false) // Close the application if the form isn't closed manually.
             {
                 Application.ExitThread();
             }
@@ -55,19 +57,19 @@ namespace PawnPlus
 
         private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            this.backgroundWorker.ReportProgress(1, "Checking for old version...");
+            this.backgroundWorker.ReportProgress(1, LanguageManager.GetText(LanguageEnum.LauncherOldVersionChecking));
             Thread.Sleep(100);
 
             if (Properties.Settings.Default.UpgradeRequired == true)
             {
-                this.backgroundWorker.ReportProgress(5, "Obtain settings from the old version...");
+                this.backgroundWorker.ReportProgress(5, LanguageManager.GetText(LanguageEnum.LauncherOldVersionSettings));
 
                 Properties.Settings.Default.Upgrade();
                 Properties.Settings.Default.UpgradeRequired = false;
                 Properties.Settings.Default.Save();
             }
 
-            this.backgroundWorker.ReportProgress(10, "Checking files...");
+            this.backgroundWorker.ReportProgress(10, LanguageManager.GetText(LanguageEnum.LauncherFilesChecking));
             Thread.Sleep(100);
 
             string JSONString = string.Empty;
@@ -83,6 +85,7 @@ namespace PawnPlus
             {
                 Directory.CreateDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Pawn", "include"));
 
+                FileInfo fileInfo = null;
                 string TemporaryFolder = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()), OurPAWNFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Pawn");
                 string SAMPZIPPath = Path.Combine(TemporaryFolder, applicationJSON.SAMPZIPName), CompilerZIPPath = Path.Combine(TemporaryFolder, applicationJSON.CompilerZIPName);
                 Directory.CreateDirectory(TemporaryFolder);
@@ -96,7 +99,7 @@ namespace PawnPlus
                 downloadHandler.DownloadProgressChanged += DownloadHandler_DownloadProgressChanged;
                 downloadHandler.DownloadProgressComplete += DownloadHandler_DownloadProgressComplete;
 
-                this.backgroundWorker.ReportProgress(15, "Downloading server files...");
+                this.backgroundWorker.ReportProgress(15, LanguageManager.GetText(LanguageEnum.LauncherFilesDownloadingServer));
                 Thread.Sleep(500);
 
                 this.Invoke(new MethodInvoker(delegate
@@ -109,10 +112,11 @@ namespace PawnPlus
                 }));
 
                 downloadHandler.Start(); // Download SA-MP files.
+                fileInfo = new FileInfo(SAMPZIPPath);
 
-                if (File.Exists(SAMPZIPPath) == true)
+                if (File.Exists(SAMPZIPPath) == true && fileInfo.Length > 0)
                 {
-                    this.backgroundWorker.ReportProgress(15, "Download completed. Unpacking server files...");
+                    this.backgroundWorker.ReportProgress(15, LanguageManager.GetText(LanguageEnum.LauncherFilesUnpackingServer));
                     Thread.Sleep(1000);
 
                     ZipArchive Archive = ZipArchive.Open(SAMPZIPPath);
@@ -127,7 +131,7 @@ namespace PawnPlus
 
                     Archive.Dispose();
 
-                    this.backgroundWorker.ReportProgress(15, "Unpacking server files completed. Proceed with copying files...");
+                    this.backgroundWorker.ReportProgress(15, LanguageManager.GetText(LanguageEnum.LauncherFilesCopyingServer));
                     Thread.Sleep(1000);
 
                     // Let's copy server includes.
@@ -138,16 +142,16 @@ namespace PawnPlus
                         File.Copy(CurrentFile, Path.Combine(OurPAWNFolder, "include", Path.GetFileName(CurrentFile)), true);
                     }
 
-                    this.backgroundWorker.ReportProgress(15, "Server files copied.");
+                    this.backgroundWorker.ReportProgress(15, LanguageManager.GetText(LanguageEnum.LauncherFilesCopiedServer));
                     Thread.Sleep(1000);
                 }
                 else
                 {
-                    this.backgroundWorker.ReportProgress(15, "Server files couldn't be downloaded. Proceed with compiler files...");
+                    this.backgroundWorker.ReportProgress(15, LanguageManager.GetText(LanguageEnum.LauncherFilesErrorServer));
                     Thread.Sleep(2000);
                 }
 
-                this.backgroundWorker.ReportProgress(15, "Downloading compiler files...");
+                this.backgroundWorker.ReportProgress(15, LanguageManager.GetText(LanguageEnum.LauncherFilesDownloadingCompiler));
                 Thread.Sleep(500);
 
                 this.Invoke(new MethodInvoker(delegate
@@ -160,10 +164,11 @@ namespace PawnPlus
                 }));
 
                 downloadHandler.Start(); // Download ZEEX compiler files.
+                fileInfo = new FileInfo(CompilerZIPPath);
 
-                if (File.Exists(CompilerZIPPath) == true)
+                if (File.Exists(CompilerZIPPath) == true && fileInfo.Length > 0)
                 {
-                    this.backgroundWorker.ReportProgress(15, "Download completed. Unpacking compiler files...");
+                    this.backgroundWorker.ReportProgress(15, LanguageManager.GetText(LanguageEnum.LauncherFilesUnpackingCompiler));
                     Thread.Sleep(1000);
 
                     ZipArchive Archive = ZipArchive.Open(CompilerZIPPath);
@@ -178,19 +183,19 @@ namespace PawnPlus
 
                     Archive.Dispose();
 
-                    this.backgroundWorker.ReportProgress(15, "Unpacking compiler files completed. Proceed with copying files...");
+                    this.backgroundWorker.ReportProgress(15, LanguageManager.GetText(LanguageEnum.LauncherFilesCopyingCompiler));
                     Thread.Sleep(1000);
 
                     // Let's copy PAWN files.
                     File.Copy(Path.Combine(TemporaryFolder, CompilerZIPPath.Remove(CompilerZIPPath.Length - 4), "bin", "pawnc.dll"), Path.Combine(OurPAWNFolder, Path.GetFileName("pawnc.dll")), true);
                     File.Copy(Path.Combine(TemporaryFolder, CompilerZIPPath.Remove(CompilerZIPPath.Length - 4), "bin", "pawncc.exe"), Path.Combine(OurPAWNFolder, Path.GetFileName("pawncc.exe")), true);
 
-                    this.backgroundWorker.ReportProgress(15, "Compiler files copied.");
+                    this.backgroundWorker.ReportProgress(15, LanguageManager.GetText(LanguageEnum.LauncherFilesCopiedCompiler));
                     Thread.Sleep(1000);
                 }
                 else
                 {
-                    this.backgroundWorker.ReportProgress(15, "Compiler files couldn't be downloaded. Proceed with program startup...");
+                    this.backgroundWorker.ReportProgress(15, LanguageManager.GetText(LanguageEnum.LauncherFilesErrorCompiler));
                     Thread.Sleep(2000);
                 }
 
@@ -203,18 +208,22 @@ namespace PawnPlus
 
             Thread.Sleep(50);
 
-            this.backgroundWorker.ReportProgress(100, "Starting up...");
+            this.backgroundWorker.ReportProgress(99, LanguageManager.GetText(LanguageEnum.LauncherStartingUp));
+            Thread.Sleep(100);
+
+            this.backgroundWorker.ReportProgress(100);
         }
 
         private void backgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            this.statusControl.statusLabel.Text = e.UserState.ToString();
+            if (e.UserState != null && e.UserState.ToString().Length > 0)
+            {
+                this.statusControl.statusLabel.Text = e.UserState.ToString();
+            }
 
             if(e.ProgressPercentage == 100)
             {
-                Main mainForm = new Main();
-                mainForm.Show();
-
+                this.IsSafe = true;
                 this.Close();
             }
         }
@@ -237,6 +246,11 @@ namespace PawnPlus
                 this.controlsPanel.Controls.Clear();
                 this.controlsPanel.Controls.Add(this.statusControl);
             }));
+        }
+
+        public bool ClosedSafe()
+        {
+            return this.IsSafe;
         }
     }
 }

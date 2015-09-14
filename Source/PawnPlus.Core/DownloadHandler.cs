@@ -61,7 +61,9 @@ namespace PawnPlus.Core
         public void Start()
         {
             if (this.LinksQueue.Count == 0)
+            {
                 return;
+            }
 
             this.manualResetEvent.Reset();
             Tuple<Uri, string> CurrentLink = this.LinksQueue.Dequeue();
@@ -90,8 +92,9 @@ namespace PawnPlus.Core
             if (e.Cancelled == true)
             {
                 File.Delete(this.currentSavePath);
-
                 this.DownloadProgressComplete(this, new DownloadHandlerEventArgs("Canceled", -1));
+
+                return;
             }
 
             this.DownloadProgressComplete(this, new DownloadHandlerEventArgs("Completed", 100));

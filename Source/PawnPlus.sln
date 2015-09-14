@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PawnPlus.CodeEditor", "Pawn
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PawnPlus.Core", "PawnPlus.Core\PawnPlus.Core.csproj", "{C8F4A17C-2FF7-49F3-AD5F-21234F54A52D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PawnPlus.Language", "PawnPlus.Language\PawnPlus.Language.csproj", "{0E913473-949C-4EC6-80F4-965ED670B30C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{C8F4A17C-2FF7-49F3-AD5F-21234F54A52D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8F4A17C-2FF7-49F3-AD5F-21234F54A52D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8F4A17C-2FF7-49F3-AD5F-21234F54A52D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E913473-949C-4EC6-80F4-965ED670B30C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E913473-949C-4EC6-80F4-965ED670B30C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E913473-949C-4EC6-80F4-965ED670B30C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E913473-949C-4EC6-80F4-965ED670B30C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

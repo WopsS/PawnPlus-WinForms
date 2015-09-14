@@ -133,6 +133,10 @@
       <Project>{c8f4a17c-2ff7-49f3-ad5f-21234f54a52d}</Project>
       <Name>PawnPlus.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PawnPlus.Language\PawnPlus.Language.csproj">
+      <Project>{0e913473-949c-4ec6-80f4-965ed670b30c}</Project>
+      <Name>PawnPlus.Language</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\CloseButton.png" />

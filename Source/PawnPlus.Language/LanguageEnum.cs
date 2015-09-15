@@ -31,6 +31,69 @@ namespace PawnPlus.Language
         [Description("Launcher_Old_Version_Settings")]
         LauncherOldVersionSettings,
         [Description("Launcher_Starting_Up")]
-        LauncherStartingUp
+        LauncherStartingUp,
+
+        [Description("Main_Menu_Item_Build")]
+        MainMenuItemBuild,
+        [Description("Main_Menu_Item_Build_Compile")]
+        MainMenuItemBuildCompile,
+        [Description("Main_Menu_Item_Build_Compile_Options")]
+        MainMenuItemBuildCompileOptions,
+
+        [Description("Main_Menu_Item_Edit")]
+        MainMenuItemEdit,
+        [Description("Main_Menu_Item_Edit_Copy")]
+        MainMenuItemEditCopy,
+        [Description("Main_Menu_Item_Edit_Cut")]
+        MainMenuItemEditCut,
+        [Description("Main_Menu_Item_Edit_Find")]
+        MainMenuItemEditFind,
+        [Description("Main_Menu_Item_Edit_Find_Next")]
+        MainMenuItemEditFindNext,
+        [Description("Main_Menu_Item_Edit_Find_Previous")]
+        MainMenuItemEditFindPrevious,
+        [Description("Main_Menu_Item_Edit_Go_To")]
+        MainMenuItemEditGoTo,
+        [Description("Main_Menu_Item_Edit_Paste")]
+        MainMenuItemEditPaste,
+        [Description("Main_Menu_Item_Edit_Redo")]
+        MainMenuItemEditRedo,
+        [Description("Main_Menu_Item_Edit_Replace")]
+        MainMenuItemEditReplace,
+        [Description("Main_Menu_Item_Edit_Undo")]
+        MainMenuItemEditUndo,
+
+        [Description("Main_Menu_Item_File")]
+        MainMenuItemFile,
+        [Description("Main_Menu_Item_File_Close")]
+        MainMenuItemFileClose,
+        [Description("Main_Menu_Item_File_Close_Project")]
+        MainMenuItemFileCloseProject,
+        [Description("Main_Menu_Item_File_Exit")]
+        MainMenuItemFileExit,
+        [Description("Main_Menu_Item_File_File")]
+        MainMenuItemFileFile,
+        [Description("Main_Menu_Item_File_New")]
+        MainMenuItemFileNew,
+        [Description("Main_Menu_Item_File_Open")]
+        MainMenuItemFileOpen,
+        [Description("Main_Menu_Item_File_Project")]
+        MainMenuItemFileProject,
+        [Description("Main_Menu_Item_File_Save")]
+        MainMenuItemFileSave,
+        [Description("Main_Menu_Item_File_Save_All")]
+        MainMenuItemFileSaveAll,
+        [Description("Main_Menu_Item_File_Save_As")]
+        MainMenuItemFileSaveAs,
+
+        [Description("Main_Version")]
+        MainVersion,
+        [Description("Menu_Column")]
+        MenuColumn,
+        [Description("Menu_Line")]
+        MenuLine,
+
+        [Description("Status_Ready")]
+        StatusReady,
     }
 }

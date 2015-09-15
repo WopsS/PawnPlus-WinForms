@@ -17,7 +17,7 @@ namespace PawnPlus
 {
     public partial class Launcher : Form
     {
-        private bool IsSafe = false;
+        private bool isSafe = false;
         private DownloadControl downloadControl;
         private StatusControl statusControl;
 
@@ -39,7 +39,7 @@ namespace PawnPlus
 
         private void Launcher_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if(this.IsSafe == false) // Close the application if the form isn't closed manually.
+            if(this.isSafe == false) // Close the application if the form isn't closed manually.
             {
                 Application.ExitThread();
             }
@@ -223,7 +223,7 @@ namespace PawnPlus
 
             if(e.ProgressPercentage == 100)
             {
-                this.IsSafe = true;
+                this.isSafe = true;
                 this.Close();
             }
         }
@@ -250,7 +250,7 @@ namespace PawnPlus
 
         public bool ClosedSafe()
         {
-            return this.IsSafe;
+            return this.isSafe;
         }
     }
 }

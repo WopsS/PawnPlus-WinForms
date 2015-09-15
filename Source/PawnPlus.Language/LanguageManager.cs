@@ -17,7 +17,7 @@ namespace PawnPlus.Language
             {
                 SetLanguage(cultureInfo);
             }
-
+            
             return resourceManager.GetString(GetDescription(Item));
         }
 

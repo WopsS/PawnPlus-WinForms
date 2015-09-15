@@ -1,4 +1,5 @@
 ﻿using PawnPlus.Language;
+using PawnPlus.Properties;
 using System;
 using System.Globalization;
 using System.Windows.Forms;
@@ -18,8 +19,7 @@ namespace PawnPlus
 
             try
             {
-                // TODO: Get user language.
-                LanguageManager.SetLanguage(new CultureInfo("en-US"));
+                LanguageManager.SetLanguage(new CultureInfo(Settings.Default.Language));
             }
             catch (Exception)
             {

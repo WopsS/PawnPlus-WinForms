@@ -27,7 +27,7 @@ namespace PawnPlus.Core
         public event DownloadHandlerDelegate DownloadProgressChanged = delegate { }, DownloadProgressComplete = delegate { };
 
         private WebClient webClient = new WebClient();
-        private Queue<Tuple<Uri, string>> LinksQueue = new Queue<Tuple<Uri, string>>();
+        private Queue<Tuple<Uri, string>> linksQueue = new Queue<Tuple<Uri, string>>();
         private string currentSavePath = string.Empty;
         private ManualResetEvent manualResetEvent = new ManualResetEvent(false);
 
@@ -35,7 +35,7 @@ namespace PawnPlus.Core
         {
             foreach(Tuple<Uri, string> Value in Values)
             {
-                this.LinksQueue.Enqueue(Value);
+                this.linksQueue.Enqueue(Value);
             }
 
             this.webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(this.DownloadProgressChangedEventHandler);
@@ -44,7 +44,7 @@ namespace PawnPlus.Core
 
         public DownloadHandler(Uri URL, string SavePath)
         {
-            this.LinksQueue.Enqueue(new Tuple<Uri, string>(URL, SavePath));
+            this.linksQueue.Enqueue(new Tuple<Uri, string>(URL, SavePath));
 
             this.webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(this.DownloadProgressChangedEventHandler);
             this.webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(this.DownloadProgressCompleteEventHandler);
@@ -60,13 +60,13 @@ namespace PawnPlus.Core
 
         public void Start()
         {
-            if (this.LinksQueue.Count == 0)
+            if (this.linksQueue.Count == 0)
             {
                 return;
             }
 
             this.manualResetEvent.Reset();
-            Tuple<Uri, string> CurrentLink = this.LinksQueue.Dequeue();
+            Tuple<Uri, string> CurrentLink = this.linksQueue.Dequeue();
 
             this.currentSavePath = CurrentLink.Item2;
             this.webClient.DownloadFileAsync(CurrentLink.Item1, CurrentLink.Item2);

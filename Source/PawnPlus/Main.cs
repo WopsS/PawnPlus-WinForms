@@ -1,7 +1,11 @@
 ﻿using PawnPlus.CodeEditor;
+using PawnPlus.Core;
 using PawnPlus.Language;
 using System;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
@@ -11,29 +15,51 @@ namespace PawnPlus
     public partial class Main : Form
     {
         private ProjectExplorer projectExplorer = new ProjectExplorer();
-        private Editor editorForm = new Editor();
         private Output outputForm = new Output();
+
+        private DeserializeDockContent dockContentLayout;
+        private string layoutPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PawnPlus", "Layout.xml");
 
         public Main()
         {
             InitializeComponent();
 
             this.MaximumSize = Screen.PrimaryScreen.WorkingArea.Size;
+            this.dockContentLayout = new DeserializeDockContent(this.GetLayout);
         }
 
         private void Main_Load(object sender, EventArgs e)
         {
-            editorForm.codeEditor.Encoding = Encoding.ASCII;
+            if (File.Exists(this.layoutPath) == true)
+            {
+                this.dockPanel.LoadFromXml(this.layoutPath, dockContentLayout);
+            }
+            else
+            {
+                Stream xmlStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("PawnPlus.Resources.DefaultLayout.xml");
+                this.dockPanel.LoadFromXml(xmlStream, dockContentLayout);
+                xmlStream.Close();
+            }
 
-            projectExplorer.Show(this.dockPanel, DockState.DockLeft);
-            editorForm.Show(this.dockPanel, DockState.Document);
-            outputForm.Show(this.dockPanel, DockState.DockBottom);
-
-            // TODO: Translate entire application.
+            StatusManager.Construct(this.statusBar);
+            CEManager.Construct(this.dockPanel);
+            this.SetLanguageText();
         }
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (Directory.Exists(Path.GetDirectoryName(this.layoutPath)) == false) // Check if path exist, if not create it.
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(this.layoutPath));
+            }
+
+            if (File.Exists(this.layoutPath) == true) // Check if the "Layout.xml" already exist, if it exist let's delete it.
+            {
+                File.Delete(this.layoutPath);
+            }
+
+            dockPanel.SaveAsXml(this.layoutPath);
+
             Application.ExitThread(); // Close the entire application.
         }
 
@@ -335,6 +361,156 @@ namespace PawnPlus
             }
         }
 
+        public DeserializeDockContent DockContentLayout1
+        {
+            get
+            {
+                return dockContentLayout;
+            }
+
+            set
+            {
+                this.dockContentLayout = value;
+            }
+        }
+
+        public DeserializeDockContent DockContentLayout2
+        {
+            get
+            {
+                return dockContentLayout;
+            }
+
+            set
+            {
+                this.dockContentLayout = value;
+            }
+        }
+
         #endregion
+
+        private void dockPanel_ActiveDocumentChanged(object sender, EventArgs e)
+        {
+            if (this.dockPanel.ActiveDocument != null)
+            {
+                CEManager.SetActiveDocument((Editor)this.dockPanel.ActiveDocument.DockHandler.Form);
+            }
+        }
+
+        private void newProjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // TODO: Create new project.
+        }
+
+        private void newFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // TODO: Create new file.
+        }
+
+        private void openProjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // TODO: Open project.
+        }
+
+        private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = this.openFileDialog.ShowDialog();
+
+            if (dialogResult == DialogResult.OK)
+            {
+                CEManager.OpenFile(this.openFileDialog.FileName);
+            }
+        }
+
+        private void closeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void closeProjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void savesAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void saveAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private IDockContent GetLayout(string LayoutString)
+        {
+            if (LayoutString != typeof(Editor).ToString())
+            {
+                if (LayoutString == typeof(ProjectExplorer).ToString())
+                {
+                    return this.projectExplorer;
+                }
+                else if (LayoutString == typeof(Output).ToString())
+                {
+                    return this.outputForm;
+                }
+            }
+
+            return null;
+        }
+
+        private void SetLanguageText()
+        {
+            // File tool strip menu item.
+            this.fileToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemFile);
+            this.newToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemFileNew);
+            this.newProjectToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemFileProject);
+            this.newFileToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemFileFile);
+            this.openToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemFileOpen);
+            this.openProjectToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemFileProject);
+            this.openFileToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemFileFile);
+            this.closeToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemFileClose);
+            this.closeProjectToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemFileCloseProject);
+            this.saveToolStripMenuItem.Text = string.Format(LanguageManager.GetText(LanguageEnum.MainMenuItemFileSave), "Selected Item");
+            this.savesAsToolStripMenuItem.Text = string.Format(LanguageManager.GetText(LanguageEnum.MainMenuItemFileSaveAs), "Selected Item");
+            this.saveAllToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemFileSaveAll);
+
+            // Edit tool strip menu item.
+            this.editToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemEdit);
+            this.undoToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemEditUndo);
+            this.redoToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemEditRedo);
+            this.cutToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemEditCut);
+            this.copyToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemEditCopy);
+            this.pasteToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemEditPaste);
+            this.findToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemEditFind);
+            this.findNextToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemEditFindNext);
+            this.findPrevToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemEditFindPrevious);
+            this.replaceToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemEditReplace);
+            this.goToToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemEditGoTo);
+
+            // Build tool strip menu item.
+            this.buildToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemBuild);
+            this.compileToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemBuildCompile);
+            this.compileOptionsToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemBuildCompileOptions);
+
+            // Status bar.
+            this.statusLabel.Text = LanguageManager.GetText(LanguageEnum.StatusReady);
+
+            FileVersionInfo Program = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location);
+            this.versionLabel.Text = string.Format(LanguageManager.GetText(LanguageEnum.MainVersion), Program.ProductMajorPart, Program.ProductMinorPart, Program.ProductBuildPart);
+
+            this.lineLabel.Text = string.Format(LanguageManager.GetText(LanguageEnum.MenuLine), 0);
+            this.columnLabel.Text = string.Format(LanguageManager.GetText(LanguageEnum.MenuColumn), 0);
+        }
     }
 }

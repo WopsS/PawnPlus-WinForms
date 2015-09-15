@@ -159,4 +159,96 @@
   <data name="Launcher_Starting_Up" xml:space="preserve">
     <value>Starting up...</value>
   </data>
+  <data name="Main_Menu_Item_Build" xml:space="preserve">
+    <value>Build</value>
+  </data>
+  <data name="Main_Menu_Item_Build_Compile" xml:space="preserve">
+    <value>Compile</value>
+  </data>
+  <data name="Main_Menu_Item_Build_Compile_Options" xml:space="preserve">
+    <value>Compile Options</value>
+  </data>
+  <data name="Main_Menu_Item_Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Main_Menu_Item_Edit_Copy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="Main_Menu_Item_Edit_Cut" xml:space="preserve">
+    <value>Cut</value>
+  </data>
+  <data name="Main_Menu_Item_Edit_Find" xml:space="preserve">
+    <value>Find</value>
+  </data>
+  <data name="Main_Menu_Item_Edit_Find_Next" xml:space="preserve">
+    <value>Find Next</value>
+  </data>
+  <data name="Main_Menu_Item_Edit_Find_Previous" xml:space="preserve">
+    <value>Find Prev</value>
+  </data>
+  <data name="Main_Menu_Item_Edit_Go_To" xml:space="preserve">
+    <value>Go To</value>
+  </data>
+  <data name="Main_Menu_Item_Edit_Paste" xml:space="preserve">
+    <value>Paste</value>
+  </data>
+  <data name="Main_Menu_Item_Edit_Redo" xml:space="preserve">
+    <value>Redo</value>
+  </data>
+  <data name="Main_Menu_Item_Edit_Replace" xml:space="preserve">
+    <value>Replace</value>
+  </data>
+  <data name="Main_Menu_Item_Edit_Undo" xml:space="preserve">
+    <value>Undo</value>
+  </data>
+  <data name="Main_Menu_Item_File" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="Main_Menu_Item_File_Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Main_Menu_Item_File_Close_Project" xml:space="preserve">
+    <value>Close Project</value>
+  </data>
+  <data name="Main_Menu_Item_File_Exit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="Main_Menu_Item_File_File" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="Main_Menu_Item_File_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Main_Menu_Item_File_Open" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="Main_Menu_Item_File_Project" xml:space="preserve">
+    <value>Project</value>
+  </data>
+  <data name="Main_Menu_Item_File_Save" xml:space="preserve">
+    <value>Save {0}</value>
+    <comment>e.g.: Save gamemode.pwn</comment>
+  </data>
+  <data name="Main_Menu_Item_File_Save_All" xml:space="preserve">
+    <value>Save All</value>
+  </data>
+  <data name="Main_Menu_Item_File_Save_As" xml:space="preserve">
+    <value>Save {0} As...</value>
+    <comment>e.g.: Save gamemode.pwn As...</comment>
+  </data>
+  <data name="Main_Version" xml:space="preserve">
+    <value>Version {0}.{1}.{2}</value>
+    <comment>e.g.: Version 1.0.0</comment>
+  </data>
+  <data name="Menu_Column" xml:space="preserve">
+    <value>Column {0}</value>
+    <comment>e.g.: Column 1</comment>
+  </data>
+  <data name="Menu_Line" xml:space="preserve">
+    <value>Line {0}</value>
+    <comment>e.g.: Line 1</comment>
+  </data>
+  <data name="Status_Ready" xml:space="preserve">
+    <value>Ready</value>
+  </data>
 </root>

@@ -90,6 +90,7 @@
     <Compile Include="ProjectExplorer.Designer.cs">
       <DependentUpon>ProjectExplorer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Project\ProjectManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Launcher.resx">
       <DependentUpon>Launcher.cs</DependentUpon>
@@ -152,6 +153,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\gear_32xLG.png" />
+    <None Include="Resources\folder_Open_32xLG.png" />
+    <None Include="Resources\folder_Closed_32xLG.png" />
+    <None Include="Resources\FileGroup_10135_32x.png" />
+    <None Include="Resources\application_32xLG.png" />
     <EmbeddedResource Include="Resources\DefaultLayout.xml" />
     <None Include="Resources\PawnPlus.png" />
   </ItemGroup>

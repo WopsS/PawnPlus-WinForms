@@ -11,13 +11,13 @@ namespace PawnPlus.Core
 {
     public class DownloadHandlerEventArgs
     {
-        public string downloadedText { get; private set; }
-        public int progressPercentage { get; private set; }
+        public string DownloadedText { get; private set; }
+        public int ProgressPercentage { get; private set; }
 
-        public DownloadHandlerEventArgs(string DownloadedText, int ProgressPercentage)
+        public DownloadHandlerEventArgs(string downloadedText, int progressPercentage)
         {
-            this.downloadedText = DownloadedText;
-            this.progressPercentage = ProgressPercentage;
+            this.DownloadedText = downloadedText;
+            this.ProgressPercentage = progressPercentage;
         }
     }
 
@@ -31,25 +31,37 @@ namespace PawnPlus.Core
         private string currentSavePath = string.Empty;
         private ManualResetEvent manualResetEvent = new ManualResetEvent(false);
 
-        public DownloadHandler(Tuple<Uri, string>[] Values)
+        /// <summary>
+        /// Class constructor.
+        /// </summary>
+        /// <param name="values">Values to be downloaded.</param>
+        public DownloadHandler(Tuple<Uri, string>[] values)
         {
-            foreach(Tuple<Uri, string> Value in Values)
+            foreach(Tuple<Uri, string> value in values)
             {
-                this.linksQueue.Enqueue(Value);
+                this.linksQueue.Enqueue(value);
             }
 
             this.webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(this.DownloadProgressChangedEventHandler);
             this.webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(this.DownloadProgressCompleteEventHandler);
         }
 
-        public DownloadHandler(Uri URL, string SavePath)
+        /// <summary>
+        /// Class constructor.
+        /// </summary>
+        /// <param name="url">URL of the file.</param>
+        /// <param name="savePath">Path where to save it.</param>
+        public DownloadHandler(Uri url, string savePath)
         {
-            this.linksQueue.Enqueue(new Tuple<Uri, string>(URL, SavePath));
+            this.linksQueue.Enqueue(new Tuple<Uri, string>(url, savePath));
 
             this.webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(this.DownloadProgressChangedEventHandler);
             this.webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(this.DownloadProgressCompleteEventHandler);
         }
 
+        /// <summary>
+        /// Class destructor.
+        /// </summary>
         ~DownloadHandler()
         {
             this.webClient.DownloadProgressChanged -= new DownloadProgressChangedEventHandler(this.DownloadProgressChangedEventHandler);
@@ -58,6 +70,9 @@ namespace PawnPlus.Core
             this.webClient.Dispose();
         }
 
+        /// <summary>
+        /// Download the first file and remove it from the queue.
+        /// </summary>
         public void Start()
         {
             if (this.linksQueue.Count == 0)
@@ -73,10 +88,14 @@ namespace PawnPlus.Core
             this.manualResetEvent.WaitOne();
         }
 
+        /// <summary>
+        /// Cancel file downloading.
+        /// </summary>
         public void Cancel()
         {
             this.webClient.CancelAsync();
         }
+
 
         private void DownloadProgressChangedEventHandler(object sender, DownloadProgressChangedEventArgs e)
         {

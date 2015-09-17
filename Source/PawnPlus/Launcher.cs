@@ -232,9 +232,9 @@ namespace PawnPlus
         {
             this.Invoke(new MethodInvoker(delegate
             {
-                this.downloadControl.SetProcessValue(e.progressPercentage);
-                this.downloadControl.SetPercentage(e.progressPercentage);
-                this.downloadControl.SetDownloadedMegaBytes(e.downloadedText);
+                this.downloadControl.SetProcessValue(e.ProgressPercentage);
+                this.downloadControl.SetPercentage(e.ProgressPercentage);
+                this.downloadControl.SetDownloadedMegaBytes(e.DownloadedText);
             }));
         }
 
@@ -248,6 +248,10 @@ namespace PawnPlus
             }));
         }
 
+        /// <summary>
+        /// Check is the application is closed by our code and not an exception.
+        /// </summary>
+        /// <returns>Returns true if it is closed by our code, false otherwise.</returns>
         public bool ClosedSafe()
         {
             return this.isSafe;

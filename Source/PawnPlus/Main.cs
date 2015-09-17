@@ -1,12 +1,12 @@
 ﻿using PawnPlus.CodeEditor;
 using PawnPlus.Core;
 using PawnPlus.Language;
+using PawnPlus.Project;
 using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
-using System.Text;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 
@@ -41,8 +41,9 @@ namespace PawnPlus
                 xmlStream.Close();
             }
 
-            StatusManager.Construct(this.statusBar);
             CEManager.Construct(this.dockPanel);
+            StatusManager.Construct(this.statusBar, this.statusLabel, this.lineLabel, this.columnLabel);
+
             this.SetLanguageText();
         }
 
@@ -393,7 +394,23 @@ namespace PawnPlus
         {
             if (this.dockPanel.ActiveDocument != null)
             {
-                CEManager.SetActiveDocument((Editor)this.dockPanel.ActiveDocument.DockHandler.Form);
+                Editor editor = (Editor)this.dockPanel.ActiveDocument.DockHandler.Form;
+
+                CEManager.SetActiveDocument(editor);
+                StatusManager.SetLineColumn(CEManager.ActiveDocument.codeEditor.TextArea.Caret.Line, CEManager.ActiveDocument.codeEditor.TextArea.Caret.Column);
+
+                this.saveToolStripMenuItem.Text = string.Format(LanguageManager.GetText(LanguageEnum.MainMenuItemFileSave), Path.GetFileName(editor.FilePath));
+                this.savesAsToolStripMenuItem.Text = string.Format(LanguageManager.GetText(LanguageEnum.MainMenuItemFileSaveAs), Path.GetFileName(editor.FilePath));
+
+                this.SetMenuStatus(true, false);
+            }
+            else
+            {
+                this.SetMenuStatus(false, false);
+                StatusManager.SetLineColumn(0, 0);
+
+                this.saveToolStripMenuItem.Text = string.Format(LanguageManager.GetText(LanguageEnum.MainMenuItemFileSave), "Selected Item");
+                this.savesAsToolStripMenuItem.Text = string.Format(LanguageManager.GetText(LanguageEnum.MainMenuItemFileSaveAs), "Selected Item");
             }
         }
 
@@ -409,11 +426,24 @@ namespace PawnPlus
 
         private void openProjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // TODO: Open project.
+            this.openFileDialog.Filter = string.Format("PawnPlus Project|*{0}", ProjectManager.Extension);
+
+            DialogResult dialogResult = this.openFileDialog.ShowDialog();
+
+            if (dialogResult == DialogResult.OK)
+            {
+                if (ProjectManager.Open(this.openFileDialog.FileName) == true) // Is the project opened properly?
+                {
+                    this.SetMenuStatus(true, true, true);
+                    this.FormName.Text = "PawnPlus - " + ProjectManager.Name;
+                }
+            }
         }
 
         private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            this.openFileDialog.Filter = "PAWN File|*.pwn|Include file|*.inc";
+
             DialogResult dialogResult = this.openFileDialog.ShowDialog();
 
             if (dialogResult == DialogResult.OK)
@@ -429,7 +459,8 @@ namespace PawnPlus
 
         private void closeProjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            ProjectManager.Close();
+            this.SetMenuStatus(false, true);
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -452,15 +483,20 @@ namespace PawnPlus
             this.Close();
         }
 
-        private IDockContent GetLayout(string LayoutString)
+        /// <summary>
+        /// Get layout of the program.
+        /// </summary>
+        /// <param name="layoutString">Path to the layout file.</param>
+        /// <returns>Returns <see cref="IDockContent"/>.</returns>
+        private IDockContent GetLayout(string layoutString)
         {
-            if (LayoutString != typeof(Editor).ToString())
+            if (layoutString != typeof(Editor).ToString())
             {
-                if (LayoutString == typeof(ProjectExplorer).ToString())
+                if (layoutString == typeof(ProjectExplorer).ToString())
                 {
                     return this.projectExplorer;
                 }
-                else if (LayoutString == typeof(Output).ToString())
+                else if (layoutString == typeof(Output).ToString())
                 {
                     return this.outputForm;
                 }
@@ -469,6 +505,9 @@ namespace PawnPlus
             return null;
         }
 
+        /// <summary>
+        /// Set language for whole application buttons or menu.
+        /// </summary>
         private void SetLanguageText()
         {
             // File tool strip menu item.
@@ -484,7 +523,7 @@ namespace PawnPlus
             this.saveToolStripMenuItem.Text = string.Format(LanguageManager.GetText(LanguageEnum.MainMenuItemFileSave), "Selected Item");
             this.savesAsToolStripMenuItem.Text = string.Format(LanguageManager.GetText(LanguageEnum.MainMenuItemFileSaveAs), "Selected Item");
             this.saveAllToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemFileSaveAll);
-
+            
             // Edit tool strip menu item.
             this.editToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemEdit);
             this.undoToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemEditUndo);
@@ -511,6 +550,43 @@ namespace PawnPlus
 
             this.lineLabel.Text = string.Format(LanguageManager.GetText(LanguageEnum.MenuLine), 0);
             this.columnLabel.Text = string.Format(LanguageManager.GetText(LanguageEnum.MenuColumn), 0);
+        }
+
+        /// <summary>
+        /// Change enable value for <see cref="MenuStrip"/> items.
+        /// </summary>
+        /// <param name="isEnabled">If it will be true, then MenuStrip items will be enabled.</param>
+        /// <param name="isProject">If it will be true, then some items for project will be enabled.</param>
+        private void SetMenuStatus(bool isEnabled, bool isProject, bool justProjectItems = false)
+        {
+            if (isProject == true)
+            {
+                this.newFileToolStripMenuItem.Enabled = isEnabled;
+                this.closeProjectToolStripMenuItem.Enabled = isEnabled;
+            }
+
+            if (justProjectItems == true)
+            {
+                return;
+            }
+
+            this.closeToolStripMenuItem.Enabled = isEnabled;
+            this.saveToolStripMenuItem.Enabled = isEnabled;
+            this.savesAsToolStripMenuItem.Enabled = isEnabled;
+            this.saveAllToolStripMenuItem.Enabled = isEnabled;
+
+            this.undoToolStripMenuItem.Enabled = isEnabled;
+            this.redoToolStripMenuItem.Enabled = isEnabled;
+            this.cutToolStripMenuItem.Enabled = isEnabled;
+            this.copyToolStripMenuItem.Enabled = isEnabled;
+            this.pasteToolStripMenuItem.Enabled = isEnabled;
+            this.findToolStripMenuItem.Enabled = isEnabled;
+            this.findNextToolStripMenuItem.Enabled = isEnabled;
+            this.findPrevToolStripMenuItem.Enabled = isEnabled;
+            this.replaceToolStripMenuItem.Enabled = isEnabled;
+            this.goToToolStripMenuItem.Enabled = isEnabled;
+
+            this.compileToolStripMenuItem.Enabled = isEnabled;
         }
     }
 }

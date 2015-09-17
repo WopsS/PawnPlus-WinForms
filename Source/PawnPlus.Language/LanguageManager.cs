@@ -11,16 +11,25 @@ namespace PawnPlus.Language
         private static CultureInfo cultureInfo;
         private static ResourceManager resourceManager;
 
-        public static string GetText(LanguageEnum Item)
+        /// <summary>
+        /// Get a language text from resources.
+        /// </summary>
+        /// <param name="item">Language item to get.</param>
+        /// <returns>Returns text.</returns>
+        public static string GetText(LanguageEnum item)
         {
             if (cultureInfo.CompareInfo != Thread.CurrentThread.CurrentCulture.CompareInfo)
             {
                 SetLanguage(cultureInfo);
             }
             
-            return resourceManager.GetString(GetDescription(Item));
+            return resourceManager.GetString(GetDescription(item));
         }
 
+        /// <summary>
+        /// Set language culture for the application.
+        /// </summary>
+        /// <param name="cultureInfo"><see cref="CultureInfo"/> to be set.</param>
         public static void SetLanguage(CultureInfo cultureInfo)
         {
             LanguageManager.cultureInfo = cultureInfo;
@@ -30,9 +39,14 @@ namespace PawnPlus.Language
             Thread.CurrentThread.CurrentUICulture = cultureInfo;
         }
 
-        private static string GetDescription(LanguageEnum Item)
+        /// <summary>
+        /// Get description for an enum value.
+        /// </summary>
+        /// <param name="item">Value of the enum.</param>
+        /// <returns>Returns description of the value.</returns>
+        private static string GetDescription(LanguageEnum item)
         {
-            FieldInfo fieldInfo = Item.GetType().GetField(Item.ToString());
+            FieldInfo fieldInfo = item.GetType().GetField(item.ToString());
             DescriptionAttribute[] descriptionAttribute = (DescriptionAttribute[])fieldInfo.GetCustomAttributes(typeof(DescriptionAttribute), false);
 
             if (descriptionAttribute.Length > 0)
@@ -40,7 +54,7 @@ namespace PawnPlus.Language
                 return descriptionAttribute[0].Description;
             }
 
-            return Item.ToString();
+            return item.ToString();
         }
     }
 }

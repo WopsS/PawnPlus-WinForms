@@ -514,7 +514,7 @@
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(260, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(244, 17);
             this.toolStripStatusLabel1.Spring = true;
             // 
             // versionLabel
@@ -527,7 +527,7 @@
             // toolStripStatusLabel3
             // 
             this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
-            this.toolStripStatusLabel3.Size = new System.Drawing.Size(260, 17);
+            this.toolStripStatusLabel3.Size = new System.Drawing.Size(244, 17);
             this.toolStripStatusLabel3.Spring = true;
             // 
             // lineLabel
@@ -607,7 +607,6 @@
             // openFileDialog
             // 
             this.openFileDialog.FileName = "openFileDialog";
-            this.openFileDialog.Filter = "PAWN File|*.pwn|Include file|*.inc";
             // 
             // Main
             // 
@@ -683,19 +682,19 @@
         public System.Windows.Forms.ToolStripMenuItem findPrevToolStripMenuItem;
         public System.Windows.Forms.ToolStripMenuItem replaceToolStripMenuItem;
         public System.Windows.Forms.ToolStripMenuItem goToToolStripMenuItem;
-        public System.Windows.Forms.StatusStrip statusBar;
-        public System.Windows.Forms.ToolStripStatusLabel statusLabel;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
-        public System.Windows.Forms.ToolStripStatusLabel versionLabel;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
-        public System.Windows.Forms.ToolStripStatusLabel lineLabel;
-        public System.Windows.Forms.ToolStripStatusLabel columnLabel;
-        public WeifenLuo.WinFormsUI.Docking.DockPanel dockPanel;
         private WeifenLuo.WinFormsUI.Docking.VS2012LightTheme vS2012LightTheme;
         private System.Windows.Forms.ToolStripMenuItem buildToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem compileToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem compileOptionsToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
+        private System.Windows.Forms.StatusStrip statusBar;
+        private System.Windows.Forms.ToolStripStatusLabel statusLabel;
+        private System.Windows.Forms.ToolStripStatusLabel versionLabel;
+        private System.Windows.Forms.ToolStripStatusLabel lineLabel;
+        private System.Windows.Forms.ToolStripStatusLabel columnLabel;
+        private WeifenLuo.WinFormsUI.Docking.DockPanel dockPanel;
     }
 }

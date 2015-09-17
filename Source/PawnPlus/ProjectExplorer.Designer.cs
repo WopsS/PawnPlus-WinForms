@@ -38,6 +38,10 @@
             this.projectFiles.Name = "projectFiles";
             this.projectFiles.Size = new System.Drawing.Size(386, 424);
             this.projectFiles.TabIndex = 0;
+            this.projectFiles.AfterCollapse += new System.Windows.Forms.TreeViewEventHandler(this.projectFiles_AfterCollapse);
+            this.projectFiles.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.projectFiles_AfterExpand);
+            this.projectFiles.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.projectFiles_AfterSelect);
+            this.projectFiles.DoubleClick += new System.EventHandler(this.projectFiles_DoubleClick);
             // 
             // ProjectExplorer
             // 
@@ -45,6 +49,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(386, 424);
             this.Controls.Add(this.projectFiles);
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "ProjectExplorer";
             this.Text = "Project explorer";
             this.Load += new System.EventHandler(this.ProjectExplorer_Load);

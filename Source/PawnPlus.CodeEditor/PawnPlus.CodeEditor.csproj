@@ -71,6 +71,15 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\PAWNSyntax.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PawnPlus.Core\PawnPlus.Core.csproj">
+      <Project>{c8f4a17c-2ff7-49f3-ad5f-21234f54a52d}</Project>
+      <Name>PawnPlus.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,31 +1,85 @@
 ﻿using PawnPlus.CodeEditor;
 using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Windows;
 using System.Windows.Forms;
 using System.Xml;
-using WeifenLuo.WinFormsUI.Docking;
 
 namespace PawnPlus.Project
 {
     internal static class ProjectManager
     {
         public static readonly string Extension = ".pawnplusproject";
+        public static bool IsOpen { get; private set; }
         public static string Name { get; private set; }
         public static string Path { get; private set; }
 
         private static TreeView treeView;
+        private static string xmlPath = string.Empty;
 
         public static void Construct(TreeView treeView)
         {
             ProjectManager.treeView = treeView;
         }
 
-        public static void Close()
+        /// <summary>
+        /// Close all project files.
+        /// </summary>
+        /// <returns>Returns <c>true</c> if cancel button is not pressed, <c>false</c> otherwise.</returns>
+        public static bool Close()
         {
-            treeView.Nodes.Clear();
+            bool cancelPressed = CEManager.CloseAll(true);
 
-            // TODO: Close all files and ask for save if needed.
+            if (cancelPressed == false)
+            {
+                try
+                {
+                    treeView.Nodes.Clear();
+
+                    XmlDocument xmlFile = new XmlDocument();
+                    xmlFile.LoadXml(File.ReadAllText(xmlPath));
+
+                    XmlNode xmlDocument = xmlFile.DocumentElement;
+
+                    // Let's delete the old 'File' nodes.
+                    XmlNodeList xmlNodes = xmlFile.SelectNodes("//File");
+                    
+                    foreach(XmlNode xmlNode in xmlNodes)
+                    {
+                        xmlDocument.RemoveChild(xmlNode);
+                    }
+
+                    // Let's create new 'File' nodes.
+                    XmlNode xmlElement;
+
+                    foreach (Editor editor in CEManager.ToList().Values)
+                    {
+                        xmlElement = xmlFile.CreateElement("File");
+                        xmlElement.InnerText = editor.FilePath;
+
+                        if (editor == CEManager.ActiveDocument)
+                        {
+                            XmlNode xmlAttribute = xmlFile.CreateNode(XmlNodeType.Attribute, "Active", string.Empty);
+                            xmlAttribute.Value = "1";
+
+                            xmlElement.Attributes.SetNamedItem(xmlAttribute);
+                        }
+
+                        xmlDocument.AppendChild(xmlElement);
+                    }
+
+                    // All done, let's save the XML.
+                    xmlFile.Save(xmlPath);
+                }
+                catch (Exception)
+                {
+                    // TODO: Write the exception to log file.
+                }
+
+                IsOpen = false;
+            }
+
+            return cancelPressed;
         }
 
         /// <summary>
@@ -37,6 +91,8 @@ namespace PawnPlus.Project
         {
             if (projectPath == null || System.IO.Path.GetExtension(projectPath) != Extension)
                 return false;
+
+            xmlPath = projectPath;
 
             bool isActive = false;
             string filePath = string.Empty, activeFile = string.Empty;
@@ -64,11 +120,12 @@ namespace PawnPlus.Project
                                         activeFile = filePath;
                                     }
 
-                                    CEManager.OpenFile(filePath);
+                                    CEManager.Open(filePath, true);
                                 }
                                 catch(Exception)
                                 {
                                     // File dosen't exist.
+                                    // TODO: Write the exception to log file.
                                 }
 
                                 break;
@@ -84,8 +141,9 @@ namespace PawnPlus.Project
 
             Path = System.IO.Path.GetDirectoryName(projectPath); // Set the project path.
 
-            // TODO: Load project files in "project explorer" and set items from menu bar to active.
             LoadDirectory(Path);
+
+            IsOpen = true;
 
             return true;
         }

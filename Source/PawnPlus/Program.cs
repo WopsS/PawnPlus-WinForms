@@ -24,12 +24,14 @@ namespace PawnPlus
             catch (Exception)
             {
                 LanguageManager.SetLanguage(new CultureInfo("en-US"));
+
+                // TODO: Write the exception to log file.
             }
 
             Launcher launcher = new Launcher();
             Application.Run(launcher);
 
-            if (launcher.ClosedSafe() == true)
+            if (launcher.IsSafe == true)
             {
                 launcher.Dispose();
                 Application.Run(new Main());

@@ -3,6 +3,7 @@ using PawnPlus.Core;
 using PawnPlus.Language;
 using PawnPlus.Project;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -49,6 +50,13 @@ namespace PawnPlus
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
+            // Let's check if project is open and let's close files from project. After that let's close all files.
+            if ((ProjectManager.IsOpen == true && ProjectManager.Close() == true) || (ProjectManager.IsOpen == false && CEManager.CloseAll(false) == true))
+            {
+                e.Cancel = true;
+                return;
+            }
+
             if (Directory.Exists(Path.GetDirectoryName(this.layoutPath)) == false) // Check if path exist, if not create it.
             {
                 Directory.CreateDirectory(Path.GetDirectoryName(this.layoutPath));
@@ -426,6 +434,11 @@ namespace PawnPlus
 
         private void openProjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (ProjectManager.IsOpen == true)
+            {
+                ProjectManager.Close();
+            }
+
             this.openFileDialog.Filter = string.Format("PawnPlus Project|*{0}", ProjectManager.Extension);
 
             DialogResult dialogResult = this.openFileDialog.ShowDialog();
@@ -448,13 +461,13 @@ namespace PawnPlus
 
             if (dialogResult == DialogResult.OK)
             {
-                CEManager.OpenFile(this.openFileDialog.FileName);
+                CEManager.Open(this.openFileDialog.FileName);
             }
         }
 
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            this.dockPanel.ActiveDocument.DockHandler.Form.Close();
         }
 
         private void closeProjectToolStripMenuItem_Click(object sender, EventArgs e)
@@ -465,17 +478,27 @@ namespace PawnPlus
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            ((Editor)this.dockPanel.ActiveDocument.DockHandler.Form).Save();
         }
 
         private void savesAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            this.saveFileDialog.Filter = "PAWN File|*.pwn|Include file|*.inc|All files|*.*";
 
+            DialogResult dialogResult = this.saveFileDialog.ShowDialog();
+
+            if (dialogResult == DialogResult.OK)
+            {
+                ((Editor)this.dockPanel.ActiveDocument.DockHandler.Form).Save(this.saveFileDialog.FileName);
+            }
         }
 
         private void saveAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            foreach (Editor editor in CEManager.ToList().Values)
+            {
+                editor.Save();
+            }
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -523,7 +546,7 @@ namespace PawnPlus
             this.saveToolStripMenuItem.Text = string.Format(LanguageManager.GetText(LanguageEnum.MainMenuItemFileSave), "Selected Item");
             this.savesAsToolStripMenuItem.Text = string.Format(LanguageManager.GetText(LanguageEnum.MainMenuItemFileSaveAs), "Selected Item");
             this.saveAllToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemFileSaveAll);
-            
+
             // Edit tool strip menu item.
             this.editToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemEdit);
             this.undoToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemEditUndo);
@@ -588,5 +611,7 @@ namespace PawnPlus
 
             this.compileToolStripMenuItem.Enabled = isEnabled;
         }
+
+        // TODO: Create compilation process.
     }
 }

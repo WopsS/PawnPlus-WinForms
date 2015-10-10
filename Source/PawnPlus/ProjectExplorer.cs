@@ -62,7 +62,7 @@ namespace PawnPlus
         {
             if (File.Exists(this.projectFiles.SelectedNode.Name) == true)
             {
-                CEManager.OpenFile(this.projectFiles.SelectedNode.Name);
+                CEManager.Open(this.projectFiles.SelectedNode.Name, true);
             }
 
             CEManager.SetActiveDocument(this.projectFiles.SelectedNode.Name, true);

@@ -17,7 +17,11 @@ namespace PawnPlus
 {
     public partial class Launcher : Form
     {
-        private bool isSafe = false;
+        /// <summary>
+        /// It is <c>true</c> if it is closed by our code, <c>false</c> otherwise.
+        /// </summary>
+        public bool IsSafe { get; private set; }
+
         private DownloadControl downloadControl;
         private StatusControl statusControl;
 
@@ -39,7 +43,8 @@ namespace PawnPlus
 
         private void Launcher_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if(this.isSafe == false) // Close the application if the form isn't closed manually.
+            // Close the application if the form isn't closed manually.
+            if (this.IsSafe == false)
             {
                 Application.ExitThread();
             }
@@ -221,9 +226,9 @@ namespace PawnPlus
                 this.statusControl.statusLabel.Text = e.UserState.ToString();
             }
 
-            if(e.ProgressPercentage == 100)
+            if (e.ProgressPercentage == 100)
             {
-                this.isSafe = true;
+                this.IsSafe = true;
                 this.Close();
             }
         }
@@ -246,15 +251,6 @@ namespace PawnPlus
                 this.controlsPanel.Controls.Clear();
                 this.controlsPanel.Controls.Add(this.statusControl);
             }));
-        }
-
-        /// <summary>
-        /// Check is the application is closed by our code and not an exception.
-        /// </summary>
-        /// <returns>Returns true if it is closed by our code, false otherwise.</returns>
-        public bool ClosedSafe()
-        {
-            return this.isSafe;
         }
     }
 }

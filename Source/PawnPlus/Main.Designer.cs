@@ -96,6 +96,7 @@
             this.dockPanel = new WeifenLuo.WinFormsUI.Docking.DockPanel();
             this.vS2012LightTheme = new WeifenLuo.WinFormsUI.Docking.VS2012LightTheme();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.principalPanel.SuspendLayout();
             this.ControlPanel.SuspendLayout();
             this.menuStrip.SuspendLayout();
@@ -514,7 +515,7 @@
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(244, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(260, 17);
             this.toolStripStatusLabel1.Spring = true;
             // 
             // versionLabel
@@ -527,7 +528,7 @@
             // toolStripStatusLabel3
             // 
             this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
-            this.toolStripStatusLabel3.Size = new System.Drawing.Size(244, 17);
+            this.toolStripStatusLabel3.Size = new System.Drawing.Size(260, 17);
             this.toolStripStatusLabel3.Spring = true;
             // 
             // lineLabel
@@ -599,7 +600,6 @@
             dockPaneStripToolWindowGradient1.InactiveTabGradient = tabGradient7;
             dockPaneStripSkin1.ToolWindowGradient = dockPaneStripToolWindowGradient1;
             dockPanelSkin1.DockPaneStripSkin = dockPaneStripSkin1;
-            this.dockPanel.Skin = dockPanelSkin1;
             this.dockPanel.TabIndex = 29;
             this.dockPanel.Theme = this.vS2012LightTheme;
             this.dockPanel.ActiveDocumentChanged += new System.EventHandler(this.dockPanel_ActiveDocumentChanged);
@@ -696,5 +696,6 @@
         private System.Windows.Forms.ToolStripStatusLabel lineLabel;
         private System.Windows.Forms.ToolStripStatusLabel columnLabel;
         private WeifenLuo.WinFormsUI.Docking.DockPanel dockPanel;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog;
     }
 }

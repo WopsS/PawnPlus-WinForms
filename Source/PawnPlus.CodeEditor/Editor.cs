@@ -23,6 +23,15 @@ namespace PawnPlus.CodeEditor
         /// </summary>
         public string FilePath { get; private set; }
 
+        /// <summary>
+        /// Get the 'modified' flag.
+        /// </summary>
+        public bool IsModified { get { return codeEditor.IsModified; } }
+
+        public bool IsProjectFile { get; set; }
+
+        private ElementHost elementHost = new ElementHost();
+
         public Editor()
         {
             InitializeComponent();
@@ -32,17 +41,17 @@ namespace PawnPlus.CodeEditor
 
         private void CodeEditor_Load(object sender, EventArgs e)
         {
-            ElementHost elementHost = new ElementHost();
-            elementHost.Dock = DockStyle.Fill;
-            elementHost.Child = this.codeEditor;
+            this.elementHost.Dock = DockStyle.Fill;
+            this.elementHost.Child = this.codeEditor;
 
-            this.Controls.Add(elementHost);
+            this.Controls.Add(this.elementHost);
 
             this.codeEditor.ShowLineNumbers = true;
             this.codeEditor.FontFamily = new System.Windows.Media.FontFamily("Consolas");
             this.codeEditor.FontSize = 12;
 
             this.codeEditor.TextArea.Caret.PositionChanged += codeEditor_Caret_PositionChanged;
+            this.codeEditor.Document.UpdateFinished += codeEditor_UpdateFinished;
 
             // TODO: Create folding and indentation strategy.
 
@@ -53,21 +62,34 @@ namespace PawnPlus.CodeEditor
                     this.codeEditor.SyntaxHighlighting = HighlightingLoader.Load(xmlReader, HighlightingManager.Instance);
                 }
             }
-
         }
 
         private void Editor_FormClosing(object sender, FormClosingEventArgs e)
         {
-            CEManager.CloseFile(this.FilePath);
+            CEManager.Close(this.FilePath);
             this.codeEditor.TextArea.Caret.PositionChanged -= codeEditor_Caret_PositionChanged;
-        }
+            this.codeEditor.Document.UpdateFinished -= codeEditor_UpdateFinished;
 
+            this.elementHost.Dispose();
+        }
 
         private void codeEditor_Caret_PositionChanged(object sender, EventArgs e)
         {
-            if(CEManager.ActiveDocument == this) // Just to be sure about the position of the caret, maybe it will be changed somehow (but I don't think so).
+            if (CEManager.ActiveDocument == this) // Just to be sure about the position of the caret, maybe it will be changed somehow (but I don't think so).
             {
                 StatusManager.SetLineColumn(this.codeEditor.TextArea.Caret.Line, this.codeEditor.TextArea.Caret.Column);
+            }
+        }
+
+        private void codeEditor_UpdateFinished(object sender, EventArgs e)
+        {
+            if (this.IsModified == false && this.Text[this.Text.Length - 1] == '*')
+            {
+                this.Text = this.Text.Remove(this.Text.Length - 1);
+            }
+            else if (this.IsModified == true && this.Text[this.Text.Length - 1] != '*')
+            {
+                this.Text += '*';
             }
         }
 
@@ -75,11 +97,31 @@ namespace PawnPlus.CodeEditor
         /// Open a file.
         /// </summary>
         /// <param name="filePath">Path to the file.</param>
-        public void Open(string filePath)
+        public void Open(string fileName)
         {
-            this.FilePath = filePath;
-            this.codeEditor.Load(filePath);
-            this.Text = Path.GetFileName(filePath);
+            this.FilePath = fileName;
+            this.codeEditor.Load(fileName);
+            this.Text = Path.GetFileName(fileName);
+        }
+
+        /// <summary>
+        /// Save file.
+        /// </summary>
+        /// <param name="fileName">Path where file should be saved.</param>
+        public void Save(string fileName)
+        {
+            this.FilePath = fileName;
+            this.Text = Path.GetFileName(fileName);
+
+            this.codeEditor.Save(this.FilePath);
+        }
+
+        /// <summary>
+        /// Save file.
+        /// </summary>
+        public void Save()
+        {
+            this.Save(this.FilePath);
         }
     }
 }

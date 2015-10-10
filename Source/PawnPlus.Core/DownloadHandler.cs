@@ -37,7 +37,7 @@ namespace PawnPlus.Core
         /// <param name="values">Values to be downloaded.</param>
         public DownloadHandler(Tuple<Uri, string>[] values)
         {
-            foreach(Tuple<Uri, string> value in values)
+            foreach (Tuple<Uri, string> value in values)
             {
                 this.linksQueue.Enqueue(value);
             }
@@ -95,7 +95,6 @@ namespace PawnPlus.Core
         {
             this.webClient.CancelAsync();
         }
-
 
         private void DownloadProgressChangedEventHandler(object sender, DownloadProgressChangedEventArgs e)
         {

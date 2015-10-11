@@ -4,8 +4,10 @@ using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using PawnPlus.Core;
 using System;
+using System.Drawing;
 using System.IO;
 using System.Reflection;
+using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
 using System.Xml;
@@ -15,7 +17,7 @@ namespace PawnPlus.CodeEditor
 {
     public partial class Editor : DockContent
     {
-        public readonly TextEditor codeEditor;
+        public TextEditor codeEditor { get; private set; }
 
         /// <summary>
         /// Path to the file which is edited.
@@ -55,11 +57,24 @@ namespace PawnPlus.CodeEditor
 
             // TODO: Create folding and indentation strategy.
 
-            using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("PawnPlus.CodeEditor.Resources.PAWNSyntax.xml")) // Let's load the syntax hightlight.
+            Stream stream = null;
+
+            try
             {
+                // Let's load the syntax hightlight.
+                stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("PawnPlus.CodeEditor.Resources.PAWNSyntax.xml");
+
                 using (XmlReader xmlReader = XmlReader.Create(stream))
                 {
+                    stream = null;
                     this.codeEditor.SyntaxHighlighting = HighlightingLoader.Load(xmlReader, HighlightingManager.Instance);
+                }
+            }
+            finally
+            {
+                if (stream != null)
+                {
+                    stream.Dispose();
                 }
             }
         }
@@ -67,9 +82,10 @@ namespace PawnPlus.CodeEditor
         private void Editor_FormClosing(object sender, FormClosingEventArgs e)
         {
             CEManager.Close(this.FilePath);
+
             this.codeEditor.TextArea.Caret.PositionChanged -= codeEditor_Caret_PositionChanged;
             this.codeEditor.Document.UpdateFinished -= codeEditor_UpdateFinished;
-
+         
             this.elementHost.Dispose();
         }
 
@@ -102,6 +118,19 @@ namespace PawnPlus.CodeEditor
             this.FilePath = fileName;
             this.codeEditor.Load(fileName);
             this.Text = Path.GetFileName(fileName);
+
+            IntPtr hIcon;
+
+            if (fileName.Contains(".inc"))
+            {
+                hIcon = Properties.Resources.gear_32xLG.GetHicon();
+            }
+            else
+            {
+                hIcon = Properties.Resources.FileGroup_10135_32x.GetHicon(); 
+            }
+
+            this.Icon = Icon.FromHandle(hIcon);
         }
 
         /// <summary>

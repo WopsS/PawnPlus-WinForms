@@ -414,6 +414,8 @@ namespace PawnPlus
             }
             else
             {
+                CEManager.SetActiveDocument(null);
+
                 this.SetMenuStatus(false, false);
                 StatusManager.SetLineColumn(0, 0);
 

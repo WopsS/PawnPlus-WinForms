@@ -1,13 +1,14 @@
-﻿using PawnPlus.CodeEditor;
+﻿using ICSharpCode.AvalonEdit;
+using PawnPlus.CodeEditor;
 using PawnPlus.Core;
 using PawnPlus.Language;
 using PawnPlus.Project;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
+using System.Threading;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 
@@ -19,6 +20,7 @@ namespace PawnPlus
         private Output outputForm = new Output();
 
         private DeserializeDockContent dockContentLayout;
+        private FindReplace findReplace = new FindReplace();
         private string layoutPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PawnPlus", "Layout.xml");
 
         public Main()
@@ -46,6 +48,7 @@ namespace PawnPlus
             StatusManager.Construct(this.statusBar, this.statusLabel, this.lineLabel, this.columnLabel);
 
             this.SetLanguageText();
+            StatusManager.Set(StatusType.Info, LanguageEnum.StatusReady, StatusReset.None);
         }
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
@@ -426,32 +429,25 @@ namespace PawnPlus
 
         private void newProjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // TODO: Create new project.
+            NewForm newForm = new NewForm(NewFormType.Project);
+            newForm.ShowDialog(this);
         }
 
         private void newFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // TODO: Create new file.
+            NewForm newForm = new NewForm(NewFormType.File);
+            newForm.ShowDialog(this);
         }
 
         private void openProjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (ProjectManager.IsOpen == true)
-            {
-                ProjectManager.Close();
-            }
-
             this.openFileDialog.Filter = string.Format("PawnPlus Project|*{0}", ProjectManager.Extension);
 
             DialogResult dialogResult = this.openFileDialog.ShowDialog();
 
             if (dialogResult == DialogResult.OK)
             {
-                if (ProjectManager.Open(this.openFileDialog.FileName) == true) // Is the project opened properly?
-                {
-                    this.SetMenuStatus(true, true, true);
-                    this.FormName.Text = "PawnPlus - " + ProjectManager.Name;
-                }
+                ProjectManager.Open(this.openFileDialog.FileName);
             }
         }
 
@@ -499,13 +495,222 @@ namespace PawnPlus
         {
             foreach (Editor editor in CEManager.ToList().Values)
             {
-                editor.Save();
+                if (editor.IsModified == true)
+                {
+                    editor.Save();
+                }
             }
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void undoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CEManager.ActiveDocument.codeEditor.Undo();
+        }
+
+        private void redoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CEManager.ActiveDocument.codeEditor.Redo();
+        }
+
+        private void cutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CEManager.ActiveDocument.codeEditor.Cut();
+        }
+
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CEManager.ActiveDocument.codeEditor.Copy();
+        }
+
+        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CEManager.ActiveDocument.codeEditor.Paste();
+        }
+
+        private void findToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            findReplace.ShowFind(this, CEManager.ActiveDocument.codeEditor.SelectedText);
+        }
+
+        private void findNextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            findReplace.FindNext(string.Empty, true);
+        }
+
+        private void findPrevToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            findReplace.FindPrevious(string.Empty, true);
+        }
+
+        private void replaceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            findReplace.ShowReplace(this, CEManager.ActiveDocument.codeEditor.SelectedText);
+        }
+
+        private void goToToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GoToLine gotoLine = new GoToLine();
+            gotoLine.ShowDialog(this);
+        }
+
+        private void compileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TextEditor textEditor = CEManager.ActiveDocument.codeEditor;
+
+            if (Path.GetExtension(CEManager.ActiveDocument.FilePath) != ".pwn" || this.compilerWorker.IsBusy == true)
+            {
+                return;
+            }
+            else if (string.IsNullOrEmpty(textEditor.Text) == true)
+            {
+                StatusManager.Set(StatusType.Error, LanguageEnum.StatusEmptyText, StatusReset.FiveSeconds);
+                return;
+            }
+
+            this.outputForm.ClearText();
+
+            // Saving all files opened.
+            StatusManager.Set(StatusType.Warning, LanguageEnum.StatusSavingFiles, StatusReset.None);
+
+            foreach (Editor editor in CEManager.ToList().Values)
+            {
+                if (editor.IsModified == true)
+                {
+                    editor.Save();
+                }
+            }
+
+            // Copying all includes files to PAWN include folder.
+            StatusManager.Set(StatusType.Warning, LanguageEnum.StatusCopyingIncludes, StatusReset.None);
+
+            string targetDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PawnPlus", "Pawn", "include");
+
+            foreach (string file in Directory.GetFiles(Path.Combine(ProjectManager.Path, "includes")))
+            {
+                File.Copy(file, Path.Combine(targetDirectory, Path.GetFileName(file)), true);
+            }
+
+            // Disable 'Save*' menu items.
+            this.saveToolStripMenuItem.Enabled = false;
+            this.savesAsToolStripMenuItem.Enabled = false;
+            this.saveAllToolStripMenuItem.Enabled = false;
+
+            StatusManager.Set(StatusType.Warning, LanguageEnum.StatusCompiling, StatusReset.None);
+            this.compilerWorker.RunWorkerAsync();
+        }
+
+        private void compileOptionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string value = Properties.Settings.Default["Compiler_Arguments"].ToString();
+
+            if(WindowHelper.InputBox(LanguageManager.GetText(LanguageEnum.MainMenuItemBuildCompileOptions), LanguageManager.GetText(LanguageEnum.CompilerOptions), ref value) == DialogResult.OK)
+            {
+                Properties.Settings.Default["Compiler_Arguments"] = value;
+                Properties.Settings.Default.Save();
+            }
+        }
+
+        private void compilerWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            string amxPath = Path.Combine(Path.GetDirectoryName(CEManager.ActiveDocument.FilePath), string.Format("{0}.amx", Path.GetFileNameWithoutExtension(CEManager.ActiveDocument.FilePath)));
+
+            Process compilingProcess = new Process();
+
+            compilingProcess.StartInfo.FileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PawnPlus", "Pawn", "pawncc.exe");
+            compilingProcess.StartInfo.Arguments = string.Format("\"{0}\" -o\"{1}\" -;+ -(+ {2}", CEManager.ActiveDocument.FilePath, amxPath, Properties.Settings.Default["Compiler_Arguments"].ToString());
+            compilingProcess.StartInfo.UseShellExecute = false;
+            compilingProcess.StartInfo.CreateNoWindow = true;
+            compilingProcess.StartInfo.RedirectStandardError = true;
+            compilingProcess.StartInfo.RedirectStandardOutput = true;
+            compilingProcess.Start();
+
+            while (compilingProcess.HasExited == false)
+            {
+                ProjectManager.LastCompiled.Errors = compilingProcess.StandardError.ReadToEnd();
+                ProjectManager.LastCompiled.Output = compilingProcess.StandardOutput.ReadToEnd();
+            }
+        }
+
+        private void compilerWorker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+            // Deleting all includes files to PAWN include folder.
+            StatusManager.Set(StatusType.Warning, LanguageEnum.StatusDeletingIncludes, StatusReset.None);
+
+            string targetDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PawnPlus", "Pawn", "include");
+
+            foreach (string file in Directory.GetFiles(Path.Combine(ProjectManager.Path, "includes")))
+            {
+                File.Delete(Path.Combine(targetDirectory, Path.GetFileName(file)));
+            }
+
+            // Enable 'Save*' menu items.
+            this.saveToolStripMenuItem.Enabled = true;
+            this.savesAsToolStripMenuItem.Enabled = true;
+            this.saveAllToolStripMenuItem.Enabled = true;
+
+            if (ProjectManager.LastCompiled.HasErrors == true)
+            {
+                this.outputForm.SetText(ProjectManager.LastCompiled.Errors, false);
+                StatusManager.Set(StatusType.Error, LanguageEnum.StatusCompiledWithErrors, StatusReset.FiveSeconds);
+            }
+            else
+            {
+                StatusManager.Set(StatusType.Finish, LanguageEnum.StatusCompiled, StatusReset.FiveSeconds);
+            }
+
+            this.outputForm.SetText(ProjectManager.LastCompiled.Output, true);
+        }
+
+        /// <summary>
+        /// Change enable value for <see cref="MenuStrip"/> items.
+        /// </summary>
+        /// <param name="isEnabled">If it will be true, then MenuStrip items will be enabled.</param>
+        /// <param name="isProject">If it will be true, then some items for project will be enabled.</param>
+        public void SetMenuStatus(bool isEnabled, bool isProject, bool justProjectItems = false)
+        {
+            if (isProject == true)
+            {
+                this.newFileToolStripMenuItem.Enabled = isEnabled;
+                this.closeProjectToolStripMenuItem.Enabled = isEnabled;
+            }
+
+            if (justProjectItems == true)
+            {
+                return;
+            }
+
+            this.closeToolStripMenuItem.Enabled = isEnabled;
+            this.saveToolStripMenuItem.Enabled = isEnabled;
+            this.savesAsToolStripMenuItem.Enabled = isEnabled;
+            this.saveAllToolStripMenuItem.Enabled = isEnabled;
+
+            this.undoToolStripMenuItem.Enabled = isEnabled;
+            this.redoToolStripMenuItem.Enabled = isEnabled;
+            this.cutToolStripMenuItem.Enabled = isEnabled;
+            this.copyToolStripMenuItem.Enabled = isEnabled;
+            this.pasteToolStripMenuItem.Enabled = isEnabled;
+            this.findToolStripMenuItem.Enabled = isEnabled;
+            this.findNextToolStripMenuItem.Enabled = isEnabled;
+            this.findPrevToolStripMenuItem.Enabled = isEnabled;
+            this.replaceToolStripMenuItem.Enabled = isEnabled;
+            this.goToToolStripMenuItem.Enabled = isEnabled;
+
+            this.compileToolStripMenuItem.Enabled = isEnabled;
+            this.compileOptionsToolStripMenuItem.Enabled = isEnabled;
+        }
+
+        /// <summary>
+        /// Set form name.
+        /// </summary>
+        /// <param name="name">New name of the form.</param>
+        public void SetFormName(string name)
+        {
+            this.FormName.Text = name;
         }
 
         /// <summary>
@@ -576,44 +781,5 @@ namespace PawnPlus
             this.lineLabel.Text = string.Format(LanguageManager.GetText(LanguageEnum.MenuLine), 0);
             this.columnLabel.Text = string.Format(LanguageManager.GetText(LanguageEnum.MenuColumn), 0);
         }
-
-        /// <summary>
-        /// Change enable value for <see cref="MenuStrip"/> items.
-        /// </summary>
-        /// <param name="isEnabled">If it will be true, then MenuStrip items will be enabled.</param>
-        /// <param name="isProject">If it will be true, then some items for project will be enabled.</param>
-        private void SetMenuStatus(bool isEnabled, bool isProject, bool justProjectItems = false)
-        {
-            if (isProject == true)
-            {
-                this.newFileToolStripMenuItem.Enabled = isEnabled;
-                this.closeProjectToolStripMenuItem.Enabled = isEnabled;
-            }
-
-            if (justProjectItems == true)
-            {
-                return;
-            }
-
-            this.closeToolStripMenuItem.Enabled = isEnabled;
-            this.saveToolStripMenuItem.Enabled = isEnabled;
-            this.savesAsToolStripMenuItem.Enabled = isEnabled;
-            this.saveAllToolStripMenuItem.Enabled = isEnabled;
-
-            this.undoToolStripMenuItem.Enabled = isEnabled;
-            this.redoToolStripMenuItem.Enabled = isEnabled;
-            this.cutToolStripMenuItem.Enabled = isEnabled;
-            this.copyToolStripMenuItem.Enabled = isEnabled;
-            this.pasteToolStripMenuItem.Enabled = isEnabled;
-            this.findToolStripMenuItem.Enabled = isEnabled;
-            this.findNextToolStripMenuItem.Enabled = isEnabled;
-            this.findPrevToolStripMenuItem.Enabled = isEnabled;
-            this.replaceToolStripMenuItem.Enabled = isEnabled;
-            this.goToToolStripMenuItem.Enabled = isEnabled;
-
-            this.compileToolStripMenuItem.Enabled = isEnabled;
-        }
-
-        // TODO: Create compilation process.
     }
 }

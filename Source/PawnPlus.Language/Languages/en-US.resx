@@ -117,6 +117,73 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Button_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Button_OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="CompilerOptions" xml:space="preserve">
+    <value>Options:</value>
+  </data>
+  <data name="Filterscript" xml:space="preserve">
+    <value>Filterscript</value>
+  </data>
+  <data name="FindReplace_Button_Case_Sensitive" xml:space="preserve">
+    <value>Case Sensitive</value>
+  </data>
+  <data name="FindReplace_Button_Find_Next" xml:space="preserve">
+    <value>Find Next</value>
+  </data>
+  <data name="FindReplace_Button_Find_Previous" xml:space="preserve">
+    <value>Find Prev.</value>
+  </data>
+  <data name="FindReplace_Button_Replace" xml:space="preserve">
+    <value>Replace</value>
+  </data>
+  <data name="FindReplace_Button_Replace_All" xml:space="preserve">
+    <value>Replace All</value>
+  </data>
+  <data name="FindReplace_Button_Whole_Word" xml:space="preserve">
+    <value>Whole Word</value>
+  </data>
+  <data name="FindReplace_Find_What_Label" xml:space="preserve">
+    <value>Text to find:</value>
+  </data>
+  <data name="FindReplace_LookIn_All_Document" xml:space="preserve">
+    <value>All Documents</value>
+  </data>
+  <data name="FindReplace_LookIn_Current_Document" xml:space="preserve">
+    <value>Current Document</value>
+  </data>
+  <data name="FindReplace_LookIn_Label" xml:space="preserve">
+    <value>Look in:</value>
+  </data>
+  <data name="FindReplace_Name" xml:space="preserve">
+    <value>Find and Replace</value>
+  </data>
+  <data name="FindReplace_Replace_With_Label" xml:space="preserve">
+    <value>Text to replace:</value>
+  </data>
+  <data name="FindReplace_Tab_Find" xml:space="preserve">
+    <value>Find</value>
+  </data>
+  <data name="FindReplace_Tab_Replace" xml:space="preserve">
+    <value>Replace</value>
+  </data>
+  <data name="Gamemode" xml:space="preserve">
+    <value>Gamemode</value>
+  </data>
+  <data name="GoToLine_Label" xml:space="preserve">
+    <value>Line number (1- {0}):</value>
+    <comment>e.g.: Line number (1- 10):</comment>
+  </data>
+  <data name="GoToLine_Name" xml:space="preserve">
+    <value>Go To Line</value>
+  </data>
+  <data name="Include" xml:space="preserve">
+    <value>Include</value>
+  </data>
   <data name="Launcher_Files_Checking" xml:space="preserve">
     <value>Checking files...</value>
   </data>
@@ -248,7 +315,60 @@
     <value>Line {0}</value>
     <comment>e.g.: Line 1</comment>
   </data>
+  <data name="NewForm_Browse" xml:space="preserve">
+    <value>Browse</value>
+  </data>
+  <data name="NewForm_Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="NewForm_Create" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="NewForm_Empty_Name" xml:space="preserve">
+    <value>Name cannot be empty.</value>
+  </data>
+  <data name="NewForm_Empty_Path" xml:space="preserve">
+    <value>Path cannot be empty.</value>
+  </data>
+  <data name="NewForm_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="NewForm_Path" xml:space="preserve">
+    <value>Path</value>
+  </data>
+  <data name="NewForm_Project" xml:space="preserve">
+    <value>project</value>
+    <comment>e.g.: New - project (form name)</comment>
+  </data>
+  <data name="NewForm_Project_File" xml:space="preserve">
+    <value>file</value>
+    <comment>e.g.: New - file (form name)</comment>
+  </data>
+  <data name="NewForm_Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="Status_Compiled" xml:space="preserve">
+    <value>Compiled</value>
+  </data>
+  <data name="Status_Compiled_With_Errors" xml:space="preserve">
+    <value>Compiled with errors</value>
+  </data>
+  <data name="Status_Compiling" xml:space="preserve">
+    <value>Compiling...</value>
+  </data>
+  <data name="Status_Copying_Includes" xml:space="preserve">
+    <value>Copying include files...</value>
+  </data>
+  <data name="Status_Deleting_Includes" xml:space="preserve">
+    <value>Deleting include files...</value>
+  </data>
+  <data name="Status_Empty_Text" xml:space="preserve">
+    <value>Current document is empty</value>
+  </data>
   <data name="Status_Ready" xml:space="preserve">
     <value>Ready</value>
+  </data>
+  <data name="Status_Saving_Files" xml:space="preserve">
+    <value>Saving files...</value>
   </data>
 </root>

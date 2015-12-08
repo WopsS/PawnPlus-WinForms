@@ -62,6 +62,7 @@
     <Compile Include="UserControls\Launcher\StatusControl.Designer.cs">
       <DependentUpon>StatusControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="WindowHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="UserControls\Launcher\DownloadControl.resx">

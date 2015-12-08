@@ -21,7 +21,7 @@ namespace PawnPlus.Core.UserControls.Launcher
 
         public void SetDownloadedMegaBytes(string Text)
         {
-            this.downloadPercentageLabel.Text = Text;
+            this.downloadedMBLabel.Text = Text;
         }
     }
 }

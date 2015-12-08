@@ -46,5 +46,17 @@ namespace PawnPlus.Properties {
                 this["Language"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Compiler_Arguments {
+            get {
+                return ((string)(this["Compiler_Arguments"]));
+            }
+            set {
+                this["Compiler_Arguments"] = value;
+            }
+        }
     }
 }

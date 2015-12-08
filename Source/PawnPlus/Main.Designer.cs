@@ -82,6 +82,7 @@
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.dockPanel = new WeifenLuo.WinFormsUI.Docking.DockPanel();
             this.vs2012LightTheme = new WeifenLuo.WinFormsUI.Docking.VS2012LightTheme();
+            this.compilerWorker = new System.ComponentModel.BackgroundWorker();
             this.principalPanel.SuspendLayout();
             this.ControlPanel.SuspendLayout();
             this.menuStrip.SuspendLayout();
@@ -361,6 +362,7 @@
             this.undoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
             this.undoToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.undoToolStripMenuItem.Text = "Undo";
+            this.undoToolStripMenuItem.Click += new System.EventHandler(this.undoToolStripMenuItem_Click);
             // 
             // redoToolStripMenuItem
             // 
@@ -369,6 +371,7 @@
             this.redoToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
             this.redoToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.redoToolStripMenuItem.Text = "Redo";
+            this.redoToolStripMenuItem.Click += new System.EventHandler(this.redoToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -382,6 +385,7 @@
             this.cutToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
             this.cutToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.cutToolStripMenuItem.Text = "Cut";
+            this.cutToolStripMenuItem.Click += new System.EventHandler(this.cutToolStripMenuItem_Click);
             // 
             // copyToolStripMenuItem
             // 
@@ -390,6 +394,7 @@
             this.copyToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
             this.copyToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.copyToolStripMenuItem.Text = "Copy";
+            this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
             // 
             // pasteToolStripMenuItem
             // 
@@ -398,6 +403,7 @@
             this.pasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
             this.pasteToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.pasteToolStripMenuItem.Text = "Paste";
+            this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
@@ -411,6 +417,7 @@
             this.findToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
             this.findToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.findToolStripMenuItem.Text = "Find";
+            this.findToolStripMenuItem.Click += new System.EventHandler(this.findToolStripMenuItem_Click);
             // 
             // findNextToolStripMenuItem
             // 
@@ -419,6 +426,7 @@
             this.findNextToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F3;
             this.findNextToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.findNextToolStripMenuItem.Text = "Find Next";
+            this.findNextToolStripMenuItem.Click += new System.EventHandler(this.findNextToolStripMenuItem_Click);
             // 
             // findPrevToolStripMenuItem
             // 
@@ -427,6 +435,7 @@
             this.findPrevToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F4;
             this.findPrevToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.findPrevToolStripMenuItem.Text = "Find Prev";
+            this.findPrevToolStripMenuItem.Click += new System.EventHandler(this.findPrevToolStripMenuItem_Click);
             // 
             // replaceToolStripMenuItem
             // 
@@ -435,6 +444,7 @@
             this.replaceToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
             this.replaceToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.replaceToolStripMenuItem.Text = "Replace";
+            this.replaceToolStripMenuItem.Click += new System.EventHandler(this.replaceToolStripMenuItem_Click);
             // 
             // goToToolStripMenuItem
             // 
@@ -443,6 +453,7 @@
             this.goToToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G)));
             this.goToToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
             this.goToToolStripMenuItem.Text = "Go To";
+            this.goToToolStripMenuItem.Click += new System.EventHandler(this.goToToolStripMenuItem_Click);
             // 
             // buildToolStripMenuItem
             // 
@@ -461,6 +472,7 @@
             this.compileToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
             this.compileToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.compileToolStripMenuItem.Text = "Compile";
+            this.compileToolStripMenuItem.Click += new System.EventHandler(this.compileToolStripMenuItem_Click);
             // 
             // toolStripSeparator6
             // 
@@ -473,6 +485,7 @@
             this.compileOptionsToolStripMenuItem.Name = "compileOptionsToolStripMenuItem";
             this.compileOptionsToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.compileOptionsToolStripMenuItem.Text = "Compile Options";
+            this.compileOptionsToolStripMenuItem.Click += new System.EventHandler(this.compileOptionsToolStripMenuItem_Click);
             // 
             // statusBar
             // 
@@ -547,6 +560,12 @@
             this.dockPanel.TabIndex = 29;
             this.dockPanel.Theme = this.vs2012LightTheme;
             this.dockPanel.ActiveDocumentChanged += new System.EventHandler(this.dockPanel_ActiveDocumentChanged);
+            // 
+            // compilerWorker
+            // 
+            this.compilerWorker.WorkerSupportsCancellation = true;
+            this.compilerWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.compilerWorker_DoWork);
+            this.compilerWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.compilerWorker_RunWorkerCompleted);
             // 
             // Main
             // 
@@ -637,5 +656,6 @@
         private WeifenLuo.WinFormsUI.Docking.DockPanel dockPanel;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private WeifenLuo.WinFormsUI.Docking.VS2012LightTheme vs2012LightTheme;
+        private System.ComponentModel.BackgroundWorker compilerWorker;
     }
 }

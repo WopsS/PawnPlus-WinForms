@@ -86,13 +86,24 @@ namespace PawnPlus
 
             ApplicationJSON applicationJSON = JsonConvert.DeserializeObject<ApplicationJSON>(JSONString);
 
-            if (Directory.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Pawn")) == false || Directory.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Pawn", "include")) == false)
+            string ApplicationData = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PawnPlus");
+
+            if(Directory.Exists(ApplicationData) == false)
             {
-                Directory.CreateDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Pawn", "include"));
+                Directory.CreateDirectory(ApplicationData);
+            }
+
+            string PAWNFolder = Path.Combine(ApplicationData, "Pawn");
+
+            if (Directory.Exists(PAWNFolder) == false || Directory.Exists(Path.Combine(PAWNFolder, "include")) == false)
+            {
+                Directory.CreateDirectory(Path.Combine(PAWNFolder, "include"));
 
                 FileInfo fileInfo = null;
-                string TemporaryFolder = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()), OurPAWNFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Pawn");
+
+                string TemporaryFolder = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
                 string SAMPZIPPath = Path.Combine(TemporaryFolder, applicationJSON.SAMPZIPName), CompilerZIPPath = Path.Combine(TemporaryFolder, applicationJSON.CompilerZIPName);
+
                 Directory.CreateDirectory(TemporaryFolder);
 
                 DownloadHandler downloadHandler = new DownloadHandler(new Tuple<Uri, string>[]
@@ -144,7 +155,7 @@ namespace PawnPlus
 
                     foreach (string CurrentFile in Files)
                     {
-                        File.Copy(CurrentFile, Path.Combine(OurPAWNFolder, "include", Path.GetFileName(CurrentFile)), true);
+                        File.Copy(CurrentFile, Path.Combine(PAWNFolder, "include", Path.GetFileName(CurrentFile)), true);
                     }
 
                     this.backgroundWorker.ReportProgress(15, LanguageManager.GetText(LanguageEnum.LauncherFilesCopiedServer));
@@ -192,8 +203,8 @@ namespace PawnPlus
                     Thread.Sleep(1000);
 
                     // Let's copy PAWN files.
-                    File.Copy(Path.Combine(TemporaryFolder, CompilerZIPPath.Remove(CompilerZIPPath.Length - 4), "bin", "pawnc.dll"), Path.Combine(OurPAWNFolder, Path.GetFileName("pawnc.dll")), true);
-                    File.Copy(Path.Combine(TemporaryFolder, CompilerZIPPath.Remove(CompilerZIPPath.Length - 4), "bin", "pawncc.exe"), Path.Combine(OurPAWNFolder, Path.GetFileName("pawncc.exe")), true);
+                    File.Copy(Path.Combine(TemporaryFolder, CompilerZIPPath.Remove(CompilerZIPPath.Length - 4), "bin", "pawnc.dll"), Path.Combine(PAWNFolder, Path.GetFileName("pawnc.dll")), true);
+                    File.Copy(Path.Combine(TemporaryFolder, CompilerZIPPath.Remove(CompilerZIPPath.Length - 4), "bin", "pawncc.exe"), Path.Combine(PAWNFolder, Path.GetFileName("pawncc.exe")), true);
 
                     this.backgroundWorker.ReportProgress(15, LanguageManager.GetText(LanguageEnum.LauncherFilesCopiedCompiler));
                     Thread.Sleep(1000);

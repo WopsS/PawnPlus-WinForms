@@ -7,15 +7,26 @@ using System.Xml;
 
 namespace PawnPlus.Project
 {
+    internal class CompiledInformation
+    {
+        public string Errors { get; set; }
+
+        public bool HasErrors { get { return Errors.Length > 0; } }
+
+        public string Output { get; set; }
+    }
+
     internal static class ProjectManager
     {
         public static readonly string Extension = ".pawnplusproject";
         public static bool IsOpen { get; private set; }
         public static string Name { get; private set; }
         public static string Path { get; private set; }
+        public static CompiledInformation LastCompiled = new CompiledInformation();
 
         private static TreeView treeView;
         private static string xmlPath = string.Empty;
+        private static Main mainForm = (Main)Application.OpenForms[0];
 
         public static void Construct(TreeView treeView)
         {
@@ -90,7 +101,14 @@ namespace PawnPlus.Project
         public static bool Open(string projectPath)
         {
             if (projectPath == null || System.IO.Path.GetExtension(projectPath) != Extension)
+            {
                 return false;
+            }
+
+            if (IsOpen == true)
+            {
+                Close();
+            }
 
             xmlPath = projectPath;
 
@@ -145,6 +163,9 @@ namespace PawnPlus.Project
 
             IsOpen = true;
 
+            mainForm.SetMenuStatus(true, true, true);
+            mainForm.SetFormName("PawnPlus - " + Name);
+
             return true;
         }
 
@@ -152,7 +173,7 @@ namespace PawnPlus.Project
         /// Load a directory and create a project tree.
         /// </summary>
         /// <param name="path">Path of the project.</param>
-        private static void LoadDirectory(string path)
+        public static void LoadDirectory(string path)
         {
             if (treeView == null)
             {

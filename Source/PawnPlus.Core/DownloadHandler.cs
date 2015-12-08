@@ -99,7 +99,6 @@ namespace PawnPlus.Core
         private void DownloadProgressChangedEventHandler(object sender, DownloadProgressChangedEventArgs e)
         {
             string downloadedText = string.Format("{0} of {1} MB", (e.BytesReceived / 1024d / 1024d).ToString("0.00"), (e.TotalBytesToReceive / 1024d / 1024d).ToString("0.00"));
-
             this.DownloadProgressChanged(this, new DownloadHandlerEventArgs(downloadedText, e.ProgressPercentage));
         }
 

@@ -4,6 +4,57 @@ namespace PawnPlus.Language
 {
     public enum LanguageEnum
     {
+        [Description("Button_Cancel")]
+        ButtonCancel,
+        [Description("Button_OK")]
+        ButtonOK,
+
+        [Description("CompilerOptions")]
+        CompilerOptions,
+
+        [Description("Filterscript")]
+        Filterscript,
+
+        [Description("FindReplace_Button_Find_Next")]
+        FindReplaceButtonFindNext,
+        [Description("FindReplace_Button_Find_Previous")]
+        FindReplaceButtonFindPrevious,
+        [Description("FindReplace_Button_Replace")]
+        FindReplaceButtonReplace,
+        [Description("FindReplace_Button_Replace_All")]
+        FindReplaceButtonReplaceAll,
+        [Description("FindReplace_Button_Case_Sensitive")]
+        FindReplaceButtonCaseSensitive,
+        [Description("FindReplace_Find_What_Label")]
+        FindReplaceFindWhatLabel,
+        [Description("FindReplace_LookIn_All_Document")]
+        FindReplaceLookInAllDocument,
+        [Description("FindReplace_LookIn_Current_Document")]
+        FindReplaceLookInCurrentDocument,
+        [Description("FindReplace_LookIn_Label")]
+        FindReplaceLookInLabel,
+        [Description("FindReplace_Name")]
+        FindReplaceName,
+        [Description("FindReplace_Replace_With_Label")]
+        FindReplaceReplaceWithLabel,
+        [Description("FindReplace_Tab_Find")]
+        FindReplaceTabFind,
+        [Description("FindReplace_Tab_Replace")]
+        FindReplaceTabReplace,
+        [Description("FindReplace_Button_Whole_Word")]
+        FindReplaceButtonWholeWord,
+
+        [Description("Gamemode")]
+        Gamemode,
+
+        [Description("GoToLine_Label")]
+        GoToLineLabel,
+        [Description("GoToLine_Name")]
+        GoToLineName,
+
+        [Description("Include")]
+        Include,
+
         [Description("Launcher_Files_Checking")]
         LauncherFilesChecking,
         [Description("Launcher_Files_Copied_Compiler")]
@@ -93,7 +144,42 @@ namespace PawnPlus.Language
         [Description("Menu_Line")]
         MenuLine,
 
+        [Description("NewForm_Browse")]
+        NewFormBrowse,
+        [Description("NewForm_Close")]
+        NewFormClose,
+        [Description("NewForm_Create")]
+        NewFormCreate,
+        [Description("NewForm_Empty_Name")]
+        NewFormEmptyName,
+        [Description("NewForm_Empty_Path")]
+        NewFormEmptyPath,
+        [Description("NewForm_Name")]
+        NewFormName,
+        [Description("NewForm_Path")]
+        NewFormPath,
+        [Description("NewForm_Project")]
+        NewFormProject,
+        [Description("NewForm_Project_File")]
+        NewFormProjectFile,
+        [Description("NewForm_Type")]
+        NewFormType,
+
+        [Description("Status_Compiled")]
+        StatusCompiled,
+        [Description("Status_Compiled_With_Errors")]
+        StatusCompiledWithErrors,
+        [Description("Status_Compiling")]
+        StatusCompiling,
+        [Description("Status_Copying_Includes")]
+        StatusCopyingIncludes,
+        [Description("Status_Deleting_Includes")]
+        StatusDeletingIncludes,
+        [Description("Status_Empty_Text")]
+        StatusEmptyText,
         [Description("Status_Ready")]
         StatusReady,
+        [Description("Status_Saving_Files")]
+        StatusSavingFiles,
     }
 }

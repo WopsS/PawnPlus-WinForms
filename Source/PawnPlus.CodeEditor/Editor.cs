@@ -1,5 +1,4 @@
 ﻿using ICSharpCode.AvalonEdit;
-using ICSharpCode.AvalonEdit.Folding;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using PawnPlus.Core;
@@ -7,7 +6,7 @@ using System;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
-using System.Windows;
+using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
 using System.Xml;
@@ -139,6 +138,15 @@ namespace PawnPlus.CodeEditor
         /// <param name="fileName">Path where file should be saved.</param>
         public void Save(string fileName)
         {
+            // A work-around for Cyrillic.
+            byte[] bytes = new byte[this.codeEditor.Text.Length * sizeof(char)];
+            Buffer.BlockCopy(this.codeEditor.Text.ToCharArray(), 0, bytes, 0, bytes.Length);
+
+            using (StreamReader reader = new StreamReader(new MemoryStream(bytes), Encoding.Default))
+            {
+                this.codeEditor.Encoding = reader.CurrentEncoding;
+            }
+
             this.FilePath = fileName;
             this.Text = Path.GetFileName(fileName);
 

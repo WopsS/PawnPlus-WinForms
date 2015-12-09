@@ -24,13 +24,20 @@ namespace PawnPlus
 
             string SelectedText = this.outBox.SelectedText;
 
+            if (string.IsNullOrEmpty(SelectedText) == true || string.IsNullOrWhiteSpace(SelectedText) == true)
+            {
+                return;
+            }
+
             Match match = Regex.Match(SelectedText, @"(.+)\\(.+)\((.+)\)\s:");
 
-            string filePath = match.Groups[2].ToString();
+            string filePath = Path.Combine(match.Groups[1].ToString(), match.Groups[2].ToString());
 
             // Check if the file is an include.
             if (Path.GetExtension(filePath) == ".inc")
             {
+                filePath = match.Groups[2].ToString();
+
                 if (ProjectManager.IsOpen == true && File.Exists(Path.Combine(ProjectManager.Path, "includes", filePath)) == true) // Check if the "includes" folder from poject constains this include.
                 {
                     filePath = Path.Combine(ProjectManager.Path, "includes", filePath);

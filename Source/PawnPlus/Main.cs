@@ -585,14 +585,17 @@ namespace PawnPlus
                 }
             }
 
-            // Copying all includes files to PAWN include folder.
-            StatusManager.Set(StatusType.Warning, LanguageEnum.StatusCopyingIncludes, StatusReset.None);
-
-            string targetDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PawnPlus", "Pawn", "include");
-
-            foreach (string file in Directory.GetFiles(Path.Combine(ProjectManager.Path, "includes")))
+            if (ProjectManager.IsOpen == true)
             {
-                File.Copy(file, Path.Combine(targetDirectory, Path.GetFileName(file)), true);
+                // Copying all includes files to PAWN include folder.
+                StatusManager.Set(StatusType.Warning, LanguageEnum.StatusCopyingIncludes, StatusReset.None);
+
+                string targetDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PawnPlus", "Pawn", "include");
+
+                foreach (string file in Directory.GetFiles(Path.Combine(ProjectManager.Path, "includes")))
+                {
+                    File.Copy(file, Path.Combine(targetDirectory, Path.GetFileName(file)), true);
+                }
             }
 
             // Disable 'Save*' menu items.
@@ -638,14 +641,17 @@ namespace PawnPlus
 
         private void compilerWorker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
-            // Deleting all includes files to PAWN include folder.
-            StatusManager.Set(StatusType.Warning, LanguageEnum.StatusDeletingIncludes, StatusReset.None);
-
-            string targetDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PawnPlus", "Pawn", "include");
-
-            foreach (string file in Directory.GetFiles(Path.Combine(ProjectManager.Path, "includes")))
+            if (ProjectManager.IsOpen == true)
             {
-                File.Delete(Path.Combine(targetDirectory, Path.GetFileName(file)));
+                // Deleting all includes files to PAWN include folder.
+                StatusManager.Set(StatusType.Warning, LanguageEnum.StatusDeletingIncludes, StatusReset.None);
+
+                string targetDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PawnPlus", "Pawn", "include");
+
+                foreach (string file in Directory.GetFiles(Path.Combine(ProjectManager.Path, "includes")))
+                {
+                    File.Delete(Path.Combine(targetDirectory, Path.GetFileName(file)));
+                }
             }
 
             // Enable 'Save*' menu items.

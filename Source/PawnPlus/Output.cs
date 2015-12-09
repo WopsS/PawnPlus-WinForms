@@ -1,4 +1,5 @@
 ﻿using PawnPlus.CodeEditor;
+using PawnPlus.Project;
 using System;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -23,18 +24,38 @@ namespace PawnPlus
 
             string SelectedText = this.outBox.SelectedText;
 
-            Match match = Regex.Match(SelectedText, @"(.+)\((.+)\)\s:");
+            Match match = Regex.Match(SelectedText, @"(.+)\\(.+)\((.+)\)\s:");
 
-            if (File.Exists(match.Groups[1].ToString()) == true)
+            string filePath = match.Groups[2].ToString();
+
+            // Check if the file is an include.
+            if (Path.GetExtension(filePath) == ".inc")
             {
-                CEManager.Open(match.Groups[1].ToString(), true);
+                if (ProjectManager.IsOpen == true && File.Exists(Path.Combine(ProjectManager.Path, "includes", filePath)) == true) // Check if the "includes" folder from poject constains this include.
+                {
+                    filePath = Path.Combine(ProjectManager.Path, "includes", filePath);
+                }
+                else // Check PAWN "includes" folder.
+                {
+                    filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PawnPlus", "Pawn", "include", filePath);
+
+                    if(File.Exists(filePath) == false)
+                    {
+                        return;
+                    }
+                }
             }
 
-            CEManager.SetActiveDocument(match.Groups[1].ToString(), true);
+            if (File.Exists(filePath) == true)
+            {
+                CEManager.Open(filePath, true);
+            }
+
+            CEManager.SetActiveDocument(filePath, true);
 
             // Focus on the error line.
 
-            int line = Convert.ToInt32(match.Groups[2].ToString());
+            int line = Convert.ToInt32(match.Groups[3].ToString());
 
             CEManager.ActiveDocument.codeEditor.ScrollToLine(line);
             CEManager.ActiveDocument.codeEditor.TextArea.Caret.Line = line;

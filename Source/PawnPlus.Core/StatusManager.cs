@@ -1,4 +1,6 @@
-﻿using PawnPlus.Language;
+﻿using PawnPlus.CodeEditor;
+using PawnPlus.Core.Events.Caret;
+using PawnPlus.Language;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -45,7 +47,15 @@ namespace PawnPlus.Core
             StatusManager.lineLabel = lineLabel;
             StatusManager.statusLabel = statusLabel;
 
+            // Assign to the event handler for caret position.
+            CEManager.Caret_PositionChanged += new PositionChanged(Caret_PositionChanged);
+
             readyTimer.Tick += ReadyTimer_Tick;
+        }
+
+        private static void Caret_PositionChanged(Editor editor, Events.Caret.PositionChangedArgs e)
+        {
+            SetLineColumn(e.Line, e.Column);
         }
 
         private static void ReadyTimer_Tick(object sender, System.EventArgs e)

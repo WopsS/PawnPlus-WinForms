@@ -546,10 +546,6 @@
             this.columnLabel.Text = "Column 0";
             this.columnLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // openFileDialog
-            // 
-            this.openFileDialog.FileName = "openFileDialog";
-            // 
             // dockPanel
             // 
             this.dockPanel.Dock = System.Windows.Forms.DockStyle.Fill;

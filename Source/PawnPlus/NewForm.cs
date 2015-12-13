@@ -9,12 +9,21 @@ namespace PawnPlus
 {
     public partial class NewForm : Form
     {
+        string fileFolder = string.Empty;
         NewFormType type;
 
         public NewForm(NewFormType type)
         {
             InitializeComponent();
             this.type = type;
+        }
+
+        public NewForm(NewFormType type, string path)
+        {
+            InitializeComponent();
+
+            this.type = type;
+            this.fileFolder = path;
         }
 
         private void NewForm_Load(object sender, EventArgs e)
@@ -77,7 +86,6 @@ namespace PawnPlus
             if (this.type == NewFormType.File)
             {
                 CreateFile();
-                ProjectManager.LoadDirectory(ProjectManager.Path);
             }
             else
             {
@@ -104,30 +112,41 @@ namespace PawnPlus
 
             try
             {
-                string Extension = ".pwn";
-                string Folder = string.Empty;
+                string extension = ".pwn";
 
                 switch (this.typeComboBox.SelectedIndex)
                 {
                     case 0: // It is a filterscript.
                         {
                             resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("PawnPlus.Resources.ProjectFiles.Filterscript.pwn");
-                            Folder = "filterscripts";
+
+                            if (string.IsNullOrEmpty(this.fileFolder) == true)
+                            {
+                                this.fileFolder = "filterscripts";
+                            }
 
                             break;
                         }
                     case 1: // It is a gamemode.
                         {
                             resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("PawnPlus.Resources.ProjectFiles.Gamemode.pwn");
-                            Folder = "gamemodes";
+
+                            if (string.IsNullOrEmpty(this.fileFolder) == true)
+                            {
+                                this.fileFolder = "gamemodes";
+                            }
 
                             break;
                         }
                     case 2: // It is a include.
                         {
                             resourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("PawnPlus.Resources.ProjectFiles.Include.inc");
-                            Extension = ".inc";
-                            Folder = "includes";
+                            extension = ".inc";
+
+                            if (string.IsNullOrEmpty(this.fileFolder) == true)
+                            {
+                                this.fileFolder = "includes";
+                            }
 
                             break;
                         }
@@ -135,17 +154,19 @@ namespace PawnPlus
 
                 using (StreamReader streamReader = new StreamReader(resourceStream))
                 {
-                    string Stream = streamReader.ReadToEnd();
-                    string FolderPath = Path.Combine(ProjectManager.Path, Folder);
+                    string stream = streamReader.ReadToEnd();
+                    string folderPath = Path.Combine(ProjectManager.Path, this.fileFolder);
+                    string filePath = Path.Combine(folderPath, string.Format("{0}{1}", this.nameBox.Text, extension));
 
-                    if (Directory.Exists(FolderPath) == false)
+                    if (Directory.Exists(folderPath) == false)
                     {
-                        Directory.CreateDirectory(FolderPath);
+                        Directory.CreateDirectory(folderPath);
                     }
 
                     resourceStream = null;
 
-                    File.WriteAllText(Path.Combine(FolderPath, string.Format("{0}{1}", this.nameBox.Text, Extension)), Extension == ".inc" ? string.Format(Stream, this.nameBox.Text.ToLower()) : Stream);
+                    File.WriteAllText(filePath, extension == ".inc" ? string.Format(stream, this.nameBox.Text.ToLower()) : stream);
+                    ProjectManager.Add(Core.TreeNodeType.File, filePath);
                 }
             }
             finally

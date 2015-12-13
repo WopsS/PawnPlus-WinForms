@@ -8,7 +8,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
-using System.Threading;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 
@@ -424,6 +423,9 @@ namespace PawnPlus
 
                 this.saveToolStripMenuItem.Text = string.Format(LanguageManager.GetText(LanguageEnum.MainMenuItemFileSave), "Selected Item");
                 this.savesAsToolStripMenuItem.Text = string.Format(LanguageManager.GetText(LanguageEnum.MainMenuItemFileSaveAs), "Selected Item");
+
+                // Clear output box.
+                this.outputForm.ClearText();
             }
         }
 
@@ -448,6 +450,9 @@ namespace PawnPlus
             if (dialogResult == DialogResult.OK)
             {
                 ProjectManager.Open(this.openFileDialog.FileName);
+
+                this.SetMenuStatus(true, true, true);
+                this.SetFormName(Name);
             }
         }
 
@@ -566,7 +571,7 @@ namespace PawnPlus
             {
                 return;
             }
-            else if (string.IsNullOrEmpty(textEditor.Text) == true)
+            else if (string.IsNullOrEmpty(textEditor.Text) == true || string.IsNullOrWhiteSpace(textEditor.Text) == true)
             {
                 StatusManager.Set(StatusType.Error, LanguageEnum.StatusEmptyText, StatusReset.FiveSeconds);
                 return;
@@ -590,11 +595,16 @@ namespace PawnPlus
                 // Copying all includes files to PAWN include folder.
                 StatusManager.Set(StatusType.Warning, LanguageEnum.StatusCopyingIncludes, StatusReset.None);
 
-                string targetDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PawnPlus", "Pawn", "include");
+                string targetAppDataDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PawnPlus", "Pawn", "include");
+                string projectDirectory = Path.Combine(ProjectManager.Path, "includes");
 
-                foreach (string file in Directory.GetFiles(Path.Combine(ProjectManager.Path, "includes")))
+                // Check if our directories exists.
+                if (Directory.Exists(targetAppDataDirectory) == true && Directory.Exists(projectDirectory) == true)
                 {
-                    File.Copy(file, Path.Combine(targetDirectory, Path.GetFileName(file)), true);
+                    foreach (string file in Directory.GetFiles(projectDirectory))
+                    {
+                        File.Copy(file, Path.Combine(targetAppDataDirectory, Path.GetFileName(file)), true);
+                    }
                 }
             }
 
@@ -634,9 +644,18 @@ namespace PawnPlus
 
             while (compilingProcess.HasExited == false)
             {
-                ProjectManager.LastCompiled.Errors = compilingProcess.StandardError.ReadToEnd();
-                ProjectManager.LastCompiled.Output = compilingProcess.StandardOutput.ReadToEnd();
+                ProjectManager.LastCompilation.Errors = compilingProcess.StandardError.ReadToEnd();
+                ProjectManager.LastCompilation.Output = compilingProcess.StandardOutput.ReadToEnd();
             }
+
+            // Replace path to includes and gamemodes or filterscripts.
+            if (string.IsNullOrEmpty(ProjectManager.Path) == false)
+            {
+                ProjectManager.LastCompilation.Errors = ProjectManager.LastCompilation.Errors.Replace(string.Format("{0}\\", Path.Combine(ProjectManager.Path, "filterscripts")), string.Empty);
+                ProjectManager.LastCompilation.Errors = ProjectManager.LastCompilation.Errors.Replace(string.Format("{0}\\", Path.Combine(ProjectManager.Path, "gamemodes")), string.Empty);
+            }
+
+            ProjectManager.LastCompilation.Errors = ProjectManager.LastCompilation.Errors.Replace(string.Format("{0}\\", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PawnPlus", "Pawn", "include")), string.Empty);
         }
 
         private void compilerWorker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
@@ -646,11 +665,16 @@ namespace PawnPlus
                 // Deleting all includes files to PAWN include folder.
                 StatusManager.Set(StatusType.Warning, LanguageEnum.StatusDeletingIncludes, StatusReset.None);
 
-                string targetDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PawnPlus", "Pawn", "include");
+                string targetAppDataDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PawnPlus", "Pawn", "include");
+                string projectDirectory = Path.Combine(ProjectManager.Path, "includes");
 
-                foreach (string file in Directory.GetFiles(Path.Combine(ProjectManager.Path, "includes")))
+                // Check if our directories exists.
+                if (Directory.Exists(targetAppDataDirectory) == true && Directory.Exists(projectDirectory) == true)
                 {
-                    File.Delete(Path.Combine(targetDirectory, Path.GetFileName(file)));
+                    foreach (string file in Directory.GetFiles(projectDirectory))
+                    {
+                        File.Delete(Path.Combine(targetAppDataDirectory, Path.GetFileName(file)));
+                    }
                 }
             }
 
@@ -659,9 +683,9 @@ namespace PawnPlus
             this.savesAsToolStripMenuItem.Enabled = true;
             this.saveAllToolStripMenuItem.Enabled = true;
 
-            if (ProjectManager.LastCompiled.HasErrors == true)
+            if (ProjectManager.LastCompilation.HasErrors == true)
             {
-                this.outputForm.SetText(ProjectManager.LastCompiled.Errors, false);
+                this.outputForm.SetText(ProjectManager.LastCompilation.Errors, false);
                 StatusManager.Set(StatusType.Error, LanguageEnum.StatusCompiledWithErrors, StatusReset.FiveSeconds);
             }
             else
@@ -669,7 +693,7 @@ namespace PawnPlus
                 StatusManager.Set(StatusType.Finish, LanguageEnum.StatusCompiled, StatusReset.FiveSeconds);
             }
 
-            this.outputForm.SetText(ProjectManager.LastCompiled.Output, true);
+            this.outputForm.SetText(ProjectManager.LastCompilation.Output, true);
         }
 
         /// <summary>
@@ -716,7 +740,7 @@ namespace PawnPlus
         /// <param name="name">New name of the form.</param>
         public void SetFormName(string name)
         {
-            this.FormName.Text = name;
+            this.FormName.Text = string.Format("PawnPlus - {0}", name);
         }
 
         /// <summary>

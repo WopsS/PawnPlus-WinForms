@@ -42,6 +42,7 @@
             this.projectFiles.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.projectFiles_AfterExpand);
             this.projectFiles.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.projectFiles_AfterSelect);
             this.projectFiles.DoubleClick += new System.EventHandler(this.projectFiles_DoubleClick);
+            this.projectFiles.MouseUp += new System.Windows.Forms.MouseEventHandler(this.projectFiles_MouseUp);
             // 
             // ProjectExplorer
             // 

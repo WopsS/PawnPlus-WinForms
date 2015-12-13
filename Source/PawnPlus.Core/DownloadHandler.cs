@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading;
 
 namespace PawnPlus.Core
 {
-    public class DownloadHandlerEventArgs
+    public class DownloadHandlerEventArgs : EventArgs
     {
         public string DownloadedText { get; private set; }
         public int ProgressPercentage { get; private set; }

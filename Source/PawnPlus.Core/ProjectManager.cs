@@ -1,4 +1,5 @@
 ﻿using PawnPlus.CodeEditor;
+using PawnPlus.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,7 +8,7 @@ using System.Xml;
 
 namespace PawnPlus.Project
 {
-    internal class CompiledInformation
+    public struct CompiledInformation
     {
         public string Errors { get; set; }
 
@@ -16,20 +17,82 @@ namespace PawnPlus.Project
         public string Output { get; set; }
     }
 
-    internal static class ProjectManager
+    public static class ProjectManager
     {
         public static readonly string Extension = ".pawnplusproject";
         public static bool IsOpen { get; private set; }
         public static string Name { get; private set; }
         public static string Path { get; private set; }
-        public static CompiledInformation LastCompiled = new CompiledInformation();
+        public static CompiledInformation LastCompilation = new CompiledInformation();
 
         private static TreeView treeView;
         private static string xmlPath = string.Empty;
-        private static Main mainForm = (Main)Application.OpenForms[0];
 
+        /// <summary>
+        /// Add project item to explorer.
+        /// </summary>
+        /// <param name="type">Type of the item.</param>
+        /// <param name="path">Path of the item in project.</param>
+        public static void Add(TreeNodeType type, string path)
+        {
+            // Check if the path is from project.
+            if(path.Substring(0, Path.Length) != Path)
+            {
+                return;
+            }
+
+            short imageIndex = 1;
+
+            string name = System.IO.Path.GetFileName(path);
+            string extension = System.IO.Path.GetExtension(path);
+
+            // Check extension to know image index.
+            if (extension == ".inc")
+            {
+                imageIndex = 4;
+            }
+            else if (extension == ".pwn")
+            {
+                imageIndex = 3;
+            }
+
+            // Create TreeView path of the folder.
+            string directory = System.IO.Path.Combine(Name, System.IO.Path.GetDirectoryName(path.Remove(0, Path.Length + 1)));
+
+            TreeNode parentNode = TreeNodeHelper.GetNodeByPath(treeView.Nodes, directory);
+
+            if (parentNode != null)
+            {
+                // Add the node to TreeView.
+                TreeNode childNode = parentNode.Nodes.Add(path, name, imageIndex, imageIndex);
+                childNode.Tag = type;
+
+                // Now let's sort the TreeView.
+                treeView.Sort();
+
+                if (parentNode.IsExpanded == false)
+                {
+                    parentNode.Expand();
+                }
+            }
+            else
+            {
+                // TODO: Write the a message to log file.
+            }
+        }
+
+        /// <summary>
+        /// Constructor for the static class, it is called manually.
+        /// </summary>
+        /// <param name="treeView">Object for file list.</param>
         public static void Construct(TreeView treeView)
         {
+            // Prevent double construct.
+            if (ProjectManager.treeView != null)
+            {
+                return;
+            }
+
             ProjectManager.treeView = treeView;
         }
 
@@ -63,7 +126,20 @@ namespace PawnPlus.Project
                     // Let's create new 'File' nodes.
                     XmlNode xmlElement;
 
+                    // Create a list of editors, we will delete from it later.
+                    List<Editor> editors = new List<Editor>();
+
+                    // Push to list our project files.
                     foreach (Editor editor in CEManager.ToList().Values)
+                    {
+                        if (editor.IsProjectFile == true)
+                        {
+                            editors.Add(editor);
+                        }
+                    }
+
+                    // Save files and close them.
+                    foreach (Editor editor in editors)
                     {
                         xmlElement = xmlFile.CreateElement("File");
                         xmlElement.InnerText = editor.FilePath;
@@ -77,6 +153,8 @@ namespace PawnPlus.Project
                         }
 
                         xmlDocument.AppendChild(xmlElement);
+
+                        editor.Close();
                     }
 
                     // All done, let's save the XML.
@@ -163,9 +241,6 @@ namespace PawnPlus.Project
 
             IsOpen = true;
 
-            mainForm.SetMenuStatus(true, true, true);
-            mainForm.SetFormName("PawnPlus - " + Name);
-
             return true;
         }
 
@@ -180,10 +255,25 @@ namespace PawnPlus.Project
                 return;
             }
 
+            treeView.BeginUpdate();
+
             treeView.Nodes.Clear();
 
-            treeView.Nodes.Add(CreateNode(new DirectoryInfo(path)));
+            TreeNode treeNode = CreateNode(new DirectoryInfo(path));
+            treeNode.Tag = TreeNodeType.Root;
+
+            treeView.Nodes.Add(treeNode);
             treeView.Nodes[0].Expand();
+
+            treeView.EndUpdate();
+        }
+
+        /// <summary>
+        /// Reload the project directory.
+        /// </summary>
+        public static void ReloadDirectory()
+        {
+            LoadDirectory(Path);
         }
 
         /// <summary>
@@ -204,11 +294,17 @@ namespace PawnPlus.Project
                 treeNode = new TreeNode(directoryInfo.Name, 1, 1);
             }
 
+            TreeNode childNode = null;
+
             foreach (DirectoryInfo directory in directoryInfo.GetDirectories())
             {
-                if ((directory.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden) // Check if current folder is hidden.
+                // Check if current folder is hidden or it's name is "plugins".
+                if ((directory.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden && directory.Name != "plugins")
                 {
-                    treeNode.Nodes.Add(CreateNode(directory));
+                    childNode = CreateNode(directory);
+                    childNode.Tag = TreeNodeType.Directory;
+
+                    treeNode.Nodes.Add(childNode);
                 }
             }
 
@@ -222,12 +318,14 @@ namespace PawnPlus.Project
 
                 if (fileInfo.Name.Contains(".inc"))
                 {
-                    treeNode.Nodes.Add(fileInfo.FullName, fileInfo.Name, 4, 4);
+                    childNode = treeNode.Nodes.Add(fileInfo.FullName, fileInfo.Name, 4, 4);
                 }
                 else
                 {
-                    treeNode.Nodes.Add(fileInfo.FullName, fileInfo.Name, 3, 3);
+                    childNode = treeNode.Nodes.Add(fileInfo.FullName, fileInfo.Name, 3, 3);
                 }
+
+                childNode.Tag = TreeNodeType.File;
             }
 
             return treeNode;

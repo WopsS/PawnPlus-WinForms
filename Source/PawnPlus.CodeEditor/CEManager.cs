@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using PawnPlus.Core.Events.Caret;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 
@@ -11,8 +12,15 @@ namespace PawnPlus.CodeEditor
         /// </summary>
         public static Editor ActiveDocument { get; private set; }
 
+        public static event PositionChanged Caret_PositionChanged;
+
         private static Dictionary<string, Editor> editorList = new Dictionary<string, Editor>();
         private static DockPanel dockPanel;
+
+        private static void Caret_PositionChangedInternal(Editor editor, PositionChangedArgs e)
+        {
+            Caret_PositionChanged(editor, e);
+        }
 
         /// <summary>
         /// Constructor for the static class, it is called manually.
@@ -20,7 +28,8 @@ namespace PawnPlus.CodeEditor
         /// <param name="dockPanel">Object of the dock panel.</param>
         public static void Construct(DockPanel dockPanel)
         {
-            if (CEManager.dockPanel != null) // Prevent double construct.
+            // Prevent double construct.
+            if (CEManager.dockPanel != null)
             {
                 return;
             }
@@ -39,6 +48,8 @@ namespace PawnPlus.CodeEditor
                 return;
             }
 
+            // Unsubscribe from the event handler for caret position.
+            editorList[filePath].caretPositionChanged -= Caret_PositionChangedInternal;
             editorList.Remove(filePath);
         }
 
@@ -100,6 +111,9 @@ namespace PawnPlus.CodeEditor
 
             editorList.Add(filePath, editor);
             editor.Show(dockPanel, DockState.Document);
+
+            // Subscribe to the event handler for caret position.
+            editor.caretPositionChanged += new PositionChanged(Caret_PositionChangedInternal);
 
             return editor;
         }

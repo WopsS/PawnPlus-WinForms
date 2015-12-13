@@ -1,7 +1,7 @@
 ﻿using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
-using PawnPlus.Core;
+using PawnPlus.Core.Events.Caret;
 using System;
 using System.Drawing;
 using System.IO;
@@ -32,6 +32,8 @@ namespace PawnPlus.CodeEditor
         public bool IsProjectFile { get; set; }
 
         private ElementHost elementHost = new ElementHost();
+
+        internal event PositionChanged caretPositionChanged;
 
         public Editor()
         {
@@ -90,9 +92,10 @@ namespace PawnPlus.CodeEditor
 
         private void codeEditor_Caret_PositionChanged(object sender, EventArgs e)
         {
-            if (CEManager.ActiveDocument == this) // Just to be sure about the position of the caret, maybe it will be changed somehow (but I don't think so).
+            // Just to be sure about the position of the caret, maybe it will be changed somehow (but I don't think so).
+            if (CEManager.ActiveDocument == this && this.caretPositionChanged != null)
             {
-                StatusManager.SetLineColumn(this.codeEditor.TextArea.Caret.Line, this.codeEditor.TextArea.Caret.Column);
+                this.caretPositionChanged(this, new PositionChangedArgs(this.codeEditor.TextArea.Caret.Line, this.codeEditor.TextArea.Caret.Column));
             }
         }
 

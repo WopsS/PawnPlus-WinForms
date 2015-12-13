@@ -48,7 +48,7 @@ namespace PawnPlus.Core
         {
             foreach (TreeNode currentNode in nodes)
             {
-                if (System.IO.Path.GetExtension(currentNode.FullPath) != string.Empty)
+                if (Path.GetExtension(currentNode.FullPath) != string.Empty)
                 {
                     continue;
                 }

@@ -130,7 +130,7 @@ namespace PawnPlus.Project
                     List<Editor> editors = new List<Editor>();
 
                     // Push to list our project files.
-                    foreach (Editor editor in CEManager.ToList().Values)
+                    foreach (Editor editor in CEManager.Get().Values)
                     {
                         if (editor.IsProjectFile == true)
                         {

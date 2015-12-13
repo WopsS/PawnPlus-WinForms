@@ -93,6 +93,15 @@ namespace PawnPlus.CodeEditor
         }
 
         /// <summary>
+        /// Get a list of all opened editors.
+        /// </summary>
+        /// <returns>Returns a list of editors.</returns>
+        public static Dictionary<string, Editor> Get()
+        {
+            return editorList;
+        }
+
+        /// <summary>
         /// Open a file.
         /// </summary>
         /// <param name="filePath">Path of the file which need to be opened.</param>
@@ -126,15 +135,6 @@ namespace PawnPlus.CodeEditor
         public static Editor Open(string filePath)
         {
             return Open(filePath, false);
-        }
-
-        /// <summary>
-        /// Get a list of all opened editors.
-        /// </summary>
-        /// <returns>Returns a list of editors.</returns>
-        public static Dictionary<string, Editor> ToList()
-        {
-            return editorList;
         }
 
         /// <summary>

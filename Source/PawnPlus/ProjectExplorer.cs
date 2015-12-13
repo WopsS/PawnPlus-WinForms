@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 
@@ -39,6 +40,8 @@ namespace PawnPlus
             this.projectFiles.AfterLabelEdit += projectFiles_AfterLabelEdit;
 
             List<MenuItem> menuItems = new List<MenuItem>();
+
+            // TODO: Translate texts.
 
             // Add items for file context menu.
             menuItems.Add(new MenuItem("Delete", this.contextMenuDelete_Click));
@@ -101,20 +104,38 @@ namespace PawnPlus
             {
                 if (e.Label.IndexOfAny(new char[] { '@', ',', '!' }) == -1)
                 {
-                    string oldPath = Path.Combine(ProjectManager.Path, e.Node.Text);
-                    string newPath = Path.Combine(ProjectManager.Path, e.Label);
+                    string projectPath = Path.GetDirectoryName(this.projectFiles.SelectedNode.FullPath.Remove(0, this.projectFiles.SelectedNode.FullPath.Length > ProjectManager.Name.Length ? ProjectManager.Name.Length + 1 : ProjectManager.Name.Length));
+                    string oldPath = Path.Combine(ProjectManager.Path, projectPath, e.Node.Text);
+                    string newPath = Path.Combine(ProjectManager.Path, projectPath, e.Label);
 
                     if ((TreeNodeType)e.Node.Tag == TreeNodeType.Directory)
                     {
                         TreeNodeHelper.ChangeKeys(e.Node.Nodes, oldPath, newPath);
+
+                        // Change directory's name.
+                        Directory.Move(oldPath, newPath);
                     }
                     else
                     {
                         TreeNodeHelper.ChangeKey(e.Node, newPath);
+
+                        // Change file's name.
+                        File.Move(oldPath, newPath);
                     }
 
-                    // Change directory's name.
-                    Directory.Move(oldPath, newPath);
+                    // Change editor path.
+                    foreach (Editor editor in CEManager.Get().Values.ToList())
+                    {
+                        // Check if file path is greater or equal with modified path.
+                        if (editor.FilePath.Length >= oldPath.Length && editor.FilePath.Substring(0, oldPath.Length) == oldPath)
+                        {
+                            string editorPath = editor.FilePath;
+
+                            // Remove and add the editor.
+                            editor.Close();
+                            CEManager.Open(Path.Combine(newPath, editorPath.Remove(0, editorPath.Length <= oldPath.Length ? oldPath.Length : oldPath.Length + 1)));
+                        }
+                    }
 
                     e.Node.EndEdit(false);
                 }
@@ -237,6 +258,16 @@ namespace PawnPlus
                 if (File.Exists(path) == true)
                 {
                     File.Delete(path);
+                }
+            }
+
+            // Close editors.
+            foreach (Editor editor in CEManager.Get().Values.ToList())
+            {
+                // Check if file path is greater or equal with deleted path.
+                if (editor.FilePath.Length >= path.Length && editor.FilePath.Substring(0, path.Length) == path)
+                {
+                    editor.Close();
                 }
             }
 

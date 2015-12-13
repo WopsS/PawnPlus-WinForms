@@ -76,7 +76,7 @@ namespace PawnPlus
                 {
                     bool found = false;
 
-                    foreach (Editor editor in CEManager.ToList().Values)
+                    foreach (Editor editor in CEManager.Get().Values)
                     {
                         if(Path.GetFileName(editor.FilePath) == filePath)
                         {

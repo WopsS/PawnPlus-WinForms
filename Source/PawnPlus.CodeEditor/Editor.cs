@@ -22,7 +22,19 @@ namespace PawnPlus.CodeEditor
         /// Path to the file which is edited.
         /// Empty by default.
         /// </summary>
-        public string FilePath { get; private set; }
+        public string FilePath
+        {
+            get
+            {
+                return this.filePath;
+            }
+
+            set
+            {
+                this.Text = Path.GetFileName(value);
+                this.filePath = value;
+            }
+        }
 
         /// <summary>
         /// Get the 'modified' flag.
@@ -32,6 +44,8 @@ namespace PawnPlus.CodeEditor
         public bool IsProjectFile { get; set; }
 
         private ElementHost elementHost = new ElementHost();
+
+        private string filePath = string.Empty;
 
         internal event PositionChanged caretPositionChanged;
 
@@ -119,7 +133,7 @@ namespace PawnPlus.CodeEditor
         {
             this.FilePath = fileName;
             this.codeEditor.Load(fileName);
-            this.Text = Path.GetFileName(fileName);
+            //this.Text = Path.GetFileName(fileName);
 
             IntPtr hIcon;
 

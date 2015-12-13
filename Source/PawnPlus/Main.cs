@@ -498,7 +498,7 @@ namespace PawnPlus
 
         private void saveAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            foreach (Editor editor in CEManager.ToList().Values)
+            foreach (Editor editor in CEManager.Get().Values)
             {
                 if (editor.IsModified == true)
                 {
@@ -582,7 +582,7 @@ namespace PawnPlus
             // Saving all files opened.
             StatusManager.Set(StatusType.Warning, LanguageEnum.StatusSavingFiles, StatusReset.None);
 
-            foreach (Editor editor in CEManager.ToList().Values)
+            foreach (Editor editor in CEManager.Get().Values)
             {
                 if (editor.IsModified == true)
                 {

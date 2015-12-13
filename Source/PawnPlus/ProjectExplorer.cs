@@ -3,9 +3,11 @@ using PawnPlus.Core;
 using PawnPlus.Project;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 
@@ -46,6 +48,8 @@ namespace PawnPlus
             // Add items for file context menu.
             menuItems.Add(new MenuItem("Delete", this.contextMenuDelete_Click));
             menuItems.Add(new MenuItem("Rename", this.contextMenuRename_Click));
+            menuItems.Add(new MenuItem("-"));
+            menuItems.Add(new MenuItem("Show in Explorer", this.contextMenuShowInExplorer_Click));
             this.fileMenu = new ContextMenu(menuItems.ToArray());
 
             menuItems.Clear();
@@ -59,6 +63,8 @@ namespace PawnPlus
 
             menuItems.Add(new MenuItem("Delete", this.contextMenuDelete_Click));
             menuItems.Add(new MenuItem("Rename", this.contextMenuRename_Click));
+            menuItems.Add(new MenuItem("-"));
+            menuItems.Add(new MenuItem("Show in Explorer", this.contextMenuShowInExplorer_Click));
             this.directoryMenu = new ContextMenu(menuItems.ToArray());
 
             menuItems.Clear();
@@ -71,6 +77,8 @@ namespace PawnPlus
             menuItems[0].MenuItems.Add(new MenuItem("New Folder", this.contextMenuCreateFolder_Click));
 
             menuItems.Add(new MenuItem("Rename", this.contextMenuRename_Click));
+            menuItems.Add(new MenuItem("-"));
+            menuItems.Add(new MenuItem("Show in Explorer", this.contextMenuShowInExplorer_Click));
             this.rootMenu = new ContextMenu(menuItems.ToArray());
 
             ProjectManager.Construct(this.projectFiles);
@@ -100,11 +108,12 @@ namespace PawnPlus
             {
                 return;
             }
+
             if (e.Label.Length > 0)
             {
                 if (e.Label.IndexOfAny(new char[] { '@', ',', '!' }) == -1)
                 {
-                    string projectPath = Path.GetDirectoryName(this.projectFiles.SelectedNode.FullPath.Remove(0, this.projectFiles.SelectedNode.FullPath.Length > ProjectManager.Name.Length ? ProjectManager.Name.Length + 1 : ProjectManager.Name.Length));
+                    string projectPath = Path.GetDirectoryName(this.GetTreeViewPath());
                     string oldPath = Path.Combine(ProjectManager.Path, projectPath, e.Node.Text);
                     string newPath = Path.Combine(ProjectManager.Path, projectPath, e.Label);
 
@@ -208,9 +217,7 @@ namespace PawnPlus
 
         private void contextMenuCreateFile_Click(object sender, EventArgs e)
         {
-            // Remove project name from TreeView path.
-            string path = this.projectFiles.SelectedNode.FullPath.Remove(0, this.projectFiles.SelectedNode.FullPath.Length > ProjectManager.Name.Length ? ProjectManager.Name.Length + 1 : ProjectManager.Name.Length);
-            path = Path.Combine(ProjectManager.Path, path);
+            string path = Path.Combine(ProjectManager.Path, this.GetTreeViewPath());
 
             NewForm newForm = new NewForm(NewFormType.File, path);
             newForm.ShowDialog(this);
@@ -218,9 +225,7 @@ namespace PawnPlus
 
         private void contextMenuCreateFolder_Click(object sender, EventArgs e)
         {
-            // Remove project name from TreeView path.
-            string path = this.projectFiles.SelectedNode.FullPath.Remove(0, this.projectFiles.SelectedNode.FullPath.Length > ProjectManager.Name.Length ? ProjectManager.Name.Length + 1 : ProjectManager.Name.Length);
-            path = Path.Combine(ProjectManager.Path, path, "New Folder");
+            string path = Path.Combine(ProjectManager.Path, this.GetTreeViewPath(), "New Folder");
 
             int count = 0;
 
@@ -238,40 +243,43 @@ namespace PawnPlus
 
         private void contextMenuDelete_Click(object sender, EventArgs e)
         {
-            // Remove project name from TreeView path.
-            string path = this.projectFiles.SelectedNode.FullPath.Remove(0, ProjectManager.Name.Length + 1);
-            path = Path.Combine(ProjectManager.Path, path);
+            string path = Path.Combine(ProjectManager.Path, this.GetTreeViewPath());
 
-            FileAttributes fileAttributes = File.GetAttributes(path);
+            DialogResult dialogResult = MessageBox.Show(string.Format("'{0}' will be deleted permanently.", Path.GetFileName(path)), Assembly.GetExecutingAssembly().GetName().Name, MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
 
-            if (fileAttributes.HasFlag(FileAttributes.Directory) == true)
+            if (dialogResult == DialogResult.OK)
             {
-                // Check if our directory exists.
-                if (Directory.Exists(path) == true)
-                {
-                    Directory.Delete(path, true);
-                }
-            }
-            else
-            {
-                // Check if our file exists.
-                if (File.Exists(path) == true)
-                {
-                    File.Delete(path);
-                }
-            }
+                FileAttributes fileAttributes = File.GetAttributes(path);
 
-            // Close editors.
-            foreach (Editor editor in CEManager.Get().Values.ToList())
-            {
-                // Check if file path is greater or equal with deleted path.
-                if (editor.FilePath.Length >= path.Length && editor.FilePath.Substring(0, path.Length) == path)
+                if (fileAttributes.HasFlag(FileAttributes.Directory) == true)
                 {
-                    editor.Close();
+                    // Check if our directory exists.
+                    if (Directory.Exists(path) == true)
+                    {
+                        Directory.Delete(path, true);
+                    }
                 }
-            }
+                else
+                {
+                    // Check if our file exists.
+                    if (File.Exists(path) == true)
+                    {
+                        File.Delete(path);
+                    }
+                }
 
-            this.projectFiles.SelectedNode.Remove();
+                // Close editors.
+                foreach (Editor editor in CEManager.Get().Values.ToList())
+                {
+                    // Check if file path is greater or equal with deleted path.
+                    if (editor.FilePath.Length >= path.Length && editor.FilePath.Substring(0, path.Length) == path)
+                    {
+                        editor.Close();
+                    }
+                }
+
+                this.projectFiles.SelectedNode.Remove();
+            }
         }
 
         private void contextMenuRename_Click(object sender, EventArgs e)
@@ -280,6 +288,37 @@ namespace PawnPlus
             {
                 this.projectFiles.SelectedNode.BeginEdit();
             }
+        }
+
+        private void contextMenuShowInExplorer_Click(object sender, EventArgs e)
+        {
+            string path = Path.Combine(ProjectManager.Path, this.GetTreeViewPath());
+
+            if ((TreeNodeType)this.projectFiles.SelectedNode.Tag == TreeNodeType.File)
+            {
+                // Check if our file exists.
+                if (File.Exists(path) == true)
+                {
+                    Process.Start("explorer.exe", string.Format("/select,\"{0}\"", path));
+                }
+            }
+            else
+            {
+                // Check if our directory exists.
+                if (Directory.Exists(path) == true)
+                {
+                    Process.Start("explorer.exe", path);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Remove project name from TreeView path.
+        /// </summary>
+        /// <returns>Returns path without project name.</returns>
+        private string GetTreeViewPath()
+        {
+            return this.projectFiles.SelectedNode.FullPath.Remove(0, this.projectFiles.SelectedNode.FullPath.Length > ProjectManager.Name.Length ? ProjectManager.Name.Length + 1 : ProjectManager.Name.Length);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,258 +117,269 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Button_Cancel" xml:space="preserve">
+  <data name="Text_Cancel" xml:space="preserve">
     <value>Cancel</value>
+    <comment>How a button with &quot;Cancel&quot; text will be displayed.
+Fuzzy</comment>
   </data>
-  <data name="Button_OK" xml:space="preserve">
+  <data name="Text_OK" xml:space="preserve">
     <value>OK</value>
+    <comment>How a button with &quot;OK&quot; text will be displayed.
+Fuzzy</comment>
   </data>
-  <data name="CompilerOptions" xml:space="preserve">
-    <value>Options:</value>
+  <data name="Text_Gamemode" xml:space="preserve">
+    <value>Gamemode</value>
+    <comment>How &quot;gamemode&quot; word will be shown.</comment>
   </data>
-  <data name="Filterscript" xml:space="preserve">
+  <data name="Text_Include" xml:space="preserve">
+    <value>Include</value>
+    <comment>How &quot;include&quot; word will be shown.</comment>
+  </data>
+  <data name="Text_Filterscript" xml:space="preserve">
     <value>Filterscript</value>
+    <comment>How &quot;filterscript&quot; word will be shown.</comment>
   </data>
-  <data name="FindReplace_Button_Case_Sensitive" xml:space="preserve">
+  <data name="Text_Options" xml:space="preserve">
+    <value>Options</value>
+    <comment>Label to show &quot;Options:&quot; in &quot;Compiler Options&quot; form.</comment>
+  </data>
+  <data name="Text_CaseSensitive" xml:space="preserve">
     <value>Case Sensitive</value>
+    <comment>Fuzzy</comment>
   </data>
-  <data name="FindReplace_Button_Find_Next" xml:space="preserve">
-    <value>Find Next</value>
-  </data>
-  <data name="FindReplace_Button_Find_Previous" xml:space="preserve">
+  <data name="Text_FindPrevious" xml:space="preserve">
     <value>Find Prev.</value>
   </data>
-  <data name="FindReplace_Button_Replace" xml:space="preserve">
-    <value>Replace</value>
-  </data>
-  <data name="FindReplace_Button_Replace_All" xml:space="preserve">
+  <data name="Text_ReplaceAll" xml:space="preserve">
     <value>Replace All</value>
+    <comment>Fuzzy</comment>
   </data>
-  <data name="FindReplace_Button_Whole_Word" xml:space="preserve">
+  <data name="Text_WholeWord" xml:space="preserve">
     <value>Whole Word</value>
+    <comment>Fuzzy</comment>
   </data>
-  <data name="FindReplace_Find_What_Label" xml:space="preserve">
+  <data name="Text_FindWhat" xml:space="preserve">
     <value>Text to find:</value>
   </data>
-  <data name="FindReplace_LookIn_All_Document" xml:space="preserve">
+  <data name="Text_AllDocuments" xml:space="preserve">
     <value>All Documents</value>
+    <comment>Used for &quot;Look In&quot; combo box in &quot;Find and Replace&quot; form.</comment>
   </data>
-  <data name="FindReplace_LookIn_Current_Document" xml:space="preserve">
+  <data name="Text_CurrentDocument" xml:space="preserve">
     <value>Current Document</value>
+    <comment>Used for &quot;Look In&quot; combo box in &quot;Find and Replace&quot; form.</comment>
   </data>
-  <data name="FindReplace_LookIn_Label" xml:space="preserve">
+  <data name="Text_LookIn" xml:space="preserve">
     <value>Look in:</value>
+    <comment>Used for &quot;Look In&quot; combo box&apos;s label in &quot;Find and Replace&quot; form.</comment>
   </data>
-  <data name="FindReplace_Name" xml:space="preserve">
+  <data name="Name_FindReplace" xml:space="preserve">
     <value>Find and Replace</value>
+    <comment>Name for &quot;Find and Replace&quot; form.</comment>
   </data>
-  <data name="FindReplace_Replace_With_Label" xml:space="preserve">
+  <data name="Text_ReplaceWith" xml:space="preserve">
     <value>Text to replace:</value>
   </data>
-  <data name="FindReplace_Tab_Find" xml:space="preserve">
+  <data name="Text_Find" xml:space="preserve">
     <value>Find</value>
   </data>
-  <data name="FindReplace_Tab_Replace" xml:space="preserve">
+  <data name="Text_Replace" xml:space="preserve">
     <value>Replace</value>
   </data>
-  <data name="Gamemode" xml:space="preserve">
-    <value>Gamemode</value>
-  </data>
-  <data name="GoToLine_Label" xml:space="preserve">
+  <data name="Text_LineNumber" xml:space="preserve">
     <value>Line number (1- {0}):</value>
-    <comment>e.g.: Line number (1- 10):</comment>
+    <comment>Label in &quot;Go To Line&quot; form.</comment>
   </data>
-  <data name="GoToLine_Name" xml:space="preserve">
+  <data name="Name_GoToLine" xml:space="preserve">
     <value>Go To Line</value>
+    <comment>Name for &quot;Go To Line&quot; form.</comment>
   </data>
-  <data name="Include" xml:space="preserve">
-    <value>Include</value>
-  </data>
-  <data name="Launcher_Files_Checking" xml:space="preserve">
+  <data name="Text_CheckingFiles" xml:space="preserve">
     <value>Checking files...</value>
   </data>
-  <data name="Launcher_Files_Copied_Compiler" xml:space="preserve">
+  <data name="Text_CompilerFilesCopied" xml:space="preserve">
     <value>Compiler files copied.</value>
   </data>
-  <data name="Launcher_Files_Copied_Server" xml:space="preserve">
+  <data name="Text_ServerFilesCopied" xml:space="preserve">
     <value>Server files copied.</value>
   </data>
-  <data name="Launcher_Files_Copying_Compiler" xml:space="preserve">
+  <data name="Text_CompilerFilesCopying" xml:space="preserve">
     <value>Unpacking compiler files completed. Proceed with copying files...</value>
   </data>
-  <data name="Launcher_Files_Copying_Server" xml:space="preserve">
+  <data name="Text_ServerFilesCopying" xml:space="preserve">
     <value>Unpacking server files completed. Proceed with copying files...</value>
   </data>
-  <data name="Launcher_Files_Downloading_Compiler" xml:space="preserve">
+  <data name="Text_CompilerFilesDownloading" xml:space="preserve">
     <value>Downloading compiler files...</value>
   </data>
-  <data name="Launcher_Files_Downloading_Server" xml:space="preserve">
+  <data name="Text_ServerFilesDownloading" xml:space="preserve">
     <value>Downloading server files...</value>
   </data>
-  <data name="Launcher_Files_Error_Compiler" xml:space="preserve">
-    <value>Compiler files couldn't be downloaded. Proceed with program startup...</value>
+  <data name="Text_CompilerFilesError" xml:space="preserve">
+    <value>Compiler files couldn&apos;t be downloaded. Proceed with program startup...</value>
   </data>
-  <data name="Launcher_Files_Error_Server" xml:space="preserve">
-    <value>Server files couldn't be downloaded. Proceed with compiler files...</value>
+  <data name="Text_ServerFilesError" xml:space="preserve">
+    <value>Server files couldn&apos;t be downloaded. Proceed with compiler files...</value>
   </data>
-  <data name="Launcher_Files_Unpacking_Compiler" xml:space="preserve">
+  <data name="Text_CompilerFilesUnpacking" xml:space="preserve">
     <value>Download completed. Unpacking compiler files...</value>
   </data>
-  <data name="Launcher_Files_Unpacking_Server" xml:space="preserve">
+  <data name="Text_ServerFilesUnpacking" xml:space="preserve">
     <value>Download completed. Unpacking server files...</value>
   </data>
-  <data name="Launcher_Old_Version_Checking" xml:space="preserve">
+  <data name="Text_VersionChecking" xml:space="preserve">
     <value>Checking for old version...</value>
   </data>
-  <data name="Launcher_Old_Version_Settings" xml:space="preserve">
+  <data name="Text_VersionSettings" xml:space="preserve">
     <value>Obtain settings from the old version...</value>
   </data>
-  <data name="Launcher_Starting_Up" xml:space="preserve">
+  <data name="Text_Starting" xml:space="preserve">
     <value>Starting up...</value>
   </data>
-  <data name="Main_Menu_Item_Build" xml:space="preserve">
+  <data name="Text_Build" xml:space="preserve">
     <value>Build</value>
   </data>
-  <data name="Main_Menu_Item_Build_Compile" xml:space="preserve">
+  <data name="Text_Compile" xml:space="preserve">
     <value>Compile</value>
   </data>
-  <data name="Main_Menu_Item_Build_Compile_Options" xml:space="preserve">
-    <value>Compile Options</value>
+  <data name="Text_CompilerOptions" xml:space="preserve">
+    <value>Compiler Options</value>
   </data>
-  <data name="Main_Menu_Item_Edit" xml:space="preserve">
+  <data name="Text_Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
-  <data name="Main_Menu_Item_Edit_Copy" xml:space="preserve">
+  <data name="Text_Copy" xml:space="preserve">
     <value>Copy</value>
   </data>
-  <data name="Main_Menu_Item_Edit_Cut" xml:space="preserve">
+  <data name="Text_Cut" xml:space="preserve">
     <value>Cut</value>
   </data>
-  <data name="Main_Menu_Item_Edit_Find" xml:space="preserve">
-    <value>Find</value>
-  </data>
-  <data name="Main_Menu_Item_Edit_Find_Next" xml:space="preserve">
+  <data name="Text_FindNext" xml:space="preserve">
     <value>Find Next</value>
   </data>
-  <data name="Main_Menu_Item_Edit_Find_Previous" xml:space="preserve">
-    <value>Find Prev</value>
-  </data>
-  <data name="Main_Menu_Item_Edit_Go_To" xml:space="preserve">
+  <data name="Text_GoTo" xml:space="preserve">
     <value>Go To</value>
   </data>
-  <data name="Main_Menu_Item_Edit_Paste" xml:space="preserve">
+  <data name="Text_Paste" xml:space="preserve">
     <value>Paste</value>
   </data>
-  <data name="Main_Menu_Item_Edit_Redo" xml:space="preserve">
+  <data name="Text_Redo" xml:space="preserve">
     <value>Redo</value>
   </data>
-  <data name="Main_Menu_Item_Edit_Replace" xml:space="preserve">
-    <value>Replace</value>
-  </data>
-  <data name="Main_Menu_Item_Edit_Undo" xml:space="preserve">
+  <data name="Text_Undo" xml:space="preserve">
     <value>Undo</value>
   </data>
-  <data name="Main_Menu_Item_File" xml:space="preserve">
+  <data name="Text_File" xml:space="preserve">
     <value>File</value>
   </data>
-  <data name="Main_Menu_Item_File_Close" xml:space="preserve">
+  <data name="Text_Close" xml:space="preserve">
     <value>Close</value>
   </data>
-  <data name="Main_Menu_Item_File_Close_Project" xml:space="preserve">
+  <data name="Text_CloseProject" xml:space="preserve">
     <value>Close Project</value>
   </data>
-  <data name="Main_Menu_Item_File_Exit" xml:space="preserve">
+  <data name="Text_Exit" xml:space="preserve">
     <value>Exit</value>
   </data>
-  <data name="Main_Menu_Item_File_File" xml:space="preserve">
-    <value>File</value>
-  </data>
-  <data name="Main_Menu_Item_File_New" xml:space="preserve">
+  <data name="Text_New" xml:space="preserve">
     <value>New</value>
   </data>
-  <data name="Main_Menu_Item_File_Open" xml:space="preserve">
+  <data name="Text_Open" xml:space="preserve">
     <value>Open</value>
   </data>
-  <data name="Main_Menu_Item_File_Project" xml:space="preserve">
+  <data name="Text_Project" xml:space="preserve">
     <value>Project</value>
   </data>
-  <data name="Main_Menu_Item_File_Save" xml:space="preserve">
+  <data name="Text_Save" xml:space="preserve">
     <value>Save {0}</value>
-    <comment>e.g.: Save gamemode.pwn</comment>
+    <comment>It must have a formatter.
+Text for &quot;Save&quot; button.</comment>
   </data>
-  <data name="Main_Menu_Item_File_Save_All" xml:space="preserve">
+  <data name="Text_SaveAll" xml:space="preserve">
     <value>Save All</value>
   </data>
-  <data name="Main_Menu_Item_File_Save_As" xml:space="preserve">
+  <data name="Text_SaveAs" xml:space="preserve">
     <value>Save {0} As...</value>
-    <comment>e.g.: Save gamemode.pwn As...</comment>
+    <comment>It must have a formatter.
+Text for &quot;Save As&quot; button.</comment>
   </data>
-  <data name="Main_Version" xml:space="preserve">
+  <data name="Status_Version" xml:space="preserve">
     <value>Version {0}.{1}.{2}</value>
-    <comment>e.g.: Version 1.0.0</comment>
+    <comment>It must have three formaters.
+Version of application.</comment>
   </data>
-  <data name="Menu_Column" xml:space="preserve">
+  <data name="Status_Column" xml:space="preserve">
     <value>Column {0}</value>
-    <comment>e.g.: Column 1</comment>
+    <comment>It must have a formatter.
+Text for &quot;Column&quot; label in status bar.</comment>
   </data>
-  <data name="Menu_Line" xml:space="preserve">
+  <data name="Status_Line" xml:space="preserve">
     <value>Line {0}</value>
-    <comment>e.g.: Line 1</comment>
+    <comment>It must have a formatter.
+Text for &quot;Line&quot; label in status bar.</comment>
   </data>
-  <data name="NewForm_Browse" xml:space="preserve">
+  <data name="Text_Browse" xml:space="preserve">
     <value>Browse</value>
   </data>
-  <data name="NewForm_Close" xml:space="preserve">
-    <value>Close</value>
-  </data>
-  <data name="NewForm_Create" xml:space="preserve">
+  <data name="Text_Create" xml:space="preserve">
     <value>Create</value>
   </data>
-  <data name="NewForm_Empty_Name" xml:space="preserve">
-    <value>Name cannot be empty.</value>
-  </data>
-  <data name="NewForm_Empty_Path" xml:space="preserve">
+  <data name="Error_PathEmpty" xml:space="preserve">
     <value>Path cannot be empty.</value>
   </data>
-  <data name="NewForm_Name" xml:space="preserve">
+  <data name="Error_EmptyName" xml:space="preserve">
+    <value>Name cannot be empty.</value>
+  </data>
+  <data name="Text_Name" xml:space="preserve">
     <value>Name</value>
   </data>
-  <data name="NewForm_Path" xml:space="preserve">
+  <data name="Text_Path" xml:space="preserve">
     <value>Path</value>
   </data>
-  <data name="NewForm_Project" xml:space="preserve">
-    <value>project</value>
-    <comment>e.g.: New - project (form name)</comment>
-  </data>
-  <data name="NewForm_Project_File" xml:space="preserve">
-    <value>file</value>
-    <comment>e.g.: New - file (form name)</comment>
-  </data>
-  <data name="NewForm_Type" xml:space="preserve">
+  <data name="Text_Type" xml:space="preserve">
     <value>Type</value>
+  </data>
+  <data name="Status_Ready" xml:space="preserve">
+    <value>Ready</value>
   </data>
   <data name="Status_Compiled" xml:space="preserve">
     <value>Compiled</value>
   </data>
-  <data name="Status_Compiled_With_Errors" xml:space="preserve">
+  <data name="Status_CompiledError" xml:space="preserve">
     <value>Compiled with errors</value>
   </data>
   <data name="Status_Compiling" xml:space="preserve">
     <value>Compiling...</value>
   </data>
-  <data name="Status_Copying_Includes" xml:space="preserve">
+  <data name="Status_IncludesCopying" xml:space="preserve">
     <value>Copying include files...</value>
   </data>
-  <data name="Status_Deleting_Includes" xml:space="preserve">
+  <data name="Status_IncludesDeleting" xml:space="preserve">
     <value>Deleting include files...</value>
   </data>
-  <data name="Status_Empty_Text" xml:space="preserve">
+  <data name="Status_EmptyText" xml:space="preserve">
     <value>Current document is empty</value>
   </data>
-  <data name="Status_Ready" xml:space="preserve">
-    <value>Ready</value>
-  </data>
-  <data name="Status_Saving_Files" xml:space="preserve">
+  <data name="Status_SavingFiles" xml:space="preserve">
     <value>Saving files...</value>
   </data>
+  <data name="Text_SelectedItem" xml:space="preserve">
+    <value>Selected Item</value>
+  </data>
+  <data name="Text_Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Text_Rename" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="Text_ShowInExplorer" xml:space="preserve">
+    <value>Show in Explorer</value>
+  </data>
+  <data name="Text_Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="Text_Folder" xml:space="preserve">
+    <value>Folder</value>
+  </data>
+
 </root>

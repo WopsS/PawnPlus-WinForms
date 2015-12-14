@@ -47,7 +47,7 @@ namespace PawnPlus
             StatusManager.Construct(this.statusBar, this.statusLabel, this.lineLabel, this.columnLabel);
 
             this.SetLanguageText();
-            StatusManager.Set(StatusType.Info, LanguageEnum.StatusReady, StatusReset.None);
+            StatusManager.Set(StatusType.Info, Translation.Status_Ready, StatusReset.None);
         }
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
@@ -409,8 +409,8 @@ namespace PawnPlus
                 CEManager.SetActiveDocument(editor);
                 StatusManager.SetLineColumn(CEManager.ActiveDocument.codeEditor.TextArea.Caret.Line, CEManager.ActiveDocument.codeEditor.TextArea.Caret.Column);
 
-                this.saveToolStripMenuItem.Text = string.Format(LanguageManager.GetText(LanguageEnum.MainMenuItemFileSave), Path.GetFileName(editor.FilePath));
-                this.savesAsToolStripMenuItem.Text = string.Format(LanguageManager.GetText(LanguageEnum.MainMenuItemFileSaveAs), Path.GetFileName(editor.FilePath));
+                this.saveToolStripMenuItem.Text = string.Format(Translation.Text_Save, Path.GetFileName(editor.FilePath));
+                this.savesAsToolStripMenuItem.Text = string.Format(Translation.Text_SaveAs, Path.GetFileName(editor.FilePath));
 
                 this.SetMenuStatus(true, false);
             }
@@ -421,8 +421,8 @@ namespace PawnPlus
                 this.SetMenuStatus(false, false);
                 StatusManager.SetLineColumn(0, 0);
 
-                this.saveToolStripMenuItem.Text = string.Format(LanguageManager.GetText(LanguageEnum.MainMenuItemFileSave), "Selected Item");
-                this.savesAsToolStripMenuItem.Text = string.Format(LanguageManager.GetText(LanguageEnum.MainMenuItemFileSaveAs), "Selected Item");
+                this.saveToolStripMenuItem.Text = string.Format(Translation.Text_Save, Translation.Text_SelectedItem);
+                this.savesAsToolStripMenuItem.Text = string.Format(Translation.Text_SaveAs, Translation.Text_SelectedItem);
 
                 // Clear output box.
                 this.outputForm.ClearText();
@@ -573,14 +573,14 @@ namespace PawnPlus
             }
             else if (string.IsNullOrEmpty(textEditor.Text) == true || string.IsNullOrWhiteSpace(textEditor.Text) == true)
             {
-                StatusManager.Set(StatusType.Error, LanguageEnum.StatusEmptyText, StatusReset.FiveSeconds);
+                StatusManager.Set(StatusType.Error, Translation.Status_EmptyText, StatusReset.FiveSeconds);
                 return;
             }
 
             this.outputForm.ClearText();
 
             // Saving all files opened.
-            StatusManager.Set(StatusType.Warning, LanguageEnum.StatusSavingFiles, StatusReset.None);
+            StatusManager.Set(StatusType.Warning, Translation.Status_SavingFiles, StatusReset.None);
 
             foreach (Editor editor in CEManager.Get().Values)
             {
@@ -593,7 +593,7 @@ namespace PawnPlus
             if (ProjectManager.IsOpen == true)
             {
                 // Copying all includes files to PAWN include folder.
-                StatusManager.Set(StatusType.Warning, LanguageEnum.StatusCopyingIncludes, StatusReset.None);
+                StatusManager.Set(StatusType.Warning, Translation.Status_IncludesCopying, StatusReset.None);
 
                 string targetAppDataDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PawnPlus", "Pawn", "include");
                 string projectDirectory = Path.Combine(ProjectManager.Path, "includes");
@@ -613,7 +613,7 @@ namespace PawnPlus
             this.savesAsToolStripMenuItem.Enabled = false;
             this.saveAllToolStripMenuItem.Enabled = false;
 
-            StatusManager.Set(StatusType.Warning, LanguageEnum.StatusCompiling, StatusReset.None);
+            StatusManager.Set(StatusType.Warning, Translation.Status_Compiling, StatusReset.None);
             this.compilerWorker.RunWorkerAsync();
         }
 
@@ -621,7 +621,7 @@ namespace PawnPlus
         {
             string value = Properties.Settings.Default["Compiler_Arguments"].ToString();
 
-            if(WindowHelper.InputBox(LanguageManager.GetText(LanguageEnum.MainMenuItemBuildCompileOptions), LanguageManager.GetText(LanguageEnum.CompilerOptions), ref value) == DialogResult.OK)
+            if(WindowHelper.InputBox(Translation.Text_CompilerOptions, string.Format("{0}:", Translation.Text_Options), ref value) == DialogResult.OK)
             {
                 Properties.Settings.Default["Compiler_Arguments"] = value;
                 Properties.Settings.Default.Save();
@@ -663,7 +663,7 @@ namespace PawnPlus
             if (ProjectManager.IsOpen == true)
             {
                 // Deleting all includes files to PAWN include folder.
-                StatusManager.Set(StatusType.Warning, LanguageEnum.StatusDeletingIncludes, StatusReset.None);
+                StatusManager.Set(StatusType.Warning, Translation.Status_IncludesDeleting, StatusReset.None);
 
                 string targetAppDataDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PawnPlus", "Pawn", "include");
                 string projectDirectory = Path.Combine(ProjectManager.Path, "includes");
@@ -686,11 +686,11 @@ namespace PawnPlus
             if (ProjectManager.LastCompilation.HasErrors == true)
             {
                 this.outputForm.SetText(ProjectManager.LastCompilation.Errors, false);
-                StatusManager.Set(StatusType.Error, LanguageEnum.StatusCompiledWithErrors, StatusReset.FiveSeconds);
+                StatusManager.Set(StatusType.Error, Translation.Status_CompiledError, StatusReset.FiveSeconds);
             }
             else
             {
-                StatusManager.Set(StatusType.Finish, LanguageEnum.StatusCompiled, StatusReset.FiveSeconds);
+                StatusManager.Set(StatusType.Finish, Translation.Status_Compiled, StatusReset.FiveSeconds);
             }
 
             this.outputForm.SetText(ProjectManager.LastCompilation.Output, true);
@@ -771,45 +771,45 @@ namespace PawnPlus
         private void SetLanguageText()
         {
             // File tool strip menu item.
-            this.fileToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemFile);
-            this.newToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemFileNew);
-            this.newProjectToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemFileProject);
-            this.newFileToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemFileFile);
-            this.openToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemFileOpen);
-            this.openProjectToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemFileProject);
-            this.openFileToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemFileFile);
-            this.closeToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemFileClose);
-            this.closeProjectToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemFileCloseProject);
-            this.saveToolStripMenuItem.Text = string.Format(LanguageManager.GetText(LanguageEnum.MainMenuItemFileSave), "Selected Item");
-            this.savesAsToolStripMenuItem.Text = string.Format(LanguageManager.GetText(LanguageEnum.MainMenuItemFileSaveAs), "Selected Item");
-            this.saveAllToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemFileSaveAll);
+            this.fileToolStripMenuItem.Text = Translation.Text_File;
+            this.newToolStripMenuItem.Text = Translation.Text_New;
+            this.newProjectToolStripMenuItem.Text = Translation.Text_Project;
+            this.newFileToolStripMenuItem.Text = Translation.Text_File;
+            this.openToolStripMenuItem.Text = Translation.Text_Open;
+            this.openProjectToolStripMenuItem.Text = Translation.Text_Project;
+            this.openFileToolStripMenuItem.Text = Translation.Text_File;
+            this.closeToolStripMenuItem.Text = Translation.Text_Close;
+            this.closeProjectToolStripMenuItem.Text = Translation.Text_CloseProject;
+            this.saveToolStripMenuItem.Text = string.Format(Translation.Text_Save, Translation.Text_SelectedItem);
+            this.savesAsToolStripMenuItem.Text = string.Format(Translation.Text_SaveAs, Translation.Text_SelectedItem);
+            this.saveAllToolStripMenuItem.Text = Translation.Text_SaveAll;
 
             // Edit tool strip menu item.
-            this.editToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemEdit);
-            this.undoToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemEditUndo);
-            this.redoToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemEditRedo);
-            this.cutToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemEditCut);
-            this.copyToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemEditCopy);
-            this.pasteToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemEditPaste);
-            this.findToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemEditFind);
-            this.findNextToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemEditFindNext);
-            this.findPrevToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemEditFindPrevious);
-            this.replaceToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemEditReplace);
-            this.goToToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemEditGoTo);
+            this.editToolStripMenuItem.Text = Translation.Text_Edit;
+            this.undoToolStripMenuItem.Text = Translation.Text_Undo;
+            this.redoToolStripMenuItem.Text = Translation.Text_Redo;
+            this.cutToolStripMenuItem.Text = Translation.Text_Cut;
+            this.copyToolStripMenuItem.Text = Translation.Text_Copy;
+            this.pasteToolStripMenuItem.Text = Translation.Text_Paste;
+            this.findToolStripMenuItem.Text = Translation.Text_Find;
+            this.findNextToolStripMenuItem.Text = Translation.Text_FindNext;
+            this.findPrevToolStripMenuItem.Text = Translation.Text_FindPrevious;
+            this.replaceToolStripMenuItem.Text = Translation.Text_Replace;
+            this.goToToolStripMenuItem.Text = Translation.Text_GoTo;
 
             // Build tool strip menu item.
-            this.buildToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemBuild);
-            this.compileToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemBuildCompile);
-            this.compileOptionsToolStripMenuItem.Text = LanguageManager.GetText(LanguageEnum.MainMenuItemBuildCompileOptions);
+            this.buildToolStripMenuItem.Text = Translation.Text_Build;
+            this.compileToolStripMenuItem.Text = Translation.Text_Compile;
+            this.compileOptionsToolStripMenuItem.Text = Translation.Text_CompilerOptions;
 
             // Status bar.
-            this.statusLabel.Text = LanguageManager.GetText(LanguageEnum.StatusReady);
+            this.statusLabel.Text = Translation.Status_Ready;
 
             FileVersionInfo Program = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location);
-            this.versionLabel.Text = string.Format(LanguageManager.GetText(LanguageEnum.MainVersion), Program.ProductMajorPart, Program.ProductMinorPart, Program.ProductBuildPart);
+            this.versionLabel.Text = string.Format(Translation.Status_Version, Program.ProductMajorPart, Program.ProductMinorPart, Program.ProductBuildPart);
 
-            this.lineLabel.Text = string.Format(LanguageManager.GetText(LanguageEnum.MenuLine), 0);
-            this.columnLabel.Text = string.Format(LanguageManager.GetText(LanguageEnum.MenuColumn), 0);
+            this.lineLabel.Text = string.Format(Translation.Status_Line, 0);
+            this.columnLabel.Text = string.Format(Translation.Status_Column, 0);
         }
     }
 }

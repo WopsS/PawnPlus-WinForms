@@ -15,10 +15,10 @@ namespace PawnPlus
         private void GoToLine_Load(object sender, EventArgs e)
         {
             // Translate controls.
-            this.Text = LanguageManager.GetText(LanguageEnum.GoToLineName);
-            this.lineNumberLabel.Text = string.Format(LanguageManager.GetText(LanguageEnum.GoToLineLabel), CEManager.ActiveDocument.codeEditor.LineCount);
-            this.cancelButton.Text = LanguageManager.GetText(LanguageEnum.ButtonCancel);
-            this.okButton.Text = LanguageManager.GetText(LanguageEnum.ButtonOK);
+            this.Text = Translation.Name_GoToLine;
+            this.lineNumberLabel.Text = string.Format(Translation.Text_GoTo, CEManager.ActiveDocument.codeEditor.LineCount);
+            this.cancelButton.Text = Translation.Text_Cancel;
+            this.okButton.Text = Translation.Text_OK;
 
             // Set maximum numeric value for 'numericUpDown'.
             this.numericUpDown.Maximum = CEManager.ActiveDocument.codeEditor.LineCount;

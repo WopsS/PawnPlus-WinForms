@@ -60,7 +60,7 @@ namespace PawnPlus.Core
 
         private static void ReadyTimer_Tick(object sender, System.EventArgs e)
         {
-            Set(StatusType.Info, LanguageEnum.StatusReady, StatusReset.None);
+            Set(StatusType.Info, Translation.Status_Ready, StatusReset.None);
             readyTimer.Stop();
         }
 
@@ -68,9 +68,9 @@ namespace PawnPlus.Core
         /// Set status of the application.
         /// </summary>
         /// <param name="type">Type of the status.</param>
-        /// <param name="languageIndex">Language index of the text.</param>
+        /// <param name="text">Text to be set.</param>
         /// <param name="resetTime">Reset time until status will be 'Ready'.</param>
-        public static void Set(StatusType type, LanguageEnum languageIndex, StatusReset resetTime)
+        public static void Set(StatusType type, string text, StatusReset resetTime)
         {
             Color color = Color.Empty;
 
@@ -99,7 +99,7 @@ namespace PawnPlus.Core
             }
 
             statusBar.BackColor = color;
-            statusLabel.Text = LanguageManager.GetText(languageIndex);
+            statusLabel.Text = text;
 
             if (resetTime != StatusReset.None)
             {
@@ -137,8 +137,8 @@ namespace PawnPlus.Core
         /// <param name="column">Number of the column.</param>
         public static void SetLineColumn(int line, int column)
         {
-            lineLabel.Text = string.Format(LanguageManager.GetText(LanguageEnum.MenuLine), line);
-            columnLabel.Text = string.Format(LanguageManager.GetText(LanguageEnum.MenuColumn), column);
+            lineLabel.Text = string.Format(Translation.Status_Line, line);
+            columnLabel.Text = string.Format(Translation.Status_Column, column);
         }
     }
 }

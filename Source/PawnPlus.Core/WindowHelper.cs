@@ -19,8 +19,8 @@ namespace PawnPlus.Core
             label.Text = promptText;
             textBox.Text = value;
 
-            buttonOK.Text = LanguageManager.GetText(LanguageEnum.ButtonOK);
-            buttonCancel.Text = LanguageManager.GetText(LanguageEnum.ButtonCancel);
+            buttonOK.Text = Translation.Text_OK;
+            buttonCancel.Text = Translation.Text_Cancel;
             buttonOK.DialogResult = DialogResult.OK;
             buttonCancel.DialogResult = DialogResult.Cancel;
 

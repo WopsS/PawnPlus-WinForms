@@ -29,13 +29,13 @@ namespace PawnPlus
         private void NewForm_Load(object sender, EventArgs e)
         {
             // Translate controls.
-            this.Text += this.type == NewFormType.File ? LanguageManager.GetText(LanguageEnum.NewFormProjectFile) : LanguageManager.GetText(LanguageEnum.NewFormProject);
-            this.nameLabel.Text = LanguageManager.GetText(LanguageEnum.NewFormName);
-            this.pathLabel.Text = LanguageManager.GetText(LanguageEnum.NewFormPath);
-            this.typeLabel.Text = LanguageManager.GetText(LanguageEnum.NewFormType);
-            this.browseButton.Text = LanguageManager.GetText(LanguageEnum.NewFormBrowse);
-            this.closeButton.Text = LanguageManager.GetText(LanguageEnum.NewFormClose);
-            this.createButton.Text = LanguageManager.GetText(LanguageEnum.NewFormCreate);
+            this.Text += this.type == NewFormType.File ? Translation.Text_File.ToLower() : Translation.Text_Project.ToLower();
+            this.nameLabel.Text = Translation.Text_Name;
+            this.pathLabel.Text = Translation.Text_Path;
+            this.typeLabel.Text = Translation.Text_Type;
+            this.browseButton.Text = Translation.Text_Browse;
+            this.closeButton.Text = Translation.Text_Close;
+            this.createButton.Text = Translation.Text_Create;
 
             // Set correct size.
             if (this.type == NewFormType.File)
@@ -52,9 +52,9 @@ namespace PawnPlus
                 this.typeLabel.Top -= 25;
                 this.typeComboBox.Top -= 25;
 
-                this.typeComboBox.Items.Add(LanguageManager.GetText(LanguageEnum.Filterscript));
-                this.typeComboBox.Items.Add(LanguageManager.GetText(LanguageEnum.Gamemode));
-                this.typeComboBox.Items.Add(LanguageManager.GetText(LanguageEnum.Include));
+                this.typeComboBox.Items.Add(Translation.Text_Filterscript);
+                this.typeComboBox.Items.Add(Translation.Text_Gamemode);
+                this.typeComboBox.Items.Add(Translation.Text_Include);
                 this.typeComboBox.SelectedIndex = 0;
             }
             else
@@ -77,9 +77,11 @@ namespace PawnPlus
 
         private void createButton_Click(object sender, EventArgs e)
         {
+            this.errorProvider.Clear();
+
             if (this.nameBox.Text.Length == 0)
             {
-                this.errorProvider.SetError(this.nameBox, LanguageManager.GetText(LanguageEnum.NewFormEmptyName));
+                this.errorProvider.SetError(this.nameBox, Translation.Error_EmptyName);
                 return;
             }
 
@@ -91,7 +93,7 @@ namespace PawnPlus
             {
                 if (this.pathBox.Text.Length == 0)
                 {
-                    this.errorProvider.SetError(this.pathBox, LanguageManager.GetText(LanguageEnum.NewFormEmptyPath));
+                    this.errorProvider.SetError(this.pathBox, Translation.Error_PathEmpty);
                     return;
                 }
 

@@ -19,22 +19,22 @@ namespace PawnPlus.CodeEditor
         private void FindReplace_Load(object sender, EventArgs e)
         {
             // Translate controls.
-            this.Text = LanguageManager.GetText(LanguageEnum.FindReplaceName);
-            this.tabControl.TabPages[0].Name = LanguageManager.GetText(LanguageEnum.FindReplaceTabFind);
-            this.tabControl.TabPages[1].Name = LanguageManager.GetText(LanguageEnum.FindReplaceTabReplace);
-            this.findWhatLabel.Text = LanguageManager.GetText(LanguageEnum.FindReplaceFindWhatLabel);
-            this.findNextButton.Text = LanguageManager.GetText(LanguageEnum.FindReplaceButtonFindNext);
-            this.findPreviousButton.Text = LanguageManager.GetText(LanguageEnum.FindReplaceButtonFindPrevious);
-            this.replaceWhatLabel.Text = LanguageManager.GetText(LanguageEnum.FindReplaceFindWhatLabel);
-            this.replaceWithLabel.Text = LanguageManager.GetText(LanguageEnum.FindReplaceReplaceWithLabel);
-            this.replaceButton.Text = LanguageManager.GetText(LanguageEnum.FindReplaceButtonReplace);
-            this.replaceAllButton.Text = LanguageManager.GetText(LanguageEnum.FindReplaceButtonReplaceAll);
-            this.lookInLabel.Text = LanguageManager.GetText(LanguageEnum.FindReplaceLookInLabel);
-            this.caseSentitiveCheckBox.Text = LanguageManager.GetText(LanguageEnum.FindReplaceButtonCaseSensitive);
-            this.wholeWordCheckBox.Text = LanguageManager.GetText(LanguageEnum.FindReplaceButtonWholeWord);
+            this.Text = Translation.Name_FindReplace;
+            this.tabControl.TabPages[0].Name = Translation.Text_Find;
+            this.tabControl.TabPages[1].Name = Translation.Text_Replace;
+            this.findWhatLabel.Text = Translation.Text_FindWhat;
+            this.findNextButton.Text = Translation.Text_FindNext;
+            this.findPreviousButton.Text = Translation.Text_FindPrevious;
+            this.replaceWhatLabel.Text = Translation.Text_FindWhat;
+            this.replaceWithLabel.Text = Translation.Text_ReplaceWith;
+            this.replaceButton.Text = Translation.Text_Replace;
+            this.replaceAllButton.Text = Translation.Text_ReplaceAll;
+            this.lookInLabel.Text = Translation.Text_LookIn;
+            this.caseSentitiveCheckBox.Text = Translation.Text_CaseSensitive;
+            this.wholeWordCheckBox.Text = Translation.Text_WholeWord;
 
-            this.lookInComboBox.Items.Add(LanguageManager.GetText(LanguageEnum.FindReplaceLookInCurrentDocument));
-            this.lookInComboBox.Items.Add(LanguageManager.GetText(LanguageEnum.FindReplaceLookInAllDocument));
+            this.lookInComboBox.Items.Add(Translation.Text_CurrentDocument);
+            this.lookInComboBox.Items.Add(Translation.Text_AllDocuments);
             this.lookInComboBox.SelectedIndex = 0;
 
             // Disable 'Look in' until it will be implemented.

@@ -11,7 +11,7 @@ You can contribute in two ways:
  3. Open **PawnPlus.sln** in **Source** folder.
  4. Make your changes and send us a [pull request](https://help.github.com/articles/using-pull-requests/#initiating-the-pull-request). *(See [guidelines for pull requests](#guidelines-for-pull-requests))*
 2. **Translation**
- 1. Access [this](https://poeditor.com/join/project/eYFTW16g6e).
+ 1. Access [this](https://poeditor.com/join/project/eYFTW16g6e) website.
  2. Join the project.
  3. Translate.
 

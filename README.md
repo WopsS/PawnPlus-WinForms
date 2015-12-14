@@ -11,13 +11,9 @@ You can contribute in two ways:
  3. Open **PawnPlus.sln** in **Source** folder.
  4. Make your changes and send us a [pull request](https://help.github.com/articles/using-pull-requests/#initiating-the-pull-request). *(See [guidelines for pull requests](#guidelines-for-pull-requests))*
 2. **Translation**
- 1. Download **[Visual Studio 2015 Community edition](https://www.visualstudio.com/)** or higher (you need this to edit **resource** files). 
- 2. Clone this repository.
- 3. Open **PawnPlus.sln** in **Source** folder.
- 4. Expand **PawnPlus.Language** project.
- 5. Create a new **resource** file in **Languages** folder with name **<Culture name>.resx** (e.g.: **en-US.resx**).
- 6. Copy the content from the **en-US.resx** file in your file.
- 7. Translate **Value** column.
+ 1. Access [this](https://poeditor.com/join/project/eYFTW16g6e).
+ 2. Join the project.
+ 3. Translate.
 
 ## Guidelines for pull requests
 * Please respect our coding style.

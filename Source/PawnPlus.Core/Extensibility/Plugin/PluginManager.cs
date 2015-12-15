@@ -44,7 +44,7 @@ namespace PawnPlus.Core.Extensibility
                 }
                 catch (Exception ex)
                 {
-                    Logger.Write(ex);
+                    ExceptionHandler.HandledException(ex);
                 }
             }
         }

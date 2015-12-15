@@ -109,7 +109,7 @@ namespace PawnPlus.Core
             Editor editor = new Editor();
 
             editor.Open(filePath);
-            editor.HasProject = Project.Files.Contains(filePath);
+            editor.HasProject = Project != null ? Project.Files.Contains(filePath) : false;
 
             editors.Add(filePath, editor);
             editor.Show(mainForm.dockPanel, DockState.Document);

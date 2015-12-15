@@ -136,10 +136,10 @@
       <DependentUpon>ProjectExplorer.cs</DependentUpon>
     </Compile>
     <Compile Include="Exceptions\ExceptionHandler.cs" />
-    <Compile Include="Localizations\Localization.Designer.cs">
+    <Compile Include="Localization.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Localization.resx</DependentUpon>
+      <DependentUpon>Localization.tt</DependentUpon>
     </Compile>
     <Compile Include="Logger.cs" />
     <Compile Include="Project.cs" />
@@ -209,11 +209,7 @@
     <EmbeddedResource Include="Forms\ProjectExplorer.resx">
       <DependentUpon>ProjectExplorer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Localizations\Localization.resx">
-      <CustomToolNamespace>PawnPlus.Core</CustomToolNamespace>
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Localization.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Localizations\en-US.resx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -234,7 +230,12 @@
     <EmbeddedResource Include="Resources\ProjectFiles\Filterscript.pwn" />
     <EmbeddedResource Include="Resources\ProjectFiles\Gamemode.pwn" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Localization.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Localization.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
   <ItemGroup>
     <None Include="Resources\application_32xLG.png" />
   </ItemGroup>
@@ -272,7 +273,14 @@
     <EmbeddedResource Include="Resources\ProjectFiles\Include.inc" />
     <EmbeddedResource Include="Resources\ProjectFiles\Project.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

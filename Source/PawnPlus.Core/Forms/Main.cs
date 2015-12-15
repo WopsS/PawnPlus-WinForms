@@ -43,6 +43,21 @@ namespace PawnPlus.Core.Forms
 
             this.TranslateUI();
             Status.Set(StatusType.Info, StatusReset.None, Localization.Status_Ready);
+
+            if (Environment.GetCommandLineArgs().Length >= 2)
+            {
+                string fileName = Environment.GetCommandLineArgs()[1];
+                string extension = Path.GetExtension(fileName);
+                
+                if(extension == Project.Extension)
+                {
+                    Project.Open(fileName);
+                }
+                else if (extension == ".pwn" || extension == ".inc")
+                {
+                    Workspace.OpenFile(fileName);
+                }
+            }
         }
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)

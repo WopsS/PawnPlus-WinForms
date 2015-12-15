@@ -1,4 +1,5 @@
 ﻿using PawnPlus.Core.Events;
+using PawnPlus.Core.Exceptions;
 using PawnPlus.Core.Forms;
 using System;
 using System.Collections.Generic;
@@ -236,7 +237,7 @@ namespace PawnPlus.Core
             }
             catch (Exception ex)
             {
-                Logger.Write(ex);
+                ExceptionHandler.HandledException(ex);
             }
 
             return result;

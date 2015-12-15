@@ -5,23 +5,35 @@ using System.Windows.Forms;
 
 namespace PawnPlus.Core.Exceptions
 {
+    public enum ExceptionType
+    {
+        Handled,
+        Unhandled
+    }
+
     public static class ExceptionHandler
     {
+        public static void HandledException(Exception exception)
+        {
+            Logger.Write(LogType.Error, Localization.Text_HandledExceptionOccurred, Environment.NewLine + exception.ToString());
+            ShowException(ExceptionType.Handled, Localization.Name_HandledException, exception.Message, exception.ToString(), false);
+        }
+
         public static void UIThreadException(object sender, ThreadExceptionEventArgs e)
         {
-            Logger.Write(LogType.Error, "UI Exception occured: {0}", Environment.NewLine + e.Exception.ToString());
+            Logger.Write(LogType.Error, Localization.Text_UIException, Environment.NewLine + e.Exception.ToString());
 
             DialogResult dialogResult = DialogResult.OK;
 
             try
             {
-                dialogResult = ShowException("UI Exception", e.Exception.Message, e.Exception.ToString(), true);
+                dialogResult = ShowException(ExceptionType.Unhandled, Localization.Name_UIException, e.Exception.Message, e.Exception.ToString(), true);
             }
             catch
             {
                 try
                 {
-                    MessageBox.Show("Fatal Windows Forms Error", "Fatal Windows Forms Error", MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Error);
+                    MessageBox.Show(Localization.Text_FatalWindowsForms, Localization.Text_FatalWindowsForms, MessageBoxButtons.AbortRetryIgnore, MessageBoxIcon.Error);
                 }
                 finally
                 {
@@ -37,12 +49,12 @@ namespace PawnPlus.Core.Exceptions
 
         public static void UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            Logger.Write(LogType.Error, "Unhandled Exception occured: {0}", Environment.NewLine + e.ExceptionObject.ToString());
+            Logger.Write(LogType.Error, Localization.Text_UnhandledExceptionOccured, Environment.NewLine + e.ExceptionObject.ToString());
 
             try
             {
                 Exception exception = (Exception)e.ExceptionObject;
-                ShowException("Unhandled Exception", exception.Message, exception.ToString(), false);
+                ShowException(ExceptionType.Unhandled, Localization.Name_UnhandledException, exception.Message, exception.ToString(), false);
             }
             catch (Exception)
             {
@@ -50,9 +62,9 @@ namespace PawnPlus.Core.Exceptions
             }
         }
 
-        private static DialogResult ShowException(string title, string message, string stackTrace, bool continueButton)
+        private static DialogResult ShowException(ExceptionType type, string title, string message, string stackTrace, bool continueButton)
         {
-            return (new ExceptionForm(title, message, stackTrace, continueButton)).ShowDialog();
+            return (new ExceptionForm(type, title, message, stackTrace, continueButton)).ShowDialog();
         }
     }
 }

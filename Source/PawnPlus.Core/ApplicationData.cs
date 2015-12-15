@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
+using System.Windows.Forms;
 
 namespace PawnPlus.Core
 {
@@ -21,7 +19,7 @@ namespace PawnPlus.Core
         /// <summary>
         /// Path to plugins directory.
         /// </summary>
-        public static string PluginsPath { get; } = Path.Combine(Environment.CurrentDirectory, "plugins");
+        public static string PluginsPath { get; } = Path.Combine(Application.StartupPath, "plugins");
 
         static ApplicationData()
         {

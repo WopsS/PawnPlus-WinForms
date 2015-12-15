@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using PawnPlus.Core.Events;
+using PawnPlus.Core.Exceptions;
 using PawnPlus.Core.Extensibility;
 using PawnPlus.Core.UserControls;
 using SharpCompress.Archive;
@@ -8,7 +9,6 @@ using SharpCompress.Common;
 using System;
 using System.ComponentModel;
 using System.Drawing;
-using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -223,9 +223,9 @@ namespace PawnPlus.Core.Forms
 
                     Thread.Sleep(50);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    // TODO: Write the exception to log file.
+                    ExceptionHandler.HandledException(ex);
                 }
             }
 

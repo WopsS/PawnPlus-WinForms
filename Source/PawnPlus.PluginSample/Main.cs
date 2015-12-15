@@ -12,7 +12,7 @@ namespace PawnPlus.PluginTest
 
         public string Description { get { return "An example of plugin for PawnPlus."; } }
 
-        public string Name { get { return "PluginTest"; } }
+        public string Name { get { return "PluginSample"; } }
 
         public Main()
         {

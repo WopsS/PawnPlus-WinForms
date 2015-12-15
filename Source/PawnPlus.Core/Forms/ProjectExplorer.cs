@@ -81,7 +81,7 @@ namespace PawnPlus.Core.Forms
 
             // Add events listener.
             EventStorage.AddListener<Project, ProjectEventArgs>(EventKey.ProjectClosed, event_ProjectClosed);
-            EventStorage.AddListener<Project, ProjectEventArgs>(EventKey.ProjectLoaded, event_ProjectLoaded);
+            EventStorage.AddListener<Project, ProjectEventArgs>(EventKey.ProjectOpened, event_ProjectLoaded);
         }
 
         private void projectFiles_AfterCollapse(object sender, TreeViewEventArgs e)

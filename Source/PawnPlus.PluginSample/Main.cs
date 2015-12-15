@@ -1,14 +1,13 @@
 ﻿using PawnPlus.Core;
 using PawnPlus.Core.Events;
 using PawnPlus.Core.Extensibility;
-using PawnPlus.Core.Forms;
-using System;
+using System.Windows.Forms;
 
-namespace PawnPlus.PluginTest
+namespace PawnPlus.PluginSample
 {
     public class Main : IPlugin
     {
-        public string Author { get { return "Dima Octavian"; } }
+        public string Author { get { return "Your Name"; } }
 
         public string Description { get { return "An example of plugin for PawnPlus."; } }
 
@@ -16,17 +15,17 @@ namespace PawnPlus.PluginTest
 
         public Main()
         {
-            EventStorage.AddListener<Editor, CaretPositionChangedArgs>(EventKey.CaretPositionChanged, this.event_CaretPositionChanged);
+            EventStorage.AddListener<Project, ProjectEventArgs>(EventKey.ProjectOpened, this.event_ProjectLoaded);
         }
 
         ~Main()
         {
-            EventStorage.RemoveListener<Editor, CaretPositionChangedArgs>(EventKey.CaretPositionChanged, this.event_CaretPositionChanged);
+            EventStorage.RemoveListener<Project, ProjectEventArgs>(EventKey.ProjectOpened, this.event_ProjectLoaded);
         }
 
-        private void event_CaretPositionChanged(Editor editor, CaretPositionChangedArgs e)
+        private void event_ProjectLoaded(Project sender, ProjectEventArgs e)
         {
-            // Do something.
+            MessageBox.Show(string.Format("Project \"{0}\" loaded.", e.Name), this.Name, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

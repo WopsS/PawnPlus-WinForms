@@ -48,9 +48,9 @@ namespace PawnPlus.Core
         ProjectClosed,
 
         /// <summary>
-        /// Event raised when the project is loaded.
+        /// Event raised when the project is opened.
         /// </summary>
-        ProjectLoaded,
+        ProjectOpened,
 
         /// <summary>
         /// Event raised when application status is changed.

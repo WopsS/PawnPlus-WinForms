@@ -74,7 +74,7 @@ namespace PawnPlus.Core
                 }
             }
 
-            EventStorage.Fire(EventKey.ProjectLoaded, result, new ProjectEventArgs(result.Name, result.BaseDirectory));
+            EventStorage.Fire(EventKey.ProjectOpened, result, new ProjectEventArgs(result.Name, result.BaseDirectory));
             return result;
         }
 

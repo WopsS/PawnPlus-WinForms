@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PawnPlus.Core.Events;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -7,23 +8,8 @@ using System.Threading;
 
 namespace PawnPlus.Core
 {
-    public class DownloadHandlerEventArgs : EventArgs
+    public class DownloadHandler : IDisposable
     {
-        public string DownloadedText { get; private set; }
-        public int ProgressPercentage { get; private set; }
-
-        public DownloadHandlerEventArgs(string downloadedText, int progressPercentage)
-        {
-            this.DownloadedText = downloadedText;
-            this.ProgressPercentage = progressPercentage;
-        }
-    }
-
-    public class DownloadHandler
-    {
-        public delegate void DownloadHandlerDelegate(object sender, DownloadHandlerEventArgs e);
-        public event DownloadHandlerDelegate DownloadProgressChanged = delegate { }, DownloadProgressComplete = delegate { };
-
         private WebClient webClient = new WebClient();
         private Queue<Tuple<Uri, string>> linksQueue = new Queue<Tuple<Uri, string>>();
         private string currentSavePath = string.Empty;
@@ -62,10 +48,25 @@ namespace PawnPlus.Core
         /// </summary>
         ~DownloadHandler()
         {
-            this.webClient.DownloadProgressChanged -= new DownloadProgressChangedEventHandler(this.DownloadProgressChangedEventHandler);
-            this.webClient.DownloadFileCompleted -= new AsyncCompletedEventHandler(this.DownloadProgressCompleteEventHandler);
+            Dispose(false);
+        }
 
-            this.webClient.Dispose();
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                this.webClient.DownloadProgressChanged -= new DownloadProgressChangedEventHandler(this.DownloadProgressChangedEventHandler);
+                this.webClient.DownloadFileCompleted -= new AsyncCompletedEventHandler(this.DownloadProgressCompleteEventHandler);
+
+                this.manualResetEvent.Dispose();
+                this.webClient.Dispose();
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         /// <summary>
@@ -97,7 +98,7 @@ namespace PawnPlus.Core
         private void DownloadProgressChangedEventHandler(object sender, DownloadProgressChangedEventArgs e)
         {
             string downloadedText = string.Format("{0} of {1} MB", (e.BytesReceived / 1024d / 1024d).ToString("0.00"), (e.TotalBytesToReceive / 1024d / 1024d).ToString("0.00"));
-            this.DownloadProgressChanged(this, new DownloadHandlerEventArgs(downloadedText, e.ProgressPercentage));
+            EventStorage.Fire(EventKey.DownloadProgressChanged, this, new DownloadHandlerEventArgs(downloadedText, e.ProgressPercentage));
         }
 
         private void DownloadProgressCompleteEventHandler(object sender, AsyncCompletedEventArgs e)
@@ -107,12 +108,12 @@ namespace PawnPlus.Core
             if (e.Cancelled == true)
             {
                 File.Delete(this.currentSavePath);
-                this.DownloadProgressComplete(this, new DownloadHandlerEventArgs("Canceled", -1));
+                EventStorage.Fire(EventKey.DownloadProgressComplete, this, new DownloadHandlerEventArgs("Canceled", -1));
 
                 return;
             }
 
-            this.DownloadProgressComplete(this, new DownloadHandlerEventArgs("Completed", 100));
+            EventStorage.Fire(EventKey.DownloadProgressComplete, this, new DownloadHandlerEventArgs("Completed", 100));
         }
     }
 }

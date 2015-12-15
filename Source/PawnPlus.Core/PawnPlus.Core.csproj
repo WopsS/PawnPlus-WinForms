@@ -30,9 +30,23 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>
+    </ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ICSharpCode.AvalonEdit, Version=5.0.1.0, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
+      <HintPath>..\packages\AvalonEdit.5.0.2\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="SharpCompress, Version=0.11.2.0, Culture=neutral, PublicKeyToken=beaf6f427e128133, processorArchitecture=MSIL">
+      <HintPath>..\packages\sharpcompress.0.11.2\lib\net40\SharpCompress.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -44,52 +58,219 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="ThemeVS2012Light, Version=2.9.0.0, Culture=neutral, PublicKeyToken=5cded1a1a0a7b481, processorArchitecture=MSIL">
+      <HintPath>..\packages\DockPanelSuite.ThemeVS2012Light.2.10.0-beta1\lib\net40\ThemeVS2012Light.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="WeifenLuo.WinFormsUI.Docking, Version=2.9.0.0, Culture=neutral, PublicKeyToken=5cded1a1a0a7b481, processorArchitecture=MSIL">
       <HintPath>..\packages\DockPanelSuite.2.10.0-beta1\lib\net40\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationJSON.cs" />
-    <Compile Include="TreeViewNode.cs" />
-    <Compile Include="ProjectManager.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\PawnPlus\Properties\Settings.Designer.cs">
+      <Link>Properties\Settings.Designer.cs</Link>
+    </Compile>
+    <Compile Include="ApplicationData.cs" />
+    <Compile Include="CompileResult.cs" />
     <Compile Include="DownloadHandler.cs" />
-    <Compile Include="StatusManager.cs" />
-    <Compile Include="UserControls\Launcher\DownloadControl.cs">
+    <Compile Include="Events\Item.cs" />
+    <Compile Include="Events\Plugin.cs" />
+    <Compile Include="Events\Project.cs" />
+    <Compile Include="Events\Status.cs" />
+    <Compile Include="Exceptions\InvalidPluginException.cs" />
+    <Compile Include="Extensibility\Plugin\IPlugin.cs" />
+    <Compile Include="Extensibility\Plugin\Plugin.cs" />
+    <Compile Include="Extensibility\Plugin\PluginManager.cs" />
+    <Compile Include="Forms\ExceptionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ExceptionForm.Designer.cs">
+      <DependentUpon>ExceptionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\InputBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\InputBox.Designer.cs">
+      <DependentUpon>InputBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InformationJSON.cs" />
+    <Compile Include="EventStorage.cs" />
+    <Compile Include="Events\Download.cs" />
+    <Compile Include="Forms\GoToLine.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\GoToLine.Designer.cs">
+      <DependentUpon>GoToLine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Launcher.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Launcher.Designer.cs">
+      <DependentUpon>Launcher.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Main.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Main.Designer.cs">
+      <DependentUpon>Main.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\NewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\NewForm.Designer.cs">
+      <DependentUpon>NewForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Output.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Output.Designer.cs">
+      <DependentUpon>Output.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ProjectExplorer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ProjectExplorer.Designer.cs">
+      <DependentUpon>ProjectExplorer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Exceptions\ExceptionHandler.cs" />
+    <Compile Include="Localizations\Localization.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Localization.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Logger.cs" />
+    <Compile Include="Project.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Workspace.cs" />
+    <Compile Include="Forms\Editor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Editor.Designer.cs">
+      <DependentUpon>Editor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Events\Caret.cs" />
+    <Compile Include="Forms\FindReplace.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FindReplace.Designer.cs">
+      <DependentUpon>FindReplace.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TreeNode.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Status.cs" />
+    <Compile Include="UserControls\DownloadControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\Launcher\DownloadControl.Designer.cs">
+    <Compile Include="UserControls\DownloadControl.Designer.cs">
       <DependentUpon>DownloadControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Launcher\StatusControl.cs">
+    <Compile Include="UserControls\StatusControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\Launcher\StatusControl.Designer.cs">
+    <Compile Include="UserControls\StatusControl.Designer.cs">
       <DependentUpon>StatusControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="WindowHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="UserControls\Launcher\DownloadControl.resx">
+    <EmbeddedResource Include="Forms\Editor.resx">
+      <DependentUpon>Editor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ExceptionForm.resx">
+      <DependentUpon>ExceptionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FindReplace.resx">
+      <DependentUpon>FindReplace.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\GoToLine.resx">
+      <DependentUpon>GoToLine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\InputBox.resx">
+      <DependentUpon>InputBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Launcher.resx">
+      <DependentUpon>Launcher.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Main.resx">
+      <DependentUpon>Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\NewForm.resx">
+      <DependentUpon>NewForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Output.resx">
+      <DependentUpon>Output.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ProjectExplorer.resx">
+      <DependentUpon>ProjectExplorer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localizations\Localization.resx">
+      <CustomToolNamespace>PawnPlus.Core</CustomToolNamespace>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Localization.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\DownloadControl.resx">
       <DependentUpon>DownloadControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\Launcher\StatusControl.resx">
+    <EmbeddedResource Include="UserControls\StatusControl.resx">
       <DependentUpon>StatusControl.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\PawnPlus\Properties\Settings.settings">
+      <Link>Properties\Settings.settings</Link>
+    </None>
+    <None Include="app.config" />
     <None Include="packages.config" />
+    <EmbeddedResource Include="Resources\ProjectFiles\Filterscript.pwn" />
+    <EmbeddedResource Include="Resources\ProjectFiles\Gamemode.pwn" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\application_32xLG.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PawnPlus.CodeEditor\PawnPlus.CodeEditor.csproj">
-      <Project>{9a1d4c17-c9f0-4425-8295-e0876c823d79}</Project>
-      <Name>PawnPlus.CodeEditor</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PawnPlus.Language\PawnPlus.Language.csproj">
-      <Project>{0e913473-949c-4ec6-80f4-965ed670b30c}</Project>
-      <Name>PawnPlus.Language</Name>
-    </ProjectReference>
+    <None Include="Resources\CloseButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FileGroup_10135_32x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder_Closed_32xLG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder_Open_32xLG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gear_32xLG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MaximizeButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MinimizeButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PawnPlus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\DefaultLayout.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\PAWNSyntax.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ProjectFiles\Include.inc" />
+    <EmbeddedResource Include="Resources\ProjectFiles\Project.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

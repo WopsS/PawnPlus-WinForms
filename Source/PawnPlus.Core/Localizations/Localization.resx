@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Text_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+    <comment>How a button with &quot;Cancel&quot; text will be displayed.</comment>
+  </data>
+  <data name="Text_OK" xml:space="preserve">
+    <value>OK</value>
+    <comment>How a button with &quot;OK&quot; text will be displayed.</comment>
+  </data>
+  <data name="Text_Gamemode" xml:space="preserve">
+    <value>Gamemode</value>
+    <comment>How &quot;gamemode&quot; word will be shown.</comment>
+  </data>
+  <data name="Text_Include" xml:space="preserve">
+    <value>Include</value>
+    <comment>How &quot;include&quot; word will be shown.</comment>
+  </data>
+  <data name="Text_Filterscript" xml:space="preserve">
+    <value>Filterscript</value>
+    <comment>How &quot;filterscript&quot; word will be shown.</comment>
+  </data>
+  <data name="Text_Options" xml:space="preserve">
+    <value>Options</value>
+    <comment>Label to show &quot;Options:&quot; in &quot;Compiler Options&quot; form.</comment>
+  </data>
+  <data name="Text_CaseSensitive" xml:space="preserve">
+    <value>Case Sensitive</value>
+  </data>
+  <data name="Text_FindPrevious" xml:space="preserve">
+    <value>Find Prev.</value>
+  </data>
+  <data name="Text_ReplaceAll" xml:space="preserve">
+    <value>Replace All</value>
+  </data>
+  <data name="Text_WholeWord" xml:space="preserve">
+    <value>Whole Word</value>
+  </data>
+  <data name="Text_FindWhat" xml:space="preserve">
+    <value>Text to find:</value>
+  </data>
+  <data name="Text_AllDocuments" xml:space="preserve">
+    <value>All Documents</value>
+    <comment>Used for &quot;Look In&quot; combo box in &quot;Find and Replace&quot; form.</comment>
+  </data>
+  <data name="Text_CurrentDocument" xml:space="preserve">
+    <value>Current Document</value>
+    <comment>Used for &quot;Look In&quot; combo box in &quot;Find and Replace&quot; form.</comment>
+  </data>
+  <data name="Text_LookIn" xml:space="preserve">
+    <value>Look in:</value>
+    <comment>Used for &quot;Look In&quot; combo box&apos;s label in &quot;Find and Replace&quot; form.</comment>
+  </data>
+  <data name="Name_FindReplace" xml:space="preserve">
+    <value>Find and Replace</value>
+    <comment>Name for &quot;Find and Replace&quot; form.</comment>
+  </data>
+  <data name="Text_ReplaceWith" xml:space="preserve">
+    <value>Text to replace:</value>
+  </data>
+  <data name="Text_Find" xml:space="preserve">
+    <value>Find</value>
+  </data>
+  <data name="Text_Replace" xml:space="preserve">
+    <value>Replace</value>
+  </data>
+  <data name="Text_LineNumber" xml:space="preserve">
+    <value>Line number (1- {0}):</value>
+    <comment>Label in &quot;Go To Line&quot; form.</comment>
+  </data>
+  <data name="Name_GoToLine" xml:space="preserve">
+    <value>Go To Line</value>
+    <comment>Name for &quot;Go To Line&quot; form.</comment>
+  </data>
+  <data name="Text_CheckingFiles" xml:space="preserve">
+    <value>Checking files...</value>
+  </data>
+  <data name="Text_CompilerFilesCopied" xml:space="preserve">
+    <value>Compiler files copied.</value>
+  </data>
+  <data name="Text_ServerFilesCopied" xml:space="preserve">
+    <value>Server files copied.</value>
+  </data>
+  <data name="Text_CompilerFilesCopying" xml:space="preserve">
+    <value>Unpacking compiler files completed. Proceed with copying files...</value>
+  </data>
+  <data name="Text_ServerFilesCopying" xml:space="preserve">
+    <value>Unpacking server files completed. Proceed with copying files...</value>
+  </data>
+  <data name="Text_CompilerFilesDownloading" xml:space="preserve">
+    <value>Downloading compiler files...</value>
+  </data>
+  <data name="Text_ServerFilesDownloading" xml:space="preserve">
+    <value>Downloading server files...</value>
+  </data>
+  <data name="Text_CompilerFilesError" xml:space="preserve">
+    <value>Compiler files couldn&apos;t be downloaded. Proceed with program startup...</value>
+  </data>
+  <data name="Text_ServerFilesError" xml:space="preserve">
+    <value>Server files couldn&apos;t be downloaded. Proceed with compiler files...</value>
+  </data>
+  <data name="Text_CompilerFilesUnpacking" xml:space="preserve">
+    <value>Download completed. Unpacking compiler files...</value>
+  </data>
+  <data name="Text_ServerFilesUnpacking" xml:space="preserve">
+    <value>Download completed. Unpacking server files...</value>
+  </data>
+  <data name="Text_VersionChecking" xml:space="preserve">
+    <value>Checking for old version...</value>
+  </data>
+  <data name="Text_VersionSettings" xml:space="preserve">
+    <value>Obtain settings from the old version...</value>
+  </data>
+  <data name="Text_Starting" xml:space="preserve">
+    <value>Starting up...</value>
+  </data>
+  <data name="Text_Build" xml:space="preserve">
+    <value>Build</value>
+  </data>
+  <data name="Text_Compile" xml:space="preserve">
+    <value>Compile</value>
+  </data>
+  <data name="Text_CompilerOptions" xml:space="preserve">
+    <value>Compiler Options</value>
+  </data>
+  <data name="Text_Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Text_Copy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="Text_Cut" xml:space="preserve">
+    <value>Cut</value>
+  </data>
+  <data name="Text_FindNext" xml:space="preserve">
+    <value>Find Next</value>
+  </data>
+  <data name="Text_GoTo" xml:space="preserve">
+    <value>Go To</value>
+  </data>
+  <data name="Text_Paste" xml:space="preserve">
+    <value>Paste</value>
+  </data>
+  <data name="Text_Redo" xml:space="preserve">
+    <value>Redo</value>
+  </data>
+  <data name="Text_Undo" xml:space="preserve">
+    <value>Undo</value>
+  </data>
+  <data name="Text_File" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="Text_Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Text_CloseProject" xml:space="preserve">
+    <value>Close Project</value>
+  </data>
+  <data name="Text_Exit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="Text_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Text_Open" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="Text_Project" xml:space="preserve">
+    <value>Project</value>
+  </data>
+  <data name="Text_Save" xml:space="preserve">
+    <value>Save {0}</value>
+    <comment>It must have a formatter.
+Text for &quot;Save&quot; button.</comment>
+  </data>
+  <data name="Text_SaveAll" xml:space="preserve">
+    <value>Save All</value>
+  </data>
+  <data name="Text_SaveAs" xml:space="preserve">
+    <value>Save {0} As...</value>
+    <comment>It must have a formatter.
+Text for &quot;Save As&quot; button.</comment>
+  </data>
+  <data name="Status_Version" xml:space="preserve">
+    <value>Version {0}.{1}.{2}</value>
+    <comment>It must have three formaters.
+Version of application.</comment>
+  </data>
+  <data name="Status_Column" xml:space="preserve">
+    <value>Column {0}</value>
+    <comment>It must have a formatter.
+Text for &quot;Column&quot; label in status bar.</comment>
+  </data>
+  <data name="Status_Line" xml:space="preserve">
+    <value>Line {0}</value>
+    <comment>It must have a formatter.
+Text for &quot;Line&quot; label in status bar.</comment>
+  </data>
+  <data name="Text_Browse" xml:space="preserve">
+    <value>Browse</value>
+  </data>
+  <data name="Text_Create" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="Error_PathEmpty" xml:space="preserve">
+    <value>Path cannot be empty.</value>
+  </data>
+  <data name="Error_EmptyName" xml:space="preserve">
+    <value>Name cannot be empty.</value>
+  </data>
+  <data name="Text_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Text_Path" xml:space="preserve">
+    <value>Path</value>
+  </data>
+  <data name="Text_Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="Status_Ready" xml:space="preserve">
+    <value>Ready</value>
+  </data>
+  <data name="Status_Compiled" xml:space="preserve">
+    <value>Compiled</value>
+  </data>
+  <data name="Status_CompiledError" xml:space="preserve">
+    <value>Compiled with errors</value>
+  </data>
+  <data name="Status_Compiling" xml:space="preserve">
+    <value>Compiling...</value>
+  </data>
+  <data name="Status_IncludesCopying" xml:space="preserve">
+    <value>Copying include files...</value>
+  </data>
+  <data name="Status_IncludesDeleting" xml:space="preserve">
+    <value>Deleting include files...</value>
+  </data>
+  <data name="Status_EmptyText" xml:space="preserve">
+    <value>Current document is empty</value>
+  </data>
+  <data name="Status_SavingFiles" xml:space="preserve">
+    <value>Saving files...</value>
+  </data>
+  <data name="Text_SelectedItem" xml:space="preserve">
+    <value>Selected Item</value>
+  </data>
+  <data name="Text_Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Text_Rename" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="Text_ShowInExplorer" xml:space="preserve">
+    <value>Show in Explorer</value>
+  </data>
+  <data name="Text_Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="Text_Folder" xml:space="preserve">
+    <value>Folder</value>
+  </data>
+  <data name="Name_ProjectExplorer" xml:space="preserve">
+    <value>Project Explorer</value>
+    <comment>Name for &quot;Project Explorer&quot; form.</comment>
+  </data>
+  <data name="Name_Output" xml:space="preserve">
+    <value>Output</value>
+    <comment>Name for &quot;Output&quot; form.</comment>
+  </data>
+  <data name="Text_LoadingPlugins" xml:space="preserve">
+    <value>Loading plugins...</value>
+  </data>
+  <data name="Text_PluginLoaded" xml:space="preserve">
+    <value>Plugin &quot;{0}&quot; loded.</value>
+    <comment>Used to show &quot;Plugin {0} loaded.&quot; when a plugin is loaded.</comment>
+  </data>
+  <data name="Exception_InvalidPlugin" xml:space="preserve">
+    <value>&quot;{0}&quot; is an invalid plugin.</value>
+  </data>
+  <data name="Text_UnhandledExceptionOccurred" xml:space="preserve">
+    <value>Unhandled exception has occurred in application.
+If you click continue the application will ignore this issue and attempt to continue. 
+If you click quit, the application will close immediately.</value>
+  </data>
+  <data name="Exception_ProjectFileNotFound" xml:space="preserve">
+    <value>Couldn&apos;t load project because the file &quot;{0}&quot; was not found.</value>
+  </data>
+  <data name="Exception_FileNotFound" xml:space="preserve">
+    <value>File &quot;{0}&quot; was not found.</value>
+  </data>
+
+</root>

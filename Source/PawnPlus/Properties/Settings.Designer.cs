@@ -25,13 +25,13 @@ namespace PawnPlus.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool UpgradeRequired {
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Compiler_Arguments {
             get {
-                return ((bool)(this["UpgradeRequired"]));
+                return ((string)(this["Compiler_Arguments"]));
             }
             set {
-                this["UpgradeRequired"] = value;
+                this["Compiler_Arguments"] = value;
             }
         }
         
@@ -49,13 +49,13 @@ namespace PawnPlus.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Compiler_Arguments {
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool UpgradeRequired {
             get {
-                return ((string)(this["Compiler_Arguments"]));
+                return ((bool)(this["UpgradeRequired"]));
             }
             set {
-                this["Compiler_Arguments"] = value;
+                this["UpgradeRequired"] = value;
             }
         }
     }

@@ -6,13 +6,13 @@
 	!include "MUI2.nsh"
 	!include "WordFunc.nsh"
 
-	!define CurrentVersion 0.5.1.0
+	!define CurrentVersion 0.5.2.0
 	!insertmacro VersionCompare
 ;--------------------------------
 ;General
 
 	Name "PawnPlus"
-	OutFile "PawnPlus-Setup-0.5.1.exe"
+	OutFile "PawnPlus-Setup-0.5.2.exe"
 	
 	InstallDir "$PROGRAMFILES\PawnPlus"
 	

@@ -1,15 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PawnPlus", "PawnPlus\PawnPlus.csproj", "{39BA4B22-2D08-4560-A16C-1F981C4AD2B3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PawnPlus.CodeEditor", "PawnPlus.CodeEditor\PawnPlus.CodeEditor.csproj", "{9A1D4C17-C9F0-4425-8295-E0876C823D79}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9E9F569C-5F31-4C0E-9EEF-5F17DCDC3B32} = {9E9F569C-5F31-4C0E-9EEF-5F17DCDC3B32}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PawnPlus.Core", "PawnPlus.Core\PawnPlus.Core.csproj", "{C8F4A17C-2FF7-49F3-AD5F-21234F54A52D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PawnPlus.Language", "PawnPlus.Language\PawnPlus.Language.csproj", "{0E913473-949C-4EC6-80F4-965ED670B30C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PawnPlus.PluginTest", "PawnPlus.PluginTest\PawnPlus.PluginTest.csproj", "{9E9F569C-5F31-4C0E-9EEF-5F17DCDC3B32}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,18 +22,14 @@ Global
 		{39BA4B22-2D08-4560-A16C-1F981C4AD2B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39BA4B22-2D08-4560-A16C-1F981C4AD2B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39BA4B22-2D08-4560-A16C-1F981C4AD2B3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9A1D4C17-C9F0-4425-8295-E0876C823D79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9A1D4C17-C9F0-4425-8295-E0876C823D79}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9A1D4C17-C9F0-4425-8295-E0876C823D79}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9A1D4C17-C9F0-4425-8295-E0876C823D79}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C8F4A17C-2FF7-49F3-AD5F-21234F54A52D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C8F4A17C-2FF7-49F3-AD5F-21234F54A52D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8F4A17C-2FF7-49F3-AD5F-21234F54A52D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8F4A17C-2FF7-49F3-AD5F-21234F54A52D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0E913473-949C-4EC6-80F4-965ED670B30C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0E913473-949C-4EC6-80F4-965ED670B30C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0E913473-949C-4EC6-80F4-965ED670B30C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0E913473-949C-4EC6-80F4-965ED670B30C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E9F569C-5F31-4C0E-9EEF-5F17DCDC3B32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E9F569C-5F31-4C0E-9EEF-5F17DCDC3B32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E9F569C-5F31-4C0E-9EEF-5F17DCDC3B32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E9F569C-5F31-4C0E-9EEF-5F17DCDC3B32}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

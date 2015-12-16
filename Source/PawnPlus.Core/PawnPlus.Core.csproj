@@ -109,9 +109,9 @@
     <Compile Include="Events\Project.cs" />
     <Compile Include="Events\Status.cs" />
     <Compile Include="Exceptions\InvalidPluginException.cs" />
-    <Compile Include="Extensibility\Plugin\IPlugin.cs" />
-    <Compile Include="Extensibility\Plugin\Plugin.cs" />
-    <Compile Include="Extensibility\Plugin\PluginManager.cs" />
+    <Compile Include="Plugin\IPlugin.cs" />
+    <Compile Include="Plugin\Plugin.cs" />
+    <Compile Include="Plugin\PluginManager.cs" />
     <Compile Include="Forms\ExceptionForm.cs">
       <SubType>Form</SubType>
     </Compile>

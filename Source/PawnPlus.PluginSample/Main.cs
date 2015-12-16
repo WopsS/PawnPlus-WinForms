@@ -1,6 +1,5 @@
 ﻿using PawnPlus.Core;
 using PawnPlus.Core.Events;
-using PawnPlus.Core.Extensibility;
 using System.Windows.Forms;
 
 namespace PawnPlus.PluginSample
@@ -25,7 +24,7 @@ namespace PawnPlus.PluginSample
 
         private void event_ProjectLoaded(object sender, ProjectEventArgs e)
         {
-            // MessageBox.Show(string.Format("Project \"{0}\" loaded.", e.Name), this.Name, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(string.Format("Project \"{0}\" loaded.", e.Name), this.Name, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using PawnPlus.Core.Events;
 using PawnPlus.Core.Exceptions;
-using PawnPlus.Core.Extensibility;
 using PawnPlus.Core.UserControls;
 using SharpCompress.Archive;
 using SharpCompress.Archive.Zip;

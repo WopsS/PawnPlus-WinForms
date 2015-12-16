@@ -1,5 +1,4 @@
-﻿using PawnPlus.Core.Extensibility;
-using System;
+﻿using System;
 using System.Drawing;
 using System.IO;
 using System.Reflection;

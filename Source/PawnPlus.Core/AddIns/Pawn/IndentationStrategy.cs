@@ -29,9 +29,7 @@ namespace PawnPlus.Core.AddIns
 
         public override void IndentLine(TextDocument textDocument, DocumentLine line)
         {
-            int lineNumber = line.LineNumber;
-
-            TextDocumentAccessor documentAccessor = new TextDocumentAccessor(textDocument, lineNumber, lineNumber);
+            TextDocumentAccessor documentAccessor = new TextDocumentAccessor(textDocument, line.LineNumber, line.LineNumber);
             Indent(documentAccessor, false);
 
             if (documentAccessor.Text.Length == 0)

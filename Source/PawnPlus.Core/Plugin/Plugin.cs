@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace PawnPlus.Core.Extensibility
+namespace PawnPlus.Core
 {
     public class Plugin
     {

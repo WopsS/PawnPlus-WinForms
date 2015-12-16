@@ -14,7 +14,7 @@ namespace PawnPlus.Core
 
         public override string ToString()
         {
-            return string.Format("{0}({1}): {2}", FileName, Line, Message);
+            return string.Format("{0}({1}): {2}", FileName, Line, Message.TrimStart());
         }
     }
 

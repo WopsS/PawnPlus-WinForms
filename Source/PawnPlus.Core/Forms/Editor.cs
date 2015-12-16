@@ -111,7 +111,7 @@ namespace PawnPlus.Core.Forms
                 PawnFoldingStrategy foldingStrategy = new PawnFoldingStrategy();
                 foldingStrategy.UpdateFoldings(foldingManager, TextEditor.Document);
 
-                this.TextEditor.TextArea.IndentationStrategy = new IndentationStrategy(this.TextEditor.Options);
+                // this.TextEditor.TextArea.IndentationStrategy = new IndentationStrategy(this.TextEditor.Options);
                
             }
 

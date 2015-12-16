@@ -49,7 +49,7 @@ namespace PawnPlus.Core.Forms
             {
                 foreach (CompilationError error in Workspace.Compilation.Result.Errors)
                 {
-                    this.SetText(error.ToString(), false);
+                    this.SetText(error.ToString(), true);
                 }
 
                 Status.Set(StatusType.Error, StatusReset.FiveSeconds, Localization.Status_CompiledError);

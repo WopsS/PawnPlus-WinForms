@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 
-namespace PawnPlus.Core.Extensibility
+namespace PawnPlus.Core
 {
     public static class PluginManager
     {

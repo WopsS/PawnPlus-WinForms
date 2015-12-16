@@ -1,4 +1,4 @@
-﻿namespace PawnPlus.Core.Extensibility
+﻿namespace PawnPlus.Core
 {
     public interface IPlugin
     {

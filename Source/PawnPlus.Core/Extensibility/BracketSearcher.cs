@@ -19,10 +19,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using ICSharpCode.AvalonEdit.AddIn;
 using ICSharpCode.AvalonEdit.Document;
 
-namespace PawnPlus.Core
+namespace PawnPlus.Core.Extensibility
 {
     /// <summary>
     /// Searches matching brackets for PAWN.

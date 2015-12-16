@@ -1,9 +1,8 @@
 ﻿using ICSharpCode.AvalonEdit;
-using ICSharpCode.AvalonEdit.AddIn;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
-using PawnPlus.Core.AvalonEdit;
 using PawnPlus.Core.Events;
+using PawnPlus.Core.Extensibility;
 using System;
 using System.Drawing;
 using System.IO;
@@ -11,8 +10,6 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Xml;
 using WeifenLuo.WinFormsUI.Docking;
 

@@ -18,7 +18,7 @@
 
 using ICSharpCode.AvalonEdit.Document;
 
-namespace ICSharpCode.AvalonEdit.AddIn
+namespace PawnPlus.Core.Extensibility
 {
     /// <summary>
     /// Allows language specific search for matching brackets.

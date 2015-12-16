@@ -2,7 +2,7 @@ PawnPlus
 ========
 
 [![GitHub version](https://badge.fury.io/gh/WopsS%2FPawnPlus.svg)](https://badge.fury.io/gh/WopsS%2FPawnPlus)
-[![Build status](https://ci.appveyor.com/api/projects/status/lc2t0sxat5urnp2m?svg=true)](https://ci.appveyor.com/project/DimaOctavian/pawnplus)
+[![Build status](https://ci.appveyor.com/api/projects/status/fob716k1f347kk7u?svg=true)](https://ci.appveyor.com/project/DimaOctavian/pawnplus)
 [![Join the chat at https://gitter.im/WopsS/PawnPlus](https://badges.gitter.im/WopsS/PawnPlus.svg)](https://gitter.im/WopsS/PawnPlus?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 An open source editor for **[SA-MP](http://www.sa-mp.com/)** scripts.

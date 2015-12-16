@@ -21,7 +21,7 @@ using ICSharpCode.AvalonEdit.Rendering;
 using System;
 using System.Windows.Media;
 
-namespace PawnPlus.Core.Extensibility
+namespace PawnPlus.Core.AddIns
 {
     public class SelectionColorizer : ColorizingTransformer
     {

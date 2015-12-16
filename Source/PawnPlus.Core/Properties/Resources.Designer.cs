@@ -63,16 +63,6 @@ namespace PawnPlus.Core.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap application_32xLG {
-            get {
-                object obj = ResourceManager.GetObject("application_32xLG", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap CloseButton {
             get {
                 object obj = ResourceManager.GetObject("CloseButton", resourceCulture);
@@ -98,9 +88,9 @@ namespace PawnPlus.Core.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap FileGroup_10135_32x {
+        internal static System.Drawing.Bitmap FileIcon {
             get {
-                object obj = ResourceManager.GetObject("FileGroup_10135_32x", resourceCulture);
+                object obj = ResourceManager.GetObject("FileIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -108,9 +98,9 @@ namespace PawnPlus.Core.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap folder_Closed_32xLG {
+        internal static System.Drawing.Bitmap FolderClosedIcon {
             get {
-                object obj = ResourceManager.GetObject("folder_Closed_32xLG", resourceCulture);
+                object obj = ResourceManager.GetObject("FolderClosedIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -118,9 +108,9 @@ namespace PawnPlus.Core.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap folder_Open_32xLG {
+        internal static System.Drawing.Bitmap FolderOpenIcon {
             get {
-                object obj = ResourceManager.GetObject("folder_Open_32xLG", resourceCulture);
+                object obj = ResourceManager.GetObject("FolderOpenIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -128,9 +118,9 @@ namespace PawnPlus.Core.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap gear_32xLG {
+        internal static System.Drawing.Bitmap IncludeIcon {
             get {
-                object obj = ResourceManager.GetObject("gear_32xLG", resourceCulture);
+                object obj = ResourceManager.GetObject("IncludeIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -184,6 +174,16 @@ namespace PawnPlus.Core.Properties {
         internal static string PAWNSyntax {
             get {
                 return ResourceManager.GetString("PAWNSyntax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ProjectIcon {
+            get {
+                object obj = ResourceManager.GetObject("ProjectIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

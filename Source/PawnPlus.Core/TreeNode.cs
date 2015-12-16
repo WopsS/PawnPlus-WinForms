@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace PawnPlus.Core
 {
-    public enum TreeNodeType
+    public enum TreeNodeType : byte
     {
         Directory,
         File,

@@ -2,9 +2,14 @@
 
 namespace PawnPlus.Core.Events
 {
-    public delegate void ProjectLoaded(Project sender, ProjectEventArgs e);
-
-    public delegate void ProjectClosed(Project sender, ProjectEventArgs e);
+   /*
+   * Format:
+   *
+   *   [access modifier] void [Name](object sender, ProjectEventArgs e)
+   *   {
+   *       // Do something.
+   *   }
+   */
 
     public class ProjectEventArgs : EventArgs
     {

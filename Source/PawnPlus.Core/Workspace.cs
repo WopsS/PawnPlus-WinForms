@@ -16,7 +16,7 @@ namespace PawnPlus.Core
         /// <summary>
         /// Result about last compilation.
         /// </summary>
-        public static CompileResult LastCompilationResult { get; set; }
+        public static Compilation Compilation { get; set; }
 
         /// <summary>
         /// Instance of the current project, null if project is closed.
@@ -25,6 +25,11 @@ namespace PawnPlus.Core
 
         private static Dictionary<string, Editor> editors = new Dictionary<string, Editor>();
         private static Main mainForm = (Main)Application.OpenForms["Main"];
+
+        static Workspace()
+        {
+            Compilation = new Compilation();
+        }
 
         /// <summary>
         /// Close a file.
@@ -84,6 +89,16 @@ namespace PawnPlus.Core
             return false;
         }
 
+        public static Editor GetEditorByKey(string fileName)
+        {
+            if (editors.ContainsKey(fileName) == false) // Is there a file with this path? No, let's stop execution.
+            {
+                return null;
+            }
+
+            return editors[fileName];
+        }
+
         /// <summary>
         /// Get a list of all opened editors.
         /// </summary>
@@ -96,22 +111,22 @@ namespace PawnPlus.Core
         /// <summary>
         /// Open a file.
         /// </summary>
-        /// <param name="filePath">Path of the file which need to be opened.</param>
+        /// <param name="fileName">Path of the file which need to be opened.</param>
         /// <param name="isInProject">If this is <c>true</c> it will mark file as a project file.</param>
         /// <returns>Returns an instance object of the <see cref="Editor"/> class or null if the file already exist.</returns>
-        public static Editor OpenFile(string filePath, bool isInProject)
+        public static Editor OpenFile(string fileName, bool isInProject)
         {
-            if (editors.ContainsKey(filePath) == true) // Is file already opened? Yes, let's stop execution.
+            if (editors.ContainsKey(fileName) == true) // Is file already opened? Yes, let's stop execution.
             {
                 return null;
             }
 
             Editor editor = new Editor();
 
-            editor.Open(filePath);
-            editor.HasProject = Project != null ? Project.Files.Contains(filePath) : false;
+            editor.Open(fileName);
+            editor.HasProject = Project != null ? Project.Files.Contains(fileName) : false;
 
-            editors.Add(filePath, editor);
+            editors.Add(fileName, editor);
             editor.Show(mainForm.dockPanel, DockState.Document);
 
             return editor;
@@ -120,11 +135,11 @@ namespace PawnPlus.Core
         /// <summary>
         /// Open a file.
         /// </summary>
-        /// <param name="filePath">Path of the file which need to be opened.</param>
+        /// <param name="fileName">Path of the file which need to be opened.</param>
         /// <returns>Returns an instance object of the <see cref="Editor"/> class or null if the file already exist.</returns>
-        public static Editor OpenFile(string filePath)
+        public static Editor OpenFile(string fileName)
         {
-            return OpenFile(filePath, false);
+            return OpenFile(fileName, false);
         }
 
         /// <summary>

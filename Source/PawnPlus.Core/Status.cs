@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace PawnPlus.Core
 {
-    public enum StatusType
+    public enum StatusType : byte
     {
         None,
         Error,
@@ -14,7 +14,7 @@ namespace PawnPlus.Core
         Warning
     }
 
-    public enum StatusReset
+    public enum StatusReset : byte
     {
         None,
         OneSecond,
@@ -92,7 +92,7 @@ namespace PawnPlus.Core
             mainForm.statusBar.BackColor = color;
             mainForm.statusLabel.Text = string.Format(text, parameters);
 
-            EventStorage.Fire(EventKey.StatusChanged, new StatusChangedEventArgs(oldText, oldType, mainForm.statusLabel.Text, type));
+            EventStorage.Fire(EventKey.StatusChanged, null, new StatusChangedEventArgs(oldText, oldType, mainForm.statusLabel.Text, type));
 
             if (resetTime != StatusReset.None)
             {

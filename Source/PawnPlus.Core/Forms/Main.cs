@@ -1,11 +1,8 @@
-﻿using ICSharpCode.AvalonEdit;
-using PawnPlus.Core.Extensibility;
+﻿using PawnPlus.Core.Extensibility;
 using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 
@@ -13,11 +10,10 @@ namespace PawnPlus.Core.Forms
 {
     public partial class Main : Form
     {
-        private Explorer projectExplorer = new Explorer();
-        private Output outputForm = new Output();
-
         private DeserializeDockContent dockContentLayout;
+
         private FindReplace findReplace = new FindReplace();
+
         private string layoutPath = Path.Combine(ApplicationData.AppData, "Layout.xml");
 
         public Main()
@@ -63,7 +59,7 @@ namespace PawnPlus.Core.Forms
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
             // Let's check if project is open and let's close files from Workspace.Project. After that let's close all files.
-            if ((Workspace.Project != null && Workspace.Project.Close() == true) || (Workspace.Project == null && Workspace.CloseAllFiles(false) == true))
+            if ((Project.IsOpen == true && Workspace.Project.Close() == true) || (Workspace.Project == null && Workspace.CloseAllFiles(false) == true))
             {
                 e.Cancel = true;
                 return;
@@ -418,7 +414,7 @@ namespace PawnPlus.Core.Forms
                 Editor editor = (Editor)this.dockPanel.ActiveDocument.DockHandler.Form;
 
                 Workspace.CurrentEditor = editor;
-                Status.SetLineColumn(Workspace.CurrentEditor.codeEditor.TextArea.Caret.Line, Workspace.CurrentEditor.codeEditor.TextArea.Caret.Column);
+                Status.SetLineColumn(Workspace.CurrentEditor.TextEditor.TextArea.Caret.Line, Workspace.CurrentEditor.TextEditor.TextArea.Caret.Column);
 
                 this.saveToolStripMenuItem.Text = string.Format(Localization.Text_Save, Path.GetFileName(editor.FilePath));
                 this.savesAsToolStripMenuItem.Text = string.Format(Localization.Text_SaveAs, Path.GetFileName(editor.FilePath));
@@ -434,10 +430,9 @@ namespace PawnPlus.Core.Forms
 
                 this.saveToolStripMenuItem.Text = string.Format(Localization.Text_Save, Localization.Text_SelectedItem);
                 this.savesAsToolStripMenuItem.Text = string.Format(Localization.Text_SaveAs, Localization.Text_SelectedItem);
-
-                // Clear output box.
-                this.outputForm.ClearText();
             }
+
+            EventStorage.Fire(EventKey.ActiveDocumentChanged, sender, EventArgs.Empty);
         }
 
         private void newProjectToolStripMenuItem_Click(object sender, EventArgs e)
@@ -533,32 +528,32 @@ namespace PawnPlus.Core.Forms
 
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Workspace.CurrentEditor.codeEditor.Undo();
+            Workspace.CurrentEditor.TextEditor.Undo();
         }
 
         private void redoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Workspace.CurrentEditor.codeEditor.Redo();
+            Workspace.CurrentEditor.TextEditor.Redo();
         }
 
         private void cutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Workspace.CurrentEditor.codeEditor.Cut();
+            EventStorage.Fire(EventKey.TextCutting, sender, e);
         }
 
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Workspace.CurrentEditor.codeEditor.Copy();
+            EventStorage.Fire(EventKey.TextCopying, sender, e);
         }
 
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Workspace.CurrentEditor.codeEditor.Paste();
+            Workspace.CurrentEditor.TextEditor.Paste();
         }
 
         private void findToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            findReplace.ShowFind(this, Workspace.CurrentEditor.codeEditor.SelectedText);
+            findReplace.ShowFind(this, Workspace.CurrentEditor.TextEditor.SelectedText);
         }
 
         private void findNextToolStripMenuItem_Click(object sender, EventArgs e)
@@ -573,7 +568,7 @@ namespace PawnPlus.Core.Forms
 
         private void replaceToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            findReplace.ShowReplace(this, Workspace.CurrentEditor.codeEditor.SelectedText);
+            findReplace.ShowReplace(this, Workspace.CurrentEditor.TextEditor.SelectedText);
         }
 
         private void goToToolStripMenuItem_Click(object sender, EventArgs e)
@@ -584,56 +579,7 @@ namespace PawnPlus.Core.Forms
 
         private void compileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            TextEditor textEditor = Workspace.CurrentEditor.codeEditor;
-
-            if (Path.GetExtension(Workspace.CurrentEditor.FilePath) != ".pwn" || this.compilerWorker.IsBusy == true)
-            {
-                return;
-            }
-            else if (string.IsNullOrEmpty(textEditor.Text) == true || string.IsNullOrWhiteSpace(textEditor.Text) == true)
-            {
-                Status.Set(StatusType.Error, StatusReset.FiveSeconds, Localization.Status_EmptyText);
-                return;
-            }
-
-            this.outputForm.ClearText();
-
-            // Saving all files opened.
-            Status.Set(StatusType.Warning, StatusReset.None, Localization.Status_SavingFiles);
-
-            foreach (Editor editor in Workspace.GetEditors().Values)
-            {
-                if (editor.IsModified == true)
-                {
-                    editor.Save();
-                }
-            }
-
-            if (Workspace.Project != null)
-            {
-                // Copying all includes files to PAWN include folder.
-                Status.Set(StatusType.Warning, StatusReset.None, Localization.Status_IncludesCopying);
-
-                string targetAppDataDirectory = Path.Combine(ApplicationData.AppData, "Pawn", "include");
-                string projectDirectory = Path.Combine(Workspace.Project.BaseDirectory, "includes");
-
-                // Check if our directories exists.
-                if (Directory.Exists(targetAppDataDirectory) == true && Directory.Exists(projectDirectory) == true)
-                {
-                    foreach (string file in Directory.GetFiles(projectDirectory))
-                    {
-                        File.Copy(file, Path.Combine(targetAppDataDirectory, Path.GetFileName(file)), true);
-                    }
-                }
-            }
-
-            // Disable 'Save*' menu items.
-            this.saveToolStripMenuItem.Enabled = false;
-            this.savesAsToolStripMenuItem.Enabled = false;
-            this.saveAllToolStripMenuItem.Enabled = false;
-
-            Status.Set(StatusType.Warning, StatusReset.None, Localization.Status_Compiling);
-            this.compilerWorker.RunWorkerAsync();
+            Workspace.Compilation.Start(Workspace.CurrentEditor.FilePath);        
         }
 
         private void compileOptionsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -645,96 +591,6 @@ namespace PawnPlus.Core.Forms
                 PawnPlus.Properties.Settings.Default.Compiler_Arguments = value;
                 PawnPlus.Properties.Settings.Default.Save();
             }
-        }
-
-        private void compilerWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
-        {
-            string amxPath = Path.Combine(Path.GetDirectoryName(Workspace.CurrentEditor.FilePath), string.Format("{0}.amx", Path.GetFileNameWithoutExtension(Workspace.CurrentEditor.FilePath)));
-
-            Process compilingProcess = new Process();
-
-            compilingProcess.StartInfo.FileName = Path.Combine(ApplicationData.AppData, "Pawn", "pawncc.exe");
-            compilingProcess.StartInfo.Arguments = string.Format("\"{0}\" -o\"{1}\" -;+ -(+ {2}", Workspace.CurrentEditor.FilePath, amxPath, PawnPlus.Properties.Settings.Default.Compiler_Arguments.ToString());
-            compilingProcess.StartInfo.UseShellExecute = false;
-            compilingProcess.StartInfo.CreateNoWindow = true;
-            compilingProcess.StartInfo.RedirectStandardError = true;
-            compilingProcess.StartInfo.RedirectStandardOutput = true;
-            compilingProcess.Start();
-
-            while (compilingProcess.HasExited == false)
-            { }
-
-            string[] errors = compilingProcess.StandardError.ReadToEnd().Split(Environment.NewLine.ToCharArray());
-
-            Workspace.LastCompilationResult = new CompileResult();
-
-            foreach (string errorMessage in errors)
-            {
-                if (string.IsNullOrEmpty(errorMessage) == true || string.IsNullOrWhiteSpace(errorMessage) || errorMessage == "Compilation aborted.")
-                {
-                    continue;
-                }
-
-                Match match = Regex.Match(errorMessage, @"(.+)\((.+)\)\s:(.+)");
-
-                string filePath = match.Groups[1].ToString();
-                string fileName = filePath.Replace(string.Format("{0}\\", Path.Combine(ApplicationData.AppData, "Pawn", "include")), string.Empty);
-
-                if (Workspace.Project != null)
-                {
-                    fileName = fileName.Replace(string.Format("{0}\\", Workspace.Project.BaseDirectory), string.Empty);
-                }
-
-                Workspace.LastCompilationResult.Errors.Add(new CompileError() { FileName = fileName, FilePath = filePath, Line = Convert.ToInt32(match.Groups[2].ToString()), Message = match.Groups[3].ToString() });
-            }
-
-            Workspace.LastCompilationResult.Successful = Workspace.LastCompilationResult.Errors.Count == 0;
-            Workspace.LastCompilationResult.Output = compilingProcess.StandardOutput.ReadToEnd();
-        }
-
-        private void compilerWorker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
-        {
-            if (Workspace.Project != null)
-            {
-                // Deleting all includes files to PAWN include folder.
-                Status.Set(StatusType.Warning, StatusReset.None, Localization.Status_IncludesDeleting);
-
-                string targetAppDataDirectory = Path.Combine(ApplicationData.AppData, "Pawn", "include");
-                string projectDirectory = Path.Combine(Workspace.Project.BaseDirectory, "includes");
-
-                // Check if our directories exists.
-                if (Directory.Exists(targetAppDataDirectory) == true && Directory.Exists(projectDirectory) == true)
-                {
-                    foreach (string file in Directory.GetFiles(projectDirectory))
-                    {
-                        File.Delete(Path.Combine(targetAppDataDirectory, Path.GetFileName(file)));
-                    }
-                }
-            }
-
-            // Enable 'Save*' menu items.
-            this.saveToolStripMenuItem.Enabled = true;
-            this.savesAsToolStripMenuItem.Enabled = true;
-            this.saveAllToolStripMenuItem.Enabled = true;
-
-            if (Workspace.LastCompilationResult.Successful == true)
-            {
-                Status.Set(StatusType.Finish, StatusReset.FiveSeconds, Localization.Status_Compiled);
-            }
-            else
-            {
-                foreach(CompileError error in Workspace.LastCompilationResult.Errors)
-                {
-                    this.outputForm.SetText(error.ToString(), false);
-                }
-
-                Status.Set(StatusType.Error, StatusReset.FiveSeconds, Localization.Status_CompiledError);
-
-                // Add empty line because we have errors and we want a empty line to show the output.
-                this.outputForm.SetText(Environment.NewLine, true);
-            }
-
-            this.outputForm.SetText(Workspace.LastCompilationResult.Output, true);
         }
 
         /// <summary>
@@ -795,11 +651,11 @@ namespace PawnPlus.Core.Forms
             {
                 if (layoutString == typeof(Explorer).ToString())
                 {
-                    return this.projectExplorer;
+                    return new Explorer();
                 }
                 else if (layoutString == typeof(Output).ToString())
                 {
-                    return this.outputForm;
+                    return new Output();
                 }
             }
 

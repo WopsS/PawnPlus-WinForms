@@ -23,7 +23,7 @@ namespace PawnPlus.PluginSample
             EventStorage.RemoveListener<Project, ProjectEventArgs>(EventKey.ProjectOpened, this.event_ProjectLoaded);
         }
 
-        private void event_ProjectLoaded(Project sender, ProjectEventArgs e)
+        private void event_ProjectLoaded(object sender, ProjectEventArgs e)
         {
             // MessageBox.Show(string.Format("Project \"{0}\" loaded.", e.Name), this.Name, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }

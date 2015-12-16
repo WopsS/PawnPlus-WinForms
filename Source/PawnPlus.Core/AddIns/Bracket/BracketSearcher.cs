@@ -21,29 +21,29 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using ICSharpCode.AvalonEdit.Document;
 
-namespace PawnPlus.Core.Extensibility
+namespace PawnPlus.Core.AddIns
 {
     /// <summary>
     /// Searches matching brackets for PAWN.
     /// </summary>
     public class BracketSearcher : IBracketSearcher
     {
-        string openingBrackets = "([{";
-        string closingBrackets = ")]}";
+        public string OpeningBrackets = "([{";
+        public string ClosingBrackets = ")]}";
 
         public BracketSearchResult SearchBracket(IDocument document, int offset)
         {
             if (offset > 0)
             {
                 char c = document.GetCharAt(offset - 1);
-                int index = openingBrackets.IndexOf(c);
+                int index = OpeningBrackets.IndexOf(c);
                 int otherOffset = -1;
                 if (index > -1)
-                    otherOffset = SearchBracketForward(document, offset, openingBrackets[index], closingBrackets[index]);
+                    otherOffset = SearchBracketForward(document, offset, OpeningBrackets[index], ClosingBrackets[index]);
 
-                index = closingBrackets.IndexOf(c);
+                index = ClosingBrackets.IndexOf(c);
                 if (index > -1)
-                    otherOffset = SearchBracketBackward(document, offset - 2, openingBrackets[index], closingBrackets[index]);
+                    otherOffset = SearchBracketBackward(document, offset - 2, OpeningBrackets[index], ClosingBrackets[index]);
 
                 if (otherOffset > -1)
                 {

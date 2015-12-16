@@ -22,7 +22,7 @@ using System.Windows.Media;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Rendering;
 
-namespace PawnPlus.Core.Extensibility
+namespace PawnPlus.Core.AddIns
 {
     public class BracketHighlightRenderer : IBackgroundRenderer
     {
@@ -74,7 +74,9 @@ namespace PawnPlus.Core.Extensibility
         public void Draw(TextView textView, DrawingContext drawingContext)
         {
             if (this.result == null)
+            {
                 return;
+            }
 
             BackgroundGeometryBuilder builder = new BackgroundGeometryBuilder();
 

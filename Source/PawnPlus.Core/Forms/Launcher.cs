@@ -10,6 +10,7 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading;
@@ -25,6 +26,7 @@ namespace PawnPlus.Core.Forms
         public bool IsSafe { get; private set; }
 
         private DownloadControl downloadControl;
+
         private StatusControl statusControl;
 
         public Launcher()
@@ -92,12 +94,8 @@ namespace PawnPlus.Core.Forms
 
                     InformationJSON applicationJSON = JsonConvert.DeserializeObject<InformationJSON>(JSONString);
 
-                    string PAWNFolder = Path.Combine(ApplicationData.AppData, "Pawn");
-
-                    if (Directory.Exists(PAWNFolder) == false || Directory.Exists(Path.Combine(PAWNFolder, "include")) == false)
+                    if (Directory.EnumerateFiles(ApplicationData.PawnDirectory).Any() == false || Directory.EnumerateFiles(ApplicationData.IncludesDirectory).Any() == false)
                     {
-                        Directory.CreateDirectory(Path.Combine(PAWNFolder, "include"));
-
                         FileInfo fileInfo = null;
 
                         string TemporaryFolder = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
@@ -154,7 +152,7 @@ namespace PawnPlus.Core.Forms
 
                             foreach (string CurrentFile in Files)
                             {
-                                File.Copy(CurrentFile, Path.Combine(PAWNFolder, "include", Path.GetFileName(CurrentFile)), true);
+                                File.Copy(CurrentFile, Path.Combine(ApplicationData.IncludesDirectory, Path.GetFileName(CurrentFile)), true);
                             }
 
                             this.backgroundWorker.ReportProgress(15, Localization.Text_ServerFilesCopied);
@@ -202,8 +200,8 @@ namespace PawnPlus.Core.Forms
                             Thread.Sleep(1000);
 
                             // Let's copy PAWN files.
-                            File.Copy(Path.Combine(TemporaryFolder, CompilerZIPPath.Remove(CompilerZIPPath.Length - 4), "bin", "pawnc.dll"), Path.Combine(PAWNFolder, Path.GetFileName("pawnc.dll")), true);
-                            File.Copy(Path.Combine(TemporaryFolder, CompilerZIPPath.Remove(CompilerZIPPath.Length - 4), "bin", "pawncc.exe"), Path.Combine(PAWNFolder, Path.GetFileName("pawncc.exe")), true);
+                            File.Copy(Path.Combine(TemporaryFolder, CompilerZIPPath.Remove(CompilerZIPPath.Length - 4), "bin", "pawnc.dll"), Path.Combine(ApplicationData.PawnDirectory, Path.GetFileName("pawnc.dll")), true);
+                            File.Copy(Path.Combine(TemporaryFolder, CompilerZIPPath.Remove(CompilerZIPPath.Length - 4), "bin", "pawncc.exe"), Path.Combine(ApplicationData.PawnDirectory, Path.GetFileName("pawncc.exe")), true);
 
                             this.backgroundWorker.ReportProgress(15, Localization.Text_CompilerFilesCopied);
                             Thread.Sleep(1000);

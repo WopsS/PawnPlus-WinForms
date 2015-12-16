@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace PawnPlus.Core
 {
-    public class CompileError
+    public class CompilationError
     {
         public virtual string FileName { get; set; }
 
@@ -21,11 +18,11 @@ namespace PawnPlus.Core
         }
     }
 
-    public class CompileResult
+    public class CompilationResult
     {
         public virtual bool Successful { get; set; }
 
-        public readonly List<CompileError> Errors = new List<CompileError>();
+        public readonly List<CompilationError> Errors = new List<CompilationError>();
 
         public virtual string Output { get; set; }
     }

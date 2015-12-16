@@ -82,7 +82,6 @@
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.dockPanel = new WeifenLuo.WinFormsUI.Docking.DockPanel();
             this.vs2012LightTheme = new WeifenLuo.WinFormsUI.Docking.VS2012LightTheme();
-            this.compilerWorker = new System.ComponentModel.BackgroundWorker();
             this.principalPanel.SuspendLayout();
             this.ControlPanel.SuspendLayout();
             this.menuStrip.SuspendLayout();
@@ -557,12 +556,6 @@
             this.dockPanel.Theme = this.vs2012LightTheme;
             this.dockPanel.ActiveDocumentChanged += new System.EventHandler(this.dockPanel_ActiveDocumentChanged);
             // 
-            // compilerWorker
-            // 
-            this.compilerWorker.WorkerSupportsCancellation = true;
-            this.compilerWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.compilerWorker_DoWork);
-            this.compilerWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.compilerWorker_RunWorkerCompleted);
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -619,9 +612,6 @@
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeProjectToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem savesAsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveAllToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
@@ -646,12 +636,14 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private WeifenLuo.WinFormsUI.Docking.VS2012LightTheme vs2012LightTheme;
-        private System.ComponentModel.BackgroundWorker compilerWorker;
         internal System.Windows.Forms.StatusStrip statusBar;
         internal System.Windows.Forms.ToolStripStatusLabel lineLabel;
         internal System.Windows.Forms.ToolStripStatusLabel versionLabel;
         internal System.Windows.Forms.ToolStripStatusLabel statusLabel;
         internal System.Windows.Forms.ToolStripStatusLabel columnLabel;
         internal WeifenLuo.WinFormsUI.Docking.DockPanel dockPanel;
+        internal System.Windows.Forms.ToolStripMenuItem saveAllToolStripMenuItem;
+        internal System.Windows.Forms.ToolStripMenuItem savesAsToolStripMenuItem;
+        internal System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
     }
 }

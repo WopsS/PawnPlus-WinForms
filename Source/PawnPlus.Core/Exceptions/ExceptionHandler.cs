@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace PawnPlus.Core.Exceptions
 {
-    public enum ExceptionType
+    public enum ExceptionType : byte
     {
         Handled,
         Unhandled

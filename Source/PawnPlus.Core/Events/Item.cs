@@ -2,9 +2,14 @@
 
 namespace PawnPlus.Core.Events
 {
-    public delegate void ItemAdded(object sender, ItemEventArgs e);
-
-    public delegate void ItemDeleted(object sender, ItemEventArgs e);
+    /*
+    * Format for "ItemAdded" and "ItemDeleted":
+    *
+    *   [access modifier] void [Name](object sender, ItemEventArgs e)
+    *   {
+    *       // Do something.
+    *   }
+    */
 
     public class ItemEventArgs : EventArgs
     {
@@ -16,7 +21,14 @@ namespace PawnPlus.Core.Events
         }
     }
 
-    public delegate void ItemRenamed(object sender, ItemRenamedEventArgs e);
+    /*
+    * Format for "ItemRenamed":
+    *
+    *   [access modifier] void [Name](object sender, ItemRenamedEventArgs e)
+    *   {
+    *       // Do something.
+    *   }
+    */
 
     public class ItemRenamedEventArgs : EventArgs
     {

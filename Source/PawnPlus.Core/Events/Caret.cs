@@ -1,9 +1,15 @@
-﻿using PawnPlus.Core.Forms;
-using System;
+﻿using System;
 
 namespace PawnPlus.Core.Events
 {
-    public delegate void CaretPositionChanged(Editor editor, CaretPositionChangedArgs e);
+    /*
+    * Format:
+    *
+    *   [access modifier] void [Name](object sender, CaretPositionChangedArgs e)
+    *   {
+    *       // Do something.
+    *   }
+    */
 
     public class CaretPositionChangedArgs : EventArgs
     {

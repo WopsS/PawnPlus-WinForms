@@ -5,12 +5,42 @@ using System.Linq;
 
 namespace PawnPlus.Core
 {
-    public enum EventKey
+    public enum EventKey : byte
     {
+        /// <summary>
+        /// Event raised when a docked document is changed.
+        /// </summary>
+        ActiveDocumentChanged,
+
         /// <summary>
         /// Event raised when the caret position is changed.
         /// </summary>
         CaretPositionChanged,
+
+        /// <summary>
+        /// Event raised when the compilation is canceled.
+        /// </summary>
+        CompilationCanceled,
+
+        /// <summary>
+        /// Event raised when the compilation pending cancellation.
+        /// </summary>
+        CompilationCanceling,
+
+        /// <summary>
+        /// Event raised when the compilation is completed.
+        /// </summary>
+        CompilationCompleted,
+
+        /// <summary>
+        /// Event raised when the compilation has started.
+        /// </summary>
+        CompilationStarted,
+
+        /// <summary>
+        /// Event raised when the compilation is about to start.
+        /// </summary>
+        CompilationStarting,
 
         /// <summary>
         /// Event raised when the download progress is changed.
@@ -55,7 +85,17 @@ namespace PawnPlus.Core
         /// <summary>
         /// Event raised when application status is changed.
         /// </summary>
-        StatusChanged
+        StatusChanged,
+
+        /// <summary>
+        /// Event raised when text is about to be copied.
+        /// </summary>
+        TextCopying,
+
+        /// <summary>
+        /// Event raised when text is about to be cutted.
+        /// </summary>
+        TextCutting
     }
 
     public static class EventStorage

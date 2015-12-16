@@ -7,8 +7,9 @@ namespace PawnPlus.Core.Forms
 {
     public partial class NewForm : Form
     {
-        string fileFolder = string.Empty;
-        NewFormType type;
+        private string fileFolder = string.Empty;
+
+        private NewFormType type;
 
         public NewForm(NewFormType type)
         {
@@ -221,7 +222,7 @@ namespace PawnPlus.Core.Forms
         }
     }
 
-    public enum NewFormType
+    public enum NewFormType : byte
     {
         File,
         Project

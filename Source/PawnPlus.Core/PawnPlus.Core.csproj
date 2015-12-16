@@ -72,6 +72,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -92,11 +93,16 @@
     <Compile Include="..\PawnPlus\Properties\Settings.Designer.cs">
       <Link>Properties\Settings.Designer.cs</Link>
     </Compile>
+    <Compile Include="AddIns\Pawn\IndentationStrategy.cs" />
     <Compile Include="ApplicationData.cs" />
-    <Compile Include="Extensibility\BracketSearcher.cs" />
-    <Compile Include="Extensibility\BracketSearchResult.cs" />
-    <Compile Include="Extensibility\SelectionColorizer.cs" />
-    <Compile Include="CompileResult.cs" />
+    <Compile Include="Compilation.cs" />
+    <Compile Include="Events\Compilation.cs" />
+    <Compile Include="Events\Document.cs" />
+    <Compile Include="AddIns\Bracket\BracketSearcher.cs" />
+    <Compile Include="AddIns\Bracket\BracketSearchResult.cs" />
+    <Compile Include="AddIns\Pawn\PawnFoldingStrategy.cs" />
+    <Compile Include="AddIns\SelectionColorizer.cs" />
+    <Compile Include="CompilationResult.cs" />
     <Compile Include="DownloadHandler.cs" />
     <Compile Include="Events\Item.cs" />
     <Compile Include="Events\Plugin.cs" />
@@ -165,12 +171,12 @@
     </Compile>
     <Compile Include="Logger.cs" />
     <Compile Include="Project.cs" />
+    <Compile Include="AddIns\Bracket\BracketHighlightRenderer.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Extensibility\BracketHighlightRenderer.cs" />
     <Compile Include="Workspace.cs" />
     <Compile Include="Forms\Editor.cs">
       <SubType>Form</SubType>
@@ -260,22 +266,22 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Resources\application_32xLG.png" />
+    <None Include="Resources\ProjectIcon.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\CloseButton.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\FileGroup_10135_32x.png" />
+    <None Include="Resources\FileIcon.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\folder_Closed_32xLG.png" />
+    <None Include="Resources\FolderClosedIcon.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\folder_Open_32xLG.png" />
+    <None Include="Resources\FolderOpenIcon.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\gear_32xLG.png" />
+    <None Include="Resources\IncludeIcon.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\MaximizeButton.png" />
@@ -299,9 +305,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="AvalonEdit\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

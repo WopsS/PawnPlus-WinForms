@@ -58,6 +58,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.Text = "Output";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Output_FormClosing);
             this.Load += new System.EventHandler(this.Output_Load);
             this.ResumeLayout(false);
 

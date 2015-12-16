@@ -35,7 +35,7 @@ namespace PawnPlus.Core.Extensibility
                         string pluginLoaded = string.Format(Localization.Text_PluginLoaded, plugin.Name);
 
                         ((Launcher)Application.OpenForms["Launcher"]).backgroundWorker.ReportProgress(0, pluginLoaded);
-                        EventStorage.Fire(EventKey.PluginLoaded, plugin.Assembly, new PluginLoadedEventArgs(plugin.Author, plugin.Description, plugin.Name));
+                        EventStorage.Fire(EventKey.PluginLoaded, plugin.Assembly, new PluginLoadedEventArgs(plugin.Assembly, plugin.Author, plugin.Description, plugin.Name));
                     }
                     else
                     {

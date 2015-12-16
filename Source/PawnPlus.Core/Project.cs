@@ -16,12 +16,22 @@ namespace PawnPlus.Core
             get { return ".pawnplusproject"; }
         }
 
+        public static bool IsOpen
+        {
+            get { return Workspace.Project != null; }
+        }
+
         public virtual string BaseDirectory
         {
             get { return Path.GetDirectoryName(this.FileName); }
         }
 
         public virtual string FileName { get; set; }
+
+        public virtual string IncludesDirectory
+        {
+            get { return Path.Combine(this.BaseDirectory, "includes"); }
+        }
 
         public virtual string Name
         {
@@ -36,7 +46,7 @@ namespace PawnPlus.Core
         {
             if (File.Exists(fileName) == false)
             {
-                Logger.Write(new FileNotFoundException(string.Format(Localization.Exception_ProjectFileNotFound, fileName), fileName));
+                ExceptionHandler.HandledException(new FileNotFoundException(string.Format(Localization.Exception_ProjectFileNotFound, fileName), fileName));
                 return null;
             }
 
@@ -45,6 +55,8 @@ namespace PawnPlus.Core
 
             using (XmlTextReader xmlReader = new XmlTextReader(fileName))
             {
+                string activeFile = string.Empty;
+
                 while (xmlReader.Read())
                 {
                     switch (xmlReader.Name.ToString())
@@ -60,7 +72,7 @@ namespace PawnPlus.Core
 
                                 if (wasActive == true)
                                 {
-                                    Workspace.SetActiveEditor(filePath, true);
+                                    activeFile = filePath;
                                 }
                             }
                             else
@@ -71,6 +83,11 @@ namespace PawnPlus.Core
                             break;
                         }
                     }
+                }
+
+                if (string.IsNullOrEmpty(activeFile) == false)
+                {
+                    Workspace.SetActiveEditor(activeFile, true);
                 }
             }
 

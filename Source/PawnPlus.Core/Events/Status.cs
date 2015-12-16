@@ -2,8 +2,15 @@
 
 namespace PawnPlus.Core.Events
 {
-    public delegate void StatusChanged(ProjectEventArgs e);
-    
+    /*
+    * Format:
+    *
+    *   [access modifier] void [Name](object sender, StatusChangedEventArgs e)
+    *   {
+    *       // Do something.
+    *   }
+    */
+
     public class StatusChangedEventArgs : EventArgs
     {
         public virtual string OldText { get; }

@@ -2,7 +2,14 @@
 
 namespace PawnPlus.Core.Events
 {
-    public delegate void DownloadHandlerDelegate(object sender, DownloadHandlerEventArgs e);
+    /*
+    * Format:
+    *
+    *   [access modifier] void [Name](object sender, DownloadHandlerEventArgs e)
+    *   {
+    *       // Do something.
+    *   }
+    */
 
     public class DownloadHandlerEventArgs : EventArgs
     {

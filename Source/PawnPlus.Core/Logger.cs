@@ -3,7 +3,7 @@ using System.IO;
 
 namespace PawnPlus.Core
 {
-    public enum LogType
+    public enum LogType : byte
     {
         Debug,
         Error,
@@ -12,7 +12,7 @@ namespace PawnPlus.Core
 
     public static class Logger
     {
-        private static string filePath = Path.Combine(ApplicationData.MyDocumentsPath, "application.log");
+        private static string filePath = Path.Combine(ApplicationData.MyDocumentsDirectory, "application.log");
 
         static Logger()
         {
@@ -26,9 +26,9 @@ namespace PawnPlus.Core
 
         public static void Write(LogType type, string format, params string[] parameters)
         {
-            if (Directory.Exists(ApplicationData.MyDocumentsPath) == false)
+            if (Directory.Exists(ApplicationData.MyDocumentsDirectory) == false)
             {
-                Directory.CreateDirectory(ApplicationData.MyDocumentsPath);
+                Directory.CreateDirectory(ApplicationData.MyDocumentsDirectory);
             }
 
             // Formata our message with parameters.

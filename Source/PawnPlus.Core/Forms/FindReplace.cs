@@ -75,7 +75,7 @@ namespace PawnPlus.Core.Forms
 
         private void replaceAllButton_Click(object sender, EventArgs e)
         {
-            TextEditor editor = Workspace.CurrentEditor.codeEditor;
+            TextEditor editor = Workspace.CurrentEditor.TextEditor;
 
             while (this.FindNext(this.replaceWhatText.Text, false) == true)
             {
@@ -87,14 +87,14 @@ namespace PawnPlus.Core.Forms
         {
             if (this.FindNext(this.replaceWhatText.Text, false) == true)
             {
-                TextEditor editor = Workspace.CurrentEditor.codeEditor;
+                TextEditor editor = Workspace.CurrentEditor.TextEditor;
                 editor.Document.Replace(editor.Text.IndexOf(this.replaceWhatText.Text, editor.SelectionStart, editor.SelectionLength), this.replaceWhatText.Text.Length, this.replaceWithText.Text);
             }
         }
 
         public bool FindNext(string findText, bool scrollToCaret)
         {
-            TextEditor editor = Workspace.CurrentEditor.codeEditor;
+            TextEditor editor = Workspace.CurrentEditor.TextEditor;
             string editorText = editor.Text;
 
             if (string.IsNullOrEmpty(findText) == true)
@@ -131,7 +131,7 @@ namespace PawnPlus.Core.Forms
 
         public bool FindPrevious(string findText, bool scrollToCaret)
         {
-            TextEditor editor = Workspace.CurrentEditor.codeEditor;
+            TextEditor editor = Workspace.CurrentEditor.TextEditor;
             string editorText = editor.Text;
 
             if (string.IsNullOrEmpty(findText) == true)
@@ -200,7 +200,7 @@ namespace PawnPlus.Core.Forms
         /// <remarks>This function will return false if the finded text need to be 'whole word' and it isn't.</remarks>
         private bool MoveCaret(string findText, int offset, bool scrollToCaret)
         {
-            TextEditor editor = Workspace.CurrentEditor.codeEditor;
+            TextEditor editor = Workspace.CurrentEditor.TextEditor;
 
             editor.Select(offset, findText.Length);
 

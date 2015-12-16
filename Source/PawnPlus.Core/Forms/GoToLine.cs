@@ -15,10 +15,10 @@ namespace PawnPlus.Core.Forms
             this.TranslateUI();
 
             // Set maximum numeric value for 'numericUpDown'.
-            this.numericUpDown.Maximum = Workspace.CurrentEditor.codeEditor.LineCount;
+            this.numericUpDown.Maximum = Workspace.CurrentEditor.TextEditor.LineCount;
 
             // Set current line for 'numericUpDown'.
-            this.numericUpDown.Value = Workspace.CurrentEditor.codeEditor.TextArea.Caret.Line;
+            this.numericUpDown.Value = Workspace.CurrentEditor.TextEditor.TextArea.Caret.Line;
         }
 
         private void cancelButton_Click(object sender, EventArgs e)
@@ -30,10 +30,10 @@ namespace PawnPlus.Core.Forms
         {
             int line = Convert.ToInt32(this.numericUpDown.Value);
 
-            Workspace.CurrentEditor.codeEditor.ScrollToLine(line);
-            Workspace.CurrentEditor.codeEditor.TextArea.Caret.Line = line;
-            Workspace.CurrentEditor.codeEditor.TextArea.Caret.BringCaretToView();
-            Workspace.CurrentEditor.codeEditor.TextArea.Caret.Show();
+            Workspace.CurrentEditor.TextEditor.ScrollToLine(line);
+            Workspace.CurrentEditor.TextEditor.TextArea.Caret.Line = line;
+            Workspace.CurrentEditor.TextEditor.TextArea.Caret.BringCaretToView();
+            Workspace.CurrentEditor.TextEditor.TextArea.Caret.Show();
 
             this.Close();
         }
@@ -41,7 +41,7 @@ namespace PawnPlus.Core.Forms
         private void TranslateUI()
         {
             this.Text = Localization.Name_GoToLine;
-            this.lineNumberLabel.Text = string.Format(Localization.Text_GoTo, Workspace.CurrentEditor.codeEditor.LineCount);
+            this.lineNumberLabel.Text = string.Format(Localization.Text_GoTo, Workspace.CurrentEditor.TextEditor.LineCount);
             this.cancelButton.Text = Localization.Text_Cancel;
             this.okButton.Text = Localization.Text_OK;
         }

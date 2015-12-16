@@ -12,9 +12,19 @@ namespace PawnPlus.Core
         public static string AppData { get; } = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PawnPlus");
 
         /// <summary>
+        /// Path for PAWN's include directory.
+        /// </summary>
+        public static string IncludesDirectory { get; } = Path.Combine(AppData, "Pawn", "include");
+
+        /// <summary>
         /// Path for application in "My Documents" directory.
         /// </summary>
-        public static string MyDocumentsPath { get; } = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "PawnPlus");
+        public static string MyDocumentsDirectory { get; } = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "PawnPlus");
+
+        /// <summary>
+        /// Path for PAWN directory.
+        /// </summary>
+        public static string PawnDirectory { get; } = Path.Combine(AppData, "Pawn");
 
         /// <summary>
         /// Path to plugins directory.
@@ -28,9 +38,14 @@ namespace PawnPlus.Core
                 Directory.CreateDirectory(AppData);
             }
 
-            if (Directory.Exists(MyDocumentsPath) == false)
+            if (Directory.Exists(IncludesDirectory) == false)
             {
-                Directory.CreateDirectory(MyDocumentsPath);
+                Directory.CreateDirectory(IncludesDirectory);
+            }
+
+            if (Directory.Exists(MyDocumentsDirectory) == false)
+            {
+                Directory.CreateDirectory(MyDocumentsDirectory);
             }
 
             if (Directory.Exists(PluginsPath) == false)

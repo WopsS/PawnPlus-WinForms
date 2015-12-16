@@ -30,11 +30,11 @@ namespace PawnPlus.Core.Forms
             ImageList imageList = new ImageList();
             imageList.ColorDepth = ColorDepth.Depth32Bit;
 
-            imageList.Images.Add(Properties.Resources.application_32xLG);
-            imageList.Images.Add(Properties.Resources.folder_Closed_32xLG);
-            imageList.Images.Add(Properties.Resources.folder_Open_32xLG);
-            imageList.Images.Add(Properties.Resources.FileGroup_10135_32x);
-            imageList.Images.Add(Properties.Resources.gear_32xLG);
+            imageList.Images.Add(Properties.Resources.ProjectIcon);
+            imageList.Images.Add(Properties.Resources.FolderClosedIcon);
+            imageList.Images.Add(Properties.Resources.FolderOpenIcon);
+            imageList.Images.Add(Properties.Resources.FileIcon);
+            imageList.Images.Add(Properties.Resources.IncludeIcon);
 
             this.projectFiles.ImageList = imageList;
             this.projectFiles.LabelEdit = true;
@@ -316,12 +316,12 @@ namespace PawnPlus.Core.Forms
             }
         }
 
-        private void event_ProjectClosed(Project sender, ProjectEventArgs e)
+        private void event_ProjectClosed(object sender, ProjectEventArgs e)
         {
             this.projectFiles.Nodes.Clear();
         }
 
-        private void event_ProjectLoaded(Project sender, ProjectEventArgs e)
+        private void event_ProjectLoaded(object sender, ProjectEventArgs e)
         {
             this.projectFiles.BeginUpdate();
             this.projectFiles.Nodes.Clear();

@@ -1,5 +1,7 @@
 PawnPlus
 ========
+
+[![Join the chat at https://gitter.im/WopsS/PawnPlus](https://badges.gitter.im/WopsS/PawnPlus.svg)](https://gitter.im/WopsS/PawnPlus?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 An open source editor for **[SA-MP](http://www.sa-mp.com/)** scripts.
 
 ## How can I contribute?

@@ -11,6 +11,7 @@
     <AssemblyName>PawnPlus.Core</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,6 +22,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>false</RunCodeAnalysis>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,6 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>
@@ -37,6 +40,22 @@
   <ItemGroup>
     <Reference Include="ICSharpCode.AvalonEdit, Version=5.0.1.0, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
       <HintPath>..\packages\AvalonEdit.5.0.2\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mono.Cecil, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.Cecil.0.9.6.1\lib\net40\Mono.Cecil.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mono.Cecil.Mdb, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.Cecil.0.9.6.1\lib\net40\Mono.Cecil.Mdb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mono.Cecil.Pdb, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.Cecil.0.9.6.1\lib\net40\Mono.Cecil.Pdb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mono.Cecil.Rocks, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.Cecil.0.9.6.1\lib\net40\Mono.Cecil.Rocks.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -74,6 +93,9 @@
       <Link>Properties\Settings.Designer.cs</Link>
     </Compile>
     <Compile Include="ApplicationData.cs" />
+    <Compile Include="AvalonEdit\BracketSearcher.cs" />
+    <Compile Include="AvalonEdit\BracketSearchResult.cs" />
+    <Compile Include="AvalonEdit\SelectionColorizer.cs" />
     <Compile Include="CompileResult.cs" />
     <Compile Include="DownloadHandler.cs" />
     <Compile Include="Events\Item.cs" />
@@ -129,11 +151,11 @@
     <Compile Include="Forms\Output.Designer.cs">
       <DependentUpon>Output.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ProjectExplorer.cs">
+    <Compile Include="Forms\Explorer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\ProjectExplorer.Designer.cs">
-      <DependentUpon>ProjectExplorer.cs</DependentUpon>
+    <Compile Include="Forms\Explorer.Designer.cs">
+      <DependentUpon>Explorer.cs</DependentUpon>
     </Compile>
     <Compile Include="Exceptions\ExceptionHandler.cs" />
     <Compile Include="Localization.cs">
@@ -148,6 +170,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="AvalonEdit\BracketHighlightRenderer.cs" />
     <Compile Include="Workspace.cs" />
     <Compile Include="Forms\Editor.cs">
       <SubType>Form</SubType>
@@ -206,8 +229,8 @@
     <EmbeddedResource Include="Forms\Output.resx">
       <DependentUpon>Output.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ProjectExplorer.resx">
-      <DependentUpon>ProjectExplorer.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Explorer.resx">
+      <DependentUpon>Explorer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Localizations\en-US.resx" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -276,6 +299,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

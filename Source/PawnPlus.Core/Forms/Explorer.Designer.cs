@@ -1,6 +1,6 @@
 ﻿namespace PawnPlus.Core.Forms
 {
-    partial class ProjectExplorer
+    partial class Explorer
     {
         /// <summary>
         /// Required designer variable.

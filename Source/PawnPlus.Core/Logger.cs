@@ -32,7 +32,7 @@ namespace PawnPlus.Core
             }
 
             // Formata our message with parameters.
-            string result = string.Format("[{0} | {1}] {2}", DateTime.Now.ToString(), type.ToString().ToUpper(), string.Format(format, parameters));
+            string result = string.Format("{0} {1} {2}", DateTime.Now.ToString(), type.ToString().ToUpper(), string.Format(format, parameters));
         
             File.AppendAllText(filePath, result + Environment.NewLine);
         }

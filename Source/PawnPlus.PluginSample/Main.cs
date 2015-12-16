@@ -25,7 +25,7 @@ namespace PawnPlus.PluginSample
 
         private void event_ProjectLoaded(Project sender, ProjectEventArgs e)
         {
-            MessageBox.Show(string.Format("Project \"{0}\" loaded.", e.Name), this.Name, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            // MessageBox.Show(string.Format("Project \"{0}\" loaded.", e.Name), this.Name, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

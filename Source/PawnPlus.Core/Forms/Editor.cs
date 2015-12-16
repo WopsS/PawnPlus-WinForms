@@ -1,6 +1,8 @@
 ﻿using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.AddIn;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
+using PawnPlus.Core.AvalonEdit;
 using PawnPlus.Core.Events;
 using System;
 using System.Drawing;
@@ -9,6 +11,8 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
+using System.Windows.Input;
+using System.Windows.Media;
 using System.Xml;
 using WeifenLuo.WinFormsUI.Docking;
 
@@ -43,6 +47,10 @@ namespace PawnPlus.Core.Forms
 
         public bool HasProject { get; set; }
 
+        private BracketHighlightRenderer bracketHighlightRenderer;
+
+        private BracketSearcher bracketSearcher = new BracketSearcher();
+
         private ElementHost elementHost = new ElementHost();
 
         private string filePath = string.Empty;
@@ -65,31 +73,42 @@ namespace PawnPlus.Core.Forms
             this.codeEditor.FontFamily = new System.Windows.Media.FontFamily("Consolas");
             this.codeEditor.FontSize = 12;
 
-            this.codeEditor.TextArea.Caret.PositionChanged += codeEditor_Caret_PositionChanged;
             this.codeEditor.Document.UpdateFinished += codeEditor_UpdateFinished;
+            this.codeEditor.TextArea.Caret.PositionChanged += codeEditor_CaretPositionChanged;
+            this.codeEditor.TextArea.SelectionChanged += codeEditor_SelectionChanged;
 
             // TODO: Create folding and indentation strategy.
 
-            Stream stream = null;
+            string extenstion = Path.GetExtension(filePath);
 
-            try
+            if (extenstion == ".pwn" || extenstion == ".inc")
             {
-                // Let's load the syntax hightlight.
-                stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("PawnPlus.Core.Resources.PAWNSyntax.xml");
+                Stream stream = null;
 
-                using (XmlReader xmlReader = XmlReader.Create(stream))
+                try
                 {
-                    stream = null;
-                    this.codeEditor.SyntaxHighlighting = HighlightingLoader.Load(xmlReader, HighlightingManager.Instance);
+                    // Let's load the syntax hightlight.
+                    stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("PawnPlus.Core.Resources.PAWNSyntax.xml");
+
+                    using (XmlReader xmlReader = XmlReader.Create(stream))
+                    {
+                        stream = null;
+                        this.codeEditor.SyntaxHighlighting = HighlightingLoader.Load(xmlReader, HighlightingManager.Instance);
+                    }
                 }
-            }
-            finally
-            {
-                if (stream != null)
+                finally
                 {
-                    stream.Dispose();
+                    if (stream != null)
+                    {
+                        stream.Dispose();
+                    }
                 }
+
+                this.bracketHighlightRenderer = new BracketHighlightRenderer(this.codeEditor.TextArea.TextView);
             }
+
+            this.codeEditor.TextArea.SelectionCornerRadius = 0;
+            this.codeEditor.TextArea.TextView.LineTransformers.Add(new SelectionColorizer(this.codeEditor.TextArea));
         }
 
         private void Editor_FormClosing(object sender, FormClosingEventArgs e)
@@ -98,6 +117,24 @@ namespace PawnPlus.Core.Forms
 
             this.codeEditor.Document.UpdateFinished -= codeEditor_UpdateFinished;
             this.elementHost.Dispose();
+        }
+
+        private void codeEditor_CaretPositionChanged(object sender, EventArgs e)
+        {
+            if (this.bracketHighlightRenderer != null)
+            {
+                BracketSearchResult bracketSearchResult = this.bracketSearcher.SearchBracket(this.codeEditor.Document, this.codeEditor.TextArea.Caret.Offset);
+                this.bracketHighlightRenderer.SetHighlight(bracketSearchResult);
+            }
+
+            EventStorage.Fire(EventKey.CaretPositionChanged, this, new CaretPositionChangedArgs(this.codeEditor.TextArea.Caret.Line, this.codeEditor.TextArea.Caret.Column));
+        }
+
+        private void codeEditor_SelectionChanged(object sender, EventArgs e)
+        {
+            this.codeEditor.ScrollTo(this.codeEditor.TextArea.Caret.Line, this.codeEditor.TextArea.Selection.EndPosition.Column);
+            Workspace.CurrentEditor.codeEditor.TextArea.Caret.Column = this.codeEditor.TextArea.Selection.EndPosition.Column;
+            Workspace.CurrentEditor.codeEditor.TextArea.Caret.BringCaretToView();
         }
 
         private void codeEditor_UpdateFinished(object sender, EventArgs e)
@@ -110,11 +147,6 @@ namespace PawnPlus.Core.Forms
             {
                 this.Text += '*';
             }
-        }
-
-        private void codeEditor_Caret_PositionChanged(object sender, EventArgs e)
-        {
-            EventStorage.Fire(EventKey.CaretPositionChanged, this, new CaretPositionChangedArgs(this.codeEditor.TextArea.Caret.Line, this.codeEditor.TextArea.Caret.Column));
         }
 
         /// <summary>

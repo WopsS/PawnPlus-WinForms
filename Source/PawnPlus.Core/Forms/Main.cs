@@ -13,7 +13,7 @@ namespace PawnPlus.Core.Forms
 {
     public partial class Main : Form
     {
-        private ProjectExplorer projectExplorer = new ProjectExplorer();
+        private Explorer projectExplorer = new Explorer();
         private Output outputForm = new Output();
 
         private DeserializeDockContent dockContentLayout;
@@ -793,7 +793,7 @@ namespace PawnPlus.Core.Forms
         {
             if (layoutString != typeof(Editor).ToString())
             {
-                if (layoutString == typeof(ProjectExplorer).ToString())
+                if (layoutString == typeof(Explorer).ToString())
                 {
                     return this.projectExplorer;
                 }

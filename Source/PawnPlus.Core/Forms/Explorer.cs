@@ -11,13 +11,13 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace PawnPlus.Core.Forms
 {
-    public partial class ProjectExplorer : DockContent
+    public partial class Explorer : DockContent
     {
         private ContextMenu directoryMenu;
         private ContextMenu fileMenu;
         private ContextMenu rootMenu;
 
-        public ProjectExplorer()
+        public Explorer()
         {
             InitializeComponent();
         }
@@ -241,7 +241,7 @@ namespace PawnPlus.Core.Forms
 
             DirectoryInfo directoryInfo = Directory.CreateDirectory(path);
 
-            ((ProjectExplorer)Application.OpenForms["ProjectExplorer"]).Add(TreeNodeType.Directory, path, true);
+            ((Explorer)Application.OpenForms["ProjectExplorer"]).Add(TreeNodeType.Directory, path, true);
         }
 
         private void contextMenuDelete_Click(object sender, EventArgs e)

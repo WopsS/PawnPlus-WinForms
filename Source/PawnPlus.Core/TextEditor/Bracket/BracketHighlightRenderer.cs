@@ -22,7 +22,7 @@ using System.Windows.Media;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Rendering;
 
-namespace PawnPlus.Core.AddIns
+namespace PawnPlus.Core.TextEditor
 {
     public class BracketHighlightRenderer : IBackgroundRenderer
     {

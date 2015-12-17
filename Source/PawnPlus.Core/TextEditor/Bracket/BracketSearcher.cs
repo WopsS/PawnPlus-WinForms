@@ -21,7 +21,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using ICSharpCode.AvalonEdit.Document;
 
-namespace PawnPlus.Core.AddIns
+namespace PawnPlus.Core.TextEditor
 {
     /// <summary>
     /// Searches matching brackets for PAWN.

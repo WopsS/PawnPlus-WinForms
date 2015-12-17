@@ -40,7 +40,7 @@
             this.Name = "Editor";
             this.Text = "CodeEditor";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Editor_FormClosing);
-            this.Load += new System.EventHandler(this.CodeEditor_Load);
+            this.Load += new System.EventHandler(this.Editor_Load);
             this.ResumeLayout(false);
 
         }

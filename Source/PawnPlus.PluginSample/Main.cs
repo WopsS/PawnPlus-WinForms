@@ -14,7 +14,7 @@ namespace PawnPlus.PluginSample
 
         public Main()
         {
-            Project.Closed += event_ProjectClosed; ;
+            Project.Closed += this.event_ProjectClosed;
             Project.Loaded += this.event_ProjectLoaded;
         }
 

@@ -160,7 +160,7 @@ namespace PawnPlus.Core.Forms
                     resourceStream = null;
 
                     File.WriteAllText(filePath, extension == ".inc" ? string.Format(stream, this.nameBox.Text.ToLower()) : stream);
-                    ((Explorer)Application.OpenForms["ProjectExplorer"]).Add(TreeNodeType.File, filePath, true);
+                    ((Explorer)Application.OpenForms["Explorer"]).Add(TreeNodeType.File, filePath, true);
                 }
             }
             finally

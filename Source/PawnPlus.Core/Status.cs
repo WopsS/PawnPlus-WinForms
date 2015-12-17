@@ -1,5 +1,6 @@
 ﻿using PawnPlus.Core.Events;
 using PawnPlus.Core.Forms;
+using PawnPlus.Core.TextEditor;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -38,7 +39,7 @@ namespace PawnPlus.Core
 
         static Status()
         {
-            Editor.CaretPositionChanged += event_CaretPositionChanged;
+            CodeTextEditor.CaretPositionChanged += event_CaretPositionChanged;
             readyTimer.Tick += ReadyTimer_Tick;
         }
 

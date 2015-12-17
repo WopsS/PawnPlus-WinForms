@@ -93,14 +93,15 @@
     <Compile Include="..\PawnPlus\Properties\Settings.Designer.cs">
       <Link>Properties\Settings.Designer.cs</Link>
     </Compile>
-    <Compile Include="AddIns\Pawn\IndentationStrategy.cs" />
+    <Compile Include="TextEditor\Pawn\IndentationStrategy.cs" />
     <Compile Include="ApplicationData.cs" />
     <Compile Include="Compilation.cs" />
+    <Compile Include="TextEditor\Completion\CompletionData.cs" />
     <Compile Include="Events\Compilation.cs" />
-    <Compile Include="AddIns\Bracket\BracketSearcher.cs" />
-    <Compile Include="AddIns\Bracket\BracketSearchResult.cs" />
-    <Compile Include="AddIns\Pawn\PawnFoldingStrategy.cs" />
-    <Compile Include="AddIns\SelectionColorizer.cs" />
+    <Compile Include="TextEditor\Bracket\BracketSearcher.cs" />
+    <Compile Include="TextEditor\Bracket\BracketSearchResult.cs" />
+    <Compile Include="TextEditor\Pawn\PawnFoldingStrategy.cs" />
+    <Compile Include="TextEditor\SelectionColorizer.cs" />
     <Compile Include="CompilationResult.cs" />
     <Compile Include="DownloadHandler.cs" />
     <Compile Include="Events\Document.cs" />
@@ -170,12 +171,13 @@
     <Compile Include="Exceptions\ExceptionHandler.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Project.cs" />
-    <Compile Include="AddIns\Bracket\BracketHighlightRenderer.cs" />
+    <Compile Include="TextEditor\Bracket\BracketHighlightRenderer.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="TextEditor\TextEditor.cs" />
     <Compile Include="Workspace.cs" />
     <Compile Include="Forms\Editor.cs">
       <SubType>Form</SubType>

@@ -54,7 +54,7 @@
             this.Name = "Explorer";
             this.Text = "Project explorer";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Explorer_FormClosed);
-            this.Load += new System.EventHandler(this.ProjectExplorer_Load);
+            this.Load += new System.EventHandler(this.Explorer_Load);
             this.ResumeLayout(false);
 
         }

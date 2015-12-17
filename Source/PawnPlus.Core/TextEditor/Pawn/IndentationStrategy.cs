@@ -4,7 +4,7 @@ using ICSharpCode.AvalonEdit.Indentation;
 using ICSharpCode.AvalonEdit.Indentation.CSharp;
 using System;
 
-namespace PawnPlus.Core.AddIns
+namespace PawnPlus.Core.TextEditor
 {
     public class IndentationStrategy : DefaultIndentationStrategy
     {

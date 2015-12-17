@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ExceptionForm));
             this.label = new System.Windows.Forms.Label();
             this.stackTrace = new System.Windows.Forms.RichTextBox();
             this.continueButton = new System.Windows.Forms.Button();
@@ -102,11 +103,11 @@
             this.Controls.Add(this.stackTrace);
             this.Controls.Add(this.label);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ExceptionForm";
             this.ShowIcon = false;
-            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ExceptionForm";
             this.Load += new System.EventHandler(this.ExceptionForm_Load);

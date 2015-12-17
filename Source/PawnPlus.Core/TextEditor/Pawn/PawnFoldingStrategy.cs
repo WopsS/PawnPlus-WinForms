@@ -2,7 +2,7 @@
 using ICSharpCode.AvalonEdit.Folding;
 using System.Collections.Generic;
 
-namespace PawnPlus.Core.AddIns
+namespace PawnPlus.Core.TextEditor
 {
     public class PawnFolding
     {

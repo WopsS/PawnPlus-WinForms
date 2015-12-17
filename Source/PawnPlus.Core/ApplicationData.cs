@@ -40,7 +40,7 @@ namespace PawnPlus.Core
         /// <summary>
         /// Version of the program.
         /// </summary>
-        public static string Version { get; } = string.Format("{0}.{1}.{2}", Entry.GetName().Version.Major, Entry.GetName().Version.Minor, Entry.GetName().Version.Build);
+        public static string Version { get; } = string.Format("{0}.{1}.{2}-beta1", Entry.GetName().Version.Major, Entry.GetName().Version.Minor, Entry.GetName().Version.Build);
 
         static ApplicationData()
         {

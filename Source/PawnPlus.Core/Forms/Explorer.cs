@@ -37,7 +37,7 @@ namespace PawnPlus.Core.Forms
             InitializeComponent();
         }
 
-        private void ProjectExplorer_Load(object sender, EventArgs e)
+        private void Explorer_Load(object sender, EventArgs e)
         {
             // Translate controls.
             this.Text = Localization.Name_ProjectExplorer;
@@ -268,7 +268,7 @@ namespace PawnPlus.Core.Forms
 
             DirectoryInfo directoryInfo = Directory.CreateDirectory(path);
 
-            ((Explorer)Application.OpenForms["ProjectExplorer"]).Add(TreeNodeType.Directory, path, true);
+            ((Explorer)Application.OpenForms["Explorer"]).Add(TreeNodeType.Directory, path, true);
         }
 
         private void contextMenuDelete_Click(object sender, EventArgs e)

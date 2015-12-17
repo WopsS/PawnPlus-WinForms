@@ -34,7 +34,6 @@ namespace PawnPlus.Core
 
         public Plugin(string path)
         {
-            Type pluginType = typeof(IPlugin);
             this.Assembly = Assembly.LoadFrom(path);
 
             if (this.Assembly != null)
@@ -43,7 +42,7 @@ namespace PawnPlus.Core
                 {
                     if (type.IsInterface == false && type.IsAbstract == false)
                     {
-                        if (type.GetInterface(pluginType.FullName) != null)
+                        if (type.GetInterface(typeof(IPlugin).FullName) != null)
                         {
                             this.instance = (IPlugin)Activator.CreateInstance(type, new object[] { });
 

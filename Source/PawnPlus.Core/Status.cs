@@ -1,5 +1,6 @@
 ﻿using PawnPlus.Core.Events;
 using PawnPlus.Core.Forms;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -24,6 +25,11 @@ namespace PawnPlus.Core
 
     public static class Status
     {
+        /// <summary>
+        /// Event raised when application status is changed.
+        /// </summary>
+        public static event EventHandler<StatusChangedEventArgs> Changed;
+
         private static Main mainForm = (Main)Application.OpenForms["Main"];
 
         private static StatusType oldType { get; set; } = StatusType.None;
@@ -32,11 +38,11 @@ namespace PawnPlus.Core
 
         static Status()
         {
-            EventStorage.AddListener<Editor, CaretPositionChangedArgs>(EventKey.CaretPositionChanged, event_CaretPositionChanged);
+            Editor.CaretPositionChanged += event_CaretPositionChanged;
             readyTimer.Tick += ReadyTimer_Tick;
         }
 
-        private static void event_CaretPositionChanged(Editor editor, CaretPositionChangedArgs e)
+        private static void event_CaretPositionChanged(object sender, CaretPositionChangedArgs e)
         {
             SetLineColumn(e.Line, e.Column);
         }
@@ -92,7 +98,10 @@ namespace PawnPlus.Core
             mainForm.statusBar.BackColor = color;
             mainForm.statusLabel.Text = string.Format(text, parameters);
 
-            EventStorage.Fire(EventKey.StatusChanged, null, new StatusChangedEventArgs(oldText, oldType, mainForm.statusLabel.Text, type));
+            if (Changed != null)
+            {
+                Changed(null, new StatusChangedEventArgs(oldText, oldType, mainForm.statusLabel.Text, type));
+            }
 
             if (resetTime != StatusReset.None)
             {

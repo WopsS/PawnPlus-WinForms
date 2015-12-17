@@ -44,15 +44,16 @@
             this.projectFiles.DoubleClick += new System.EventHandler(this.projectFiles_DoubleClick);
             this.projectFiles.MouseUp += new System.Windows.Forms.MouseEventHandler(this.projectFiles_MouseUp);
             // 
-            // ProjectExplorer
+            // Explorer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(386, 424);
             this.Controls.Add(this.projectFiles);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Name = "ProjectExplorer";
+            this.Name = "Explorer";
             this.Text = "Project explorer";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Explorer_FormClosed);
             this.Load += new System.EventHandler(this.ProjectExplorer_Load);
             this.ResumeLayout(false);
 

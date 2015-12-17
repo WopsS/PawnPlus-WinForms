@@ -108,8 +108,8 @@ namespace PawnPlus.Core.Forms
                             Tuple.Create(new Uri(applicationJSON.CompilerLink + "/" + applicationJSON.CompilerZIPName), CompilerZIPPath),
                         });
 
-                        EventStorage.AddListener<object, DownloadHandlerEventArgs>(EventKey.DownloadProgressChanged, this.DownloadHandler_DownloadProgressChanged);
-                        EventStorage.AddListener<object, DownloadHandlerEventArgs>(EventKey.DownloadProgressComplete, this.DownloadHandler_DownloadProgressComplete);
+                        downloadHandler.ProgressChanged += this.DownloadHandler_DownloadProgressChanged;
+                        downloadHandler.FileCompleted += this.DownloadHandler_DownloadProgressComplete;
 
                         this.backgroundWorker.ReportProgress(15, Localization.Text_ServerFilesDownloading);
                         Thread.Sleep(500);
@@ -214,8 +214,7 @@ namespace PawnPlus.Core.Forms
                         // Let's delete the temporary folder, we don't need it from now.
                         Directory.Delete(TemporaryFolder, true);
 
-                        EventStorage.RemoveListener<object, DownloadHandlerEventArgs>(EventKey.DownloadProgressChanged, this.DownloadHandler_DownloadProgressChanged);
-                        EventStorage.RemoveListener<object, DownloadHandlerEventArgs>(EventKey.DownloadProgressComplete, this.DownloadHandler_DownloadProgressComplete);
+                        downloadHandler.Dispose();
                     }
 
                     Thread.Sleep(50);
@@ -252,7 +251,7 @@ namespace PawnPlus.Core.Forms
             }
         }
 
-        private void DownloadHandler_DownloadProgressChanged(object sender, DownloadHandlerEventArgs e)
+        private void DownloadHandler_DownloadProgressChanged(object sender, DownloadEventArgs e)
         {
             this.Invoke(new MethodInvoker(delegate
             {
@@ -262,7 +261,7 @@ namespace PawnPlus.Core.Forms
             }));
         }
 
-        private void DownloadHandler_DownloadProgressComplete(object sender, DownloadHandlerEventArgs e)
+        private void DownloadHandler_DownloadProgressComplete(object sender, DownloadEventArgs e)
         {
             this.Invoke(new MethodInvoker(delegate
             {

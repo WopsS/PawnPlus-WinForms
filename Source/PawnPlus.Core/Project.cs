@@ -21,6 +21,16 @@ namespace PawnPlus.Core
             get { return Workspace.Project != null; }
         }
 
+        /// <summary>
+        /// Event raised when the project is closed.
+        /// </summary>
+        public static event EventHandler<ProjectEventArgs> Closed;
+
+        /// <summary>
+        /// Event raised when the project is opened.
+        /// </summary>
+        public static event EventHandler<ProjectEventArgs> Loaded;
+
         public virtual string BaseDirectory
         {
             get { return Path.GetDirectoryName(this.FileName); }
@@ -91,7 +101,11 @@ namespace PawnPlus.Core
                 }
             }
 
-            EventStorage.Fire(EventKey.ProjectOpened, result, new ProjectEventArgs(result.Name, result.BaseDirectory));
+            if (Loaded != null)
+            {
+                Loaded(null, new ProjectEventArgs(result.Name, result.BaseDirectory));
+            }
+
             return result;
         }
 
@@ -101,16 +115,16 @@ namespace PawnPlus.Core
 
             this.PreloadDirectory(new DirectoryInfo(this.BaseDirectory));
 
-            EventStorage.AddListener<object, ItemEventArgs>(EventKey.ItemAdded, this.event_ItemAdded);
-            EventStorage.AddListener<object, ItemEventArgs>(EventKey.ItemDeleted, this.event_ItemDeleted);
-            EventStorage.AddListener<object, ItemRenamedEventArgs>(EventKey.ItemRenamed, this.event_ItemRenamed);
+            Explorer.ItemAdded += this.event_ItemAdded;
+            Explorer.ItemDeleted += this.event_ItemDeleted;
+            Explorer.ItemRenamed += this.event_ItemRenamed;
         }
 
         ~Project()
         {
-            EventStorage.RemoveListener<object, ItemEventArgs>(EventKey.ItemAdded, this.event_ItemAdded);
-            EventStorage.RemoveListener<object, ItemEventArgs>(EventKey.ItemDeleted, this.event_ItemDeleted);
-            EventStorage.RemoveListener<object, ItemRenamedEventArgs>(EventKey.ItemRenamed, this.event_ItemRenamed);
+            Explorer.ItemAdded -= this.event_ItemAdded;
+            Explorer.ItemDeleted -= this.event_ItemDeleted;
+            Explorer.ItemRenamed -= this.event_ItemRenamed;
         }
 
         private void event_ItemAdded(object sender, ItemEventArgs e)
@@ -250,7 +264,10 @@ namespace PawnPlus.Core
                 Workspace.Project = null;
                 result = Workspace.CloseAllFiles(true);
 
-                EventStorage.Fire(EventKey.ProjectClosed, this, new ProjectEventArgs(this.Name, this.BaseDirectory));
+                if (Closed != null)
+                {
+                    Closed(this, new ProjectEventArgs(this.Name, this.BaseDirectory));
+                }
             }
             catch (Exception ex)
             {

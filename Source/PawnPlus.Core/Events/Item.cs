@@ -2,15 +2,6 @@
 
 namespace PawnPlus.Core.Events
 {
-    /*
-    * Format for "ItemAdded" and "ItemDeleted":
-    *
-    *   [access modifier] void [Name](object sender, ItemEventArgs e)
-    *   {
-    *       // Do something.
-    *   }
-    */
-
     public class ItemEventArgs : EventArgs
     {
         public virtual string Path { get; }
@@ -20,15 +11,6 @@ namespace PawnPlus.Core.Events
             this.Path = path;
         }
     }
-
-    /*
-    * Format for "ItemRenamed":
-    *
-    *   [access modifier] void [Name](object sender, ItemRenamedEventArgs e)
-    *   {
-    *       // Do something.
-    *   }
-    */
 
     public class ItemRenamedEventArgs : EventArgs
     {

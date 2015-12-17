@@ -22,6 +22,31 @@ namespace PawnPlus.Core
 
     public class Compilation
     {
+        /// <summary>
+        /// Event raised when the compilation is canceled.
+        /// </summary>
+        public static event EventHandler<CompilationEventArgs> Canceled;
+
+        /// <summary>
+        /// Event raised when the compilation pending cancellation.
+        /// </summary>
+        public static event EventHandler<CompilationEventArgs> Canceling;
+
+        /// <summary>
+        /// Event raised when the compilation is completed.
+        /// </summary>
+        public static event EventHandler<CompilationEventArgs> Completed;
+
+        /// <summary>
+        /// Event raised when the compilation has started.
+        /// </summary>
+        public static event EventHandler<CompilationEventArgs> Started;
+
+        /// <summary>
+        /// Event raised when the compilation is about to start.
+        /// </summary>
+        public static event EventHandler<CompilationEventArgs> Starting;
+
         public string FileName { get; private set; }
 
         public CompilationResult Result { get; private set; } = new CompilationResult();
@@ -62,7 +87,10 @@ namespace PawnPlus.Core
             {
                 if (this.backgroundWorker.CancellationPending == true)
                 {
-                    EventStorage.Fire(EventKey.CompilationCanceled, this, new CompilationEventArgs(this.FileName));
+                    if (Canceled != null)
+                    {
+                        Canceled(this, new CompilationEventArgs(this.FileName));
+                    }
 
                     e.Cancel = true;
                     return;
@@ -104,7 +132,10 @@ namespace PawnPlus.Core
             this.mainForm.savesAsToolStripMenuItem.Enabled = true;
             this.mainForm.saveAllToolStripMenuItem.Enabled = true;
 
-            EventStorage.Fire(EventKey.CompilationCompleted, this, new CompilationEventArgs(this.FileName));
+            if (Completed != null)
+            {
+                Completed(this, new CompilationEventArgs(this.FileName));
+            }
         }
 
         public CompilationStatus Cancel()
@@ -114,7 +145,10 @@ namespace PawnPlus.Core
                 return CompilationStatus.NotRunning;
             }
 
-            EventStorage.Fire(EventKey.CompilationCanceling, this, new CompilationEventArgs(this.FileName));
+            if (Canceling != null)
+            {
+                Canceling(this, new CompilationEventArgs(this.FileName));
+            }
 
             this.backgroundWorker.CancelAsync();
             return CompilationStatus.Canceled;
@@ -125,7 +159,10 @@ namespace PawnPlus.Core
             // Get instance of the editor by file name.
             Editor editor = Workspace.GetEditorByKey(fileName);
 
-            EventStorage.Fire(EventKey.CompilationStarting, this, new CompilationEventArgs(editor, fileName));
+            if (Starting != null)
+            {
+                Starting(this, new CompilationEventArgs(editor, fileName));
+            }
 
             this.FileName = fileName;
 
@@ -166,7 +203,11 @@ namespace PawnPlus.Core
             Status.Set(StatusType.Warning, StatusReset.None, Localization.Status_Compiling);
             this.backgroundWorker.RunWorkerAsync();
 
-            EventStorage.Fire(EventKey.CompilationStarted, this, new CompilationEventArgs(editor, fileName));
+            if (Started != null)
+            {
+                Started(this, new CompilationEventArgs(editor, fileName));
+            }
+
             return CompilationStatus.Started;
         }
     }

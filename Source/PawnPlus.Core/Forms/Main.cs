@@ -430,8 +430,6 @@ namespace PawnPlus.Core.Forms
                 this.saveToolStripMenuItem.Text = string.Format(Localization.Text_Save, Localization.Text_SelectedItem);
                 this.savesAsToolStripMenuItem.Text = string.Format(Localization.Text_SaveAs, Localization.Text_SelectedItem);
             }
-
-            EventStorage.Fire(EventKey.ActiveDocumentChanged, sender, EventArgs.Empty);
         }
 
         private void newProjectToolStripMenuItem_Click(object sender, EventArgs e)
@@ -537,12 +535,14 @@ namespace PawnPlus.Core.Forms
 
         private void cutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            EventStorage.Fire(EventKey.TextCutting, sender, e);
+            Workspace.CurrentEditor.Cut();
+            Workspace.Output.Cut();
         }
 
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            EventStorage.Fire(EventKey.TextCopying, sender, e);
+            Workspace.CurrentEditor.Copy();
+            Workspace.Output.Copy();
         }
 
         private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -654,7 +654,7 @@ namespace PawnPlus.Core.Forms
                 }
                 else if (layoutString == typeof(Output).ToString())
                 {
-                    return new Output();
+                    return Workspace.Output;
                 }
             }
 
@@ -701,8 +701,7 @@ namespace PawnPlus.Core.Forms
             // Status bar.
             this.statusLabel.Text = Localization.Status_Ready;
 
-            Version version = Assembly.GetEntryAssembly().GetName().Version;
-            this.versionLabel.Text = string.Format(Localization.Status_Version, version.Major, version.Minor, version.Build);
+            this.versionLabel.Text = string.Format("{0} {1}", Localization.Status_Version, ApplicationData.Version);
 
             this.lineLabel.Text = string.Format(Localization.Status_Line, 0);
             this.columnLabel.Text = string.Format(Localization.Status_Column, 0);

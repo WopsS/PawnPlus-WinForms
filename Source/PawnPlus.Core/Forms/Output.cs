@@ -18,20 +18,16 @@ namespace PawnPlus.Core.Forms
             // Translate controls.
             this.Text = Localization.Name_Output;
 
-            EventStorage.AddListener<object, EventArgs>(EventKey.ActiveDocumentChanged, this.event_ActiveDocumentChanged);
-            EventStorage.AddListener<object, CompilationEventArgs>(EventKey.CompilationCompleted, this.event_CompilationCompleted);
-            EventStorage.AddListener<object, CompilationEventArgs>(EventKey.CompilationStarted, this.event_CompilationStarted);
-            EventStorage.AddListener<object, EventArgs>(EventKey.TextCopying, this.event_TextCopying);
-            EventStorage.AddListener<object, EventArgs>(EventKey.TextCutting, this.event_TextCutting);
+            Workspace.DocumentChanged += this.event_ActiveDocumentChanged;
+            Compilation.Completed += this.event_CompilationCompleted;
+            Compilation.Started += this.event_CompilationStarted;
         }
 
         private void Output_FormClosing(object sender, FormClosingEventArgs e)
         {
-            EventStorage.RemoveListener<object, EventArgs>(EventKey.ActiveDocumentChanged, this.event_ActiveDocumentChanged);
-            EventStorage.RemoveListener<object, CompilationEventArgs>(EventKey.CompilationCompleted, this.event_CompilationCompleted);
-            EventStorage.RemoveListener<object, CompilationEventArgs>(EventKey.CompilationStarted, this.event_CompilationStarted);
-            EventStorage.RemoveListener<object, EventArgs>(EventKey.TextCopying, this.event_TextCopying);
-            EventStorage.RemoveListener<object, EventArgs>(EventKey.TextCutting, this.event_TextCutting);
+            Workspace.DocumentChanged -= this.event_ActiveDocumentChanged;
+            Compilation.Completed -= this.event_CompilationCompleted;
+            Compilation.Started -= this.event_CompilationStarted;
         }
 
         private void event_ActiveDocumentChanged(object arg1, EventArgs arg2)
@@ -66,22 +62,6 @@ namespace PawnPlus.Core.Forms
             this.ClearText();
         }
 
-        private void event_TextCopying(object sender, EventArgs e)
-        {
-            if (this.IsActivated == true)
-            {
-                this.outBox.Copy();
-            }
-        }
-
-        private void event_TextCutting(object sender, EventArgs e)
-        {
-            if (this.IsActivated == true)
-            {
-                this.outBox.Cut();
-            }
-        }
-
         private void outBox_DoubleClick(object sender, EventArgs e)
         {
             SendKeys.Send("{HOME}+{END}");
@@ -107,6 +87,30 @@ namespace PawnPlus.Core.Forms
                 Workspace.CurrentEditor.TextEditor.TextArea.Caret.Line = line;
                 Workspace.CurrentEditor.TextEditor.TextArea.Caret.BringCaretToView();
                 Workspace.CurrentEditor.TextEditor.TextArea.Caret.Show();
+            }
+        }
+
+        /// <summary>
+        /// Copies the current selection to Clipboard.
+        /// The action will be performed if the current window is actived.
+        /// </summary>
+        public void Copy()
+        {
+            if (this.IsActivated == true)
+            {
+                this.outBox.Copy();
+            }
+        }
+
+        /// <summary>
+        /// Removes the current selection and copies it to the clipboard.
+        /// The action will be performed if the current window is actived.
+        /// </summary>
+        public void Cut()
+        {
+            if (this.IsActivated == true)
+            {
+                this.outBox.Cut();
             }
         }
 

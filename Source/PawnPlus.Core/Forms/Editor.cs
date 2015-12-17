@@ -20,6 +20,11 @@ namespace PawnPlus.Core.Forms
 {
     public partial class Editor : DockContent
     {
+        /// <summary>
+        /// Event raised when the caret position is changed.
+        /// </summary>
+        public static event EventHandler<CaretPositionChangedArgs> CaretPositionChanged;
+
         public TextEditor TextEditor { get; private set; }
 
         /// <summary>
@@ -118,9 +123,6 @@ namespace PawnPlus.Core.Forms
             this.TextEditor.TextArea.SelectionCornerRadius = 0;
             this.TextEditor.TextArea.TextView.LineTransformers.Add(new SelectionColorizer(this.TextEditor.TextArea));
 
-            EventStorage.AddListener<object, EventArgs>(EventKey.TextCopying, this.event_TextCopying);
-            EventStorage.AddListener<object, EventArgs>(EventKey.TextCutting, this.event_TextCutting);
-
             ((IScrollInfo)this.TextEditor.TextArea).ScrollOwner.HorizontalScrollBarVisibility = ScrollBarVisibility.Visible;
             ((IScrollInfo)this.TextEditor.TextArea).ScrollOwner.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
         }
@@ -131,9 +133,6 @@ namespace PawnPlus.Core.Forms
 
             this.TextEditor.Document.UpdateFinished -= codeEditor_UpdateFinished;
             this.elementHost.Dispose();
-
-            EventStorage.RemoveListener<object, EventArgs>(EventKey.TextCopying, this.event_TextCopying);
-            EventStorage.RemoveListener<object, EventArgs>(EventKey.TextCutting, this.event_TextCutting);
         }
 
         private void codeEditor_CaretPositionChanged(object sender, EventArgs e)
@@ -144,7 +143,7 @@ namespace PawnPlus.Core.Forms
                 this.bracketHighlightRenderer.SetHighlight(bracketSearchResult);
             }
 
-            EventStorage.Fire(EventKey.CaretPositionChanged, this, new CaretPositionChangedArgs(this.TextEditor.TextArea.Caret.Line, this.TextEditor.TextArea.Caret.Column));
+            CaretPositionChanged(this, new CaretPositionChangedArgs(this.TextEditor.TextArea.Caret.Line, this.TextEditor.TextArea.Caret.Column));
         }
 
         private void codeEditor_SelectionChanged(object sender, EventArgs e)
@@ -166,7 +165,11 @@ namespace PawnPlus.Core.Forms
             }
         }
 
-        private void event_TextCopying(object sender, EventArgs e)
+        /// <summary>
+        /// Copies the current selection to the clipboard. 
+        /// The action will be performed if the current window is actived.
+        /// </summary>
+        public void Copy()
         {
             if (this.IsActivated == true)
             {
@@ -174,7 +177,11 @@ namespace PawnPlus.Core.Forms
             }
         }
 
-        private void event_TextCutting(object sender, EventArgs e)
+        /// <summary>
+        /// Removes the current selection and copies it to the clipboard.
+        /// The action will be performed if the current window is actived.
+        /// </summary>
+        public void Cut()
         {
             if (this.IsActivated == true)
             {

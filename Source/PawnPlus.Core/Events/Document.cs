@@ -1,13 +1,15 @@
-﻿using System;
+﻿using PawnPlus.Core.Forms;
+using System;
 
 namespace PawnPlus.Core.Events
 {
-    /*
-    * Format:
-    *
-    *   [access modifier] void [Name](object sender, CaretPositionChangedArgs e)
-    *   {
-    *       // Do something.
-    *   }
-    */
+    public class DocumentChangedEventArgs : EventArgs
+    {
+        public Editor Editor { get; }
+
+        public DocumentChangedEventArgs(Editor editor)
+        {
+            this.Editor = editor;
+        }
+    }
 }

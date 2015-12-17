@@ -3,15 +3,6 @@ using System;
 
 namespace PawnPlus.Core.Events
 {
-    /*
-    * Format:
-    *
-    *   [access modifier] void [Name](object sender, CompilationEventArgs e)
-    *   {
-    *       // Do something.
-    *   }
-    */
-
     public class CompilationEventArgs : EventArgs
     {
         public Editor Editor { get; }

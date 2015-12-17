@@ -1,4 +1,6 @@
-﻿using PawnPlus.Core.Forms;
+﻿using PawnPlus.Core.Events;
+using PawnPlus.Core.Forms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
@@ -9,9 +11,26 @@ namespace PawnPlus.Core
     public static class Workspace
     {
         /// <summary>
+        /// Event raised when a docked document is changed.
+        /// </summary>
+        public static event EventHandler<DocumentChangedEventArgs> DocumentChanged;
+
+        /// <summary>
         /// Instance of the current editor.
         /// </summary>
-        public static Editor CurrentEditor { get; set; }
+        public static Editor CurrentEditor
+        {
+            get
+            {
+                return currentEditor;
+            }
+
+            set
+            {
+                currentEditor = value;
+                DocumentChanged(null, new DocumentChangedEventArgs(currentEditor));
+            }
+        }
 
         /// <summary>
         /// Result about last compilation.
@@ -19,11 +38,19 @@ namespace PawnPlus.Core
         public static Compilation Compilation { get; set; }
 
         /// <summary>
+        /// Instance of the output window.
+        /// </summary>
+        public static Output Output { get; } = new Output();
+
+        /// <summary>
         /// Instance of the current project, null if project is closed.
         /// </summary>
         public static Project Project { get; set; }
 
+        private static Editor currentEditor;
+
         private static Dictionary<string, Editor> editors = new Dictionary<string, Editor>();
+
         private static Main mainForm = (Main)Application.OpenForms["Main"];
 
         static Workspace()

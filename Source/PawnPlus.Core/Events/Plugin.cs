@@ -3,16 +3,7 @@ using System.Reflection;
 
 namespace PawnPlus.Core.Events
 {
-   /*
-   * Format:
-   *
-   *   [access modifier] void [Name](object sender, PluginLoadedEventArgs e)
-   *   {
-   *       // Do something.
-   *   }
-   */
-
-    public class PluginLoadedEventArgs : EventArgs
+    public class PluginEventArgs : EventArgs
     {
         public string Author { get; }
 
@@ -22,7 +13,7 @@ namespace PawnPlus.Core.Events
 
         public Assembly Plugin { get; }
 
-        public PluginLoadedEventArgs(Assembly plugin, string author, string description, string name)
+        public PluginEventArgs(Assembly plugin, string author, string description, string name)
         {
             this.Author = author;
             this.Description = description;

@@ -97,18 +97,23 @@
     <Compile Include="ApplicationData.cs" />
     <Compile Include="Compilation.cs" />
     <Compile Include="Events\Compilation.cs" />
-    <Compile Include="Events\Document.cs" />
     <Compile Include="AddIns\Bracket\BracketSearcher.cs" />
     <Compile Include="AddIns\Bracket\BracketSearchResult.cs" />
     <Compile Include="AddIns\Pawn\PawnFoldingStrategy.cs" />
     <Compile Include="AddIns\SelectionColorizer.cs" />
     <Compile Include="CompilationResult.cs" />
     <Compile Include="DownloadHandler.cs" />
+    <Compile Include="Events\Document.cs" />
     <Compile Include="Events\Item.cs" />
     <Compile Include="Events\Plugin.cs" />
     <Compile Include="Events\Project.cs" />
     <Compile Include="Events\Status.cs" />
     <Compile Include="Exceptions\InvalidPluginException.cs" />
+    <Compile Include="Localization.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Localization.tt</DependentUpon>
+    </Compile>
     <Compile Include="Plugin\IPlugin.cs" />
     <Compile Include="Plugin\Plugin.cs" />
     <Compile Include="Plugin\PluginManager.cs" />
@@ -125,7 +130,6 @@
       <DependentUpon>InputBox.cs</DependentUpon>
     </Compile>
     <Compile Include="InformationJSON.cs" />
-    <Compile Include="EventStorage.cs" />
     <Compile Include="Events\Download.cs" />
     <Compile Include="Forms\GoToLine.cs">
       <SubType>Form</SubType>
@@ -164,11 +168,6 @@
       <DependentUpon>Explorer.cs</DependentUpon>
     </Compile>
     <Compile Include="Exceptions\ExceptionHandler.cs" />
-    <Compile Include="Localization.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Localization.tt</DependentUpon>
-    </Compile>
     <Compile Include="Logger.cs" />
     <Compile Include="Project.cs" />
     <Compile Include="AddIns\Bracket\BracketHighlightRenderer.cs" />

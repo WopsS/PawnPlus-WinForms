@@ -16,6 +16,11 @@ namespace PawnPlus.Core
         public static int Count { get { return Plugins.Count; } }
 
         /// <summary>
+        /// Event raised when a plugin is loaded.
+        /// </summary>
+        public static event EventHandler<PluginEventArgs> Loaded;
+
+        /// <summary>
         /// List of all loded plugins.
         /// </summary>
         public static List<Plugin> Plugins { get; } = new List<Plugin>();
@@ -35,7 +40,7 @@ namespace PawnPlus.Core
                         string pluginLoaded = string.Format(Localization.Text_PluginLoaded, plugin.Name);
 
                         ((Launcher)Application.OpenForms["Launcher"]).backgroundWorker.ReportProgress(0, pluginLoaded);
-                        EventStorage.Fire(EventKey.PluginLoaded, plugin.Assembly, new PluginLoadedEventArgs(plugin.Assembly, plugin.Author, plugin.Description, plugin.Name));
+                        Loaded(null, new PluginEventArgs(plugin.Assembly, plugin.Author, plugin.Description, plugin.Name));
                     }
                     else
                     {

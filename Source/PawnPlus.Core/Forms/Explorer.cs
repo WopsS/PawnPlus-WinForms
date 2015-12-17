@@ -13,6 +13,21 @@ namespace PawnPlus.Core.Forms
 {
     public partial class Explorer : DockContent
     {
+        /// <summary>
+        /// Event raised when a project item is added.
+        /// </summary>
+        public static event EventHandler<ItemEventArgs> ItemAdded;
+
+        /// <summary>
+        /// Event raised when a project item is deleted.
+        /// </summary>
+        public static event EventHandler<ItemEventArgs> ItemDeleted;
+
+        /// <summary>
+        /// Event raised when a project item is renamed.
+        /// </summary>
+        public static event EventHandler<ItemRenamedEventArgs> ItemRenamed;
+
         private ContextMenu directoryMenu;
         private ContextMenu fileMenu;
         private ContextMenu rootMenu;
@@ -80,8 +95,14 @@ namespace PawnPlus.Core.Forms
             this.rootMenu = new ContextMenu(menuItems.ToArray());
 
             // Add events listener.
-            EventStorage.AddListener<Project, ProjectEventArgs>(EventKey.ProjectClosed, event_ProjectClosed);
-            EventStorage.AddListener<Project, ProjectEventArgs>(EventKey.ProjectOpened, event_ProjectLoaded);
+            Project.Closed += this.event_ProjectClosed;
+            Project.Loaded += this.event_ProjectLoaded;
+        }
+
+        private void Explorer_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Project.Closed -= this.event_ProjectClosed;
+            Project.Loaded -= this.event_ProjectLoaded;
         }
 
         private void projectFiles_AfterCollapse(object sender, TreeViewEventArgs e)
@@ -118,34 +139,40 @@ namespace PawnPlus.Core.Forms
                     string oldPath = Path.Combine(Workspace.Project.BaseDirectory, projectPath, e.Node.Text);
                     string newPath = Path.Combine(Workspace.Project.BaseDirectory, projectPath, e.Label);
 
-                    if ((TreeNodeType)e.Node.Tag == TreeNodeType.Directory)
+                    if (oldPath != newPath)
                     {
-                        TreeNodeHelper.ChangeKeys(e.Node.Nodes, oldPath, newPath);
-
-                        // Change directory's name.
-                        Directory.Move(oldPath, newPath);
-                    }
-                    else
-                    {
-                        TreeNodeHelper.ChangeKey(e.Node, newPath);
-
-                        // Change file's name.
-                        File.Move(oldPath, newPath);
-                    }
-
-                    EventStorage.Fire(EventKey.ItemRenamed, this, new ItemRenamedEventArgs(oldPath, newPath));
-
-                    // Change editor path.
-                    foreach (Editor editor in Workspace.GetEditors().Values.ToList())
-                    {
-                        // Check if file path is greater or equal with modified path.
-                        if (editor.FilePath.Length >= oldPath.Length && editor.FilePath.Substring(0, oldPath.Length) == oldPath)
+                        if ((TreeNodeType)e.Node.Tag == TreeNodeType.Directory)
                         {
-                            string editorPath = editor.FilePath;
+                            TreeNodeHelper.ChangeKeys(e.Node.Nodes, oldPath, newPath);
 
-                            // Remove and add the editor.
-                            editor.Close();
-                            Workspace.OpenFile(Path.Combine(newPath, editorPath.Remove(0, editorPath.Length <= oldPath.Length ? oldPath.Length : oldPath.Length + 1)));
+                            // Change directory's name.
+                            Directory.Move(oldPath, newPath);
+                        }
+                        else
+                        {
+                            TreeNodeHelper.ChangeKey(e.Node, newPath);
+
+                            // Change file's name.
+                            File.Move(oldPath, newPath);
+                        }
+
+                        if (ItemRenamed != null)
+                        {
+                            ItemRenamed(this, new ItemRenamedEventArgs(oldPath, newPath));
+                        }
+
+                        // Change editor path.
+                        foreach (Editor editor in Workspace.GetEditors().Values.ToList())
+                        {
+                            // Check if file path is greater or equal with modified path.
+                            if (editor.FilePath.Length >= oldPath.Length && editor.FilePath.Substring(0, oldPath.Length) == oldPath)
+                            {
+                                string editorPath = editor.FilePath;
+
+                                // Remove and add the editor.
+                                editor.Close();
+                                Workspace.OpenFile(Path.Combine(newPath, editorPath.Remove(0, editorPath.Length <= oldPath.Length ? oldPath.Length : oldPath.Length + 1)));
+                            }
                         }
                     }
 
@@ -281,7 +308,11 @@ namespace PawnPlus.Core.Forms
                     }
                 }
 
-                EventStorage.Fire(EventKey.ItemDeleted, this, new ItemEventArgs(path));
+                if (ItemDeleted != null)
+                {
+                    ItemDeleted(this, new ItemEventArgs(path));
+                }
+
                 this.projectFiles.SelectedNode.Remove();
             }
         }
@@ -394,7 +425,10 @@ namespace PawnPlus.Core.Forms
                     parentNode.Expand();
                 }
 
-                EventStorage.Fire(EventKey.ItemAdded, this, new ItemEventArgs(path));
+                if (ItemAdded != null)
+                {
+                    ItemAdded(this, new ItemEventArgs(path));
+                }
             }
             else
             {

@@ -14,12 +14,19 @@ namespace PawnPlus.PluginSample
 
         public Main()
         {
-            EventStorage.AddListener<Project, ProjectEventArgs>(EventKey.ProjectOpened, this.event_ProjectLoaded);
+            Project.Closed += event_ProjectClosed; ;
+            Project.Loaded += this.event_ProjectLoaded;
         }
 
         ~Main()
         {
-            EventStorage.RemoveListener<Project, ProjectEventArgs>(EventKey.ProjectOpened, this.event_ProjectLoaded);
+            Project.Closed -= this.event_ProjectLoaded;
+            Project.Loaded -= this.event_ProjectLoaded;
+        }
+
+        private void event_ProjectClosed(object sender, ProjectEventArgs e)
+        {
+            MessageBox.Show(string.Format("Project \"{0}\" closed.", e.Name), this.Name, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void event_ProjectLoaded(object sender, ProjectEventArgs e)

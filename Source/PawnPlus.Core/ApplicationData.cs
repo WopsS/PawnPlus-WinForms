@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace PawnPlus.Core
@@ -10,6 +11,11 @@ namespace PawnPlus.Core
         /// Path for application in "%appdata%" directory.
         /// </summary>
         public static string AppData { get; } = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PawnPlus");
+
+        /// <summary>
+        /// Entry program.
+        /// </summary>
+        public static Assembly Entry { get; } = Assembly.GetEntryAssembly();
 
         /// <summary>
         /// Path for PAWN's include directory.
@@ -30,6 +36,11 @@ namespace PawnPlus.Core
         /// Path to plugins directory.
         /// </summary>
         public static string PluginsPath { get; } = Path.Combine(Application.StartupPath, "plugins");
+
+        /// <summary>
+        /// Version of the program.
+        /// </summary>
+        public static string Version { get; } = string.Format("{0}.{1}.{2}", Entry.GetName().Version.Major, Entry.GetName().Version.Minor, Entry.GetName().Version.Build);
 
         static ApplicationData()
         {

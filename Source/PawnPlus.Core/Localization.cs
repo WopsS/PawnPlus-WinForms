@@ -525,7 +525,7 @@ namespace PawnPlus.Core
 		}
 
 		/// <summary>
-		/// It must have three formaters. Version of application.
+		/// Version of application.
 		/// </summary>
 		public static string Status_Version
 		{
@@ -642,22 +642,6 @@ namespace PawnPlus.Core
 			get
 			{
 				return resourceManager.GetString("Status_Compiling", Culture);
-			}
-		}
-
-		public static string Status_IncludesCopying
-		{
-			get
-			{
-				return resourceManager.GetString("Status_IncludesCopying", Culture);
-			}
-		}
-
-		public static string Status_IncludesDeleting
-		{
-			get
-			{
-				return resourceManager.GetString("Status_IncludesDeleting", Culture);
 			}
 		}
 

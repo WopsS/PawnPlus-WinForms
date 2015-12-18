@@ -48,7 +48,7 @@ namespace PawnPlus.Core
             SetLineColumn(e.Line, e.Column);
         }
 
-        private static void ReadyTimer_Tick(object sender, System.EventArgs e)
+        private static void ReadyTimer_Tick(object sender, EventArgs e)
         {
             Set(StatusType.Info, StatusReset.None, Localization.Status_Ready);
             readyTimer.Stop();

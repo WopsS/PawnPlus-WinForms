@@ -408,7 +408,7 @@ namespace PawnPlus.Core.Forms
 
         private void dockPanel_ActiveDocumentChanged(object sender, EventArgs e)
         {
-            if (this.dockPanel.ActiveDocument != null)
+            if (this.dockPanel.ActiveDocument != null && this.dockPanel.ActiveDocument.DockHandler.Form.IsDisposed == false)
             {
                 Editor editor = (Editor)this.dockPanel.ActiveDocument.DockHandler.Form;
 

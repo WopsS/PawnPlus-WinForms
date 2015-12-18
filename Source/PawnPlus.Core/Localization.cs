@@ -858,5 +858,21 @@ namespace PawnPlus.Core
 			}
 		}
 
+		public static string Name_MissingFiles
+		{
+			get
+			{
+				return resourceManager.GetString("Name_MissingFiles", Culture);
+			}
+		}
+
+		public static string Text_MissingPawnFiles
+		{
+			get
+			{
+				return resourceManager.GetString("Text_MissingPawnFiles", Culture);
+			}
+		}
+
 			}
 		}

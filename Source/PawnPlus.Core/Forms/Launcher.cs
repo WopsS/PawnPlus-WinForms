@@ -77,151 +77,11 @@ namespace PawnPlus.Core.Forms
                 PawnPlus.Properties.Settings.Default.Save();
             }
 
-            if (NetworkInterface.GetIsNetworkAvailable() == true)
+            if (Directory.EnumerateFiles(ApplicationData.PawnDirectory).Any() == false || Directory.EnumerateFiles(ApplicationData.IncludesDirectory).Any() == false)
             {
-                try
+                if (MessageBox.Show(Localization.Text_MissingPawnFiles, Localization.Name_MissingFiles, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    this.backgroundWorker.ReportProgress(10, Localization.Text_CheckingFiles);
-                    Thread.Sleep(100);
-
-                    string JSONString = string.Empty;
-
-                    using (WebClient webClient = new WebClient())
-                    {
-                        JSONString = webClient.DownloadString("https://raw.githubusercontent.com/WopsS/PawnPlus/master/Information.json");
-                    }
-
-                    InformationJSON applicationJSON = JsonConvert.DeserializeObject<InformationJSON>(JSONString);
-
-                    if (Directory.EnumerateFiles(ApplicationData.PawnDirectory).Any() == false || Directory.EnumerateFiles(ApplicationData.IncludesDirectory).Any() == false)
-                    {
-                        FileInfo fileInfo = null;
-
-                        string TemporaryFolder = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
-                        string SAMPZIPPath = Path.Combine(TemporaryFolder, applicationJSON.SAMPZIPName), CompilerZIPPath = Path.Combine(TemporaryFolder, applicationJSON.CompilerZIPName);
-
-                        Directory.CreateDirectory(TemporaryFolder);
-
-                        DownloadHandler downloadHandler = new DownloadHandler(new Tuple<Uri, string>[]
-                        {
-                            Tuple.Create(new Uri(applicationJSON.SAMPFilesLink + "/" + applicationJSON.SAMPZIPName), SAMPZIPPath),
-                            Tuple.Create(new Uri(applicationJSON.CompilerLink + "/" + applicationJSON.CompilerZIPName), CompilerZIPPath),
-                        });
-
-                        downloadHandler.ProgressChanged += this.DownloadHandler_DownloadProgressChanged;
-                        downloadHandler.FileCompleted += this.DownloadHandler_DownloadProgressComplete;
-
-                        this.backgroundWorker.ReportProgress(15, Localization.Text_ServerFilesDownloading);
-                        Thread.Sleep(500);
-
-                        this.Invoke(new MethodInvoker(delegate
-                        {
-                            this.downloadControl = new DownloadControl();
-
-                            this.Height = 190;
-                            this.controlsPanel.Controls.Clear();
-                            this.controlsPanel.Controls.Add(this.downloadControl);
-                        }));
-
-                        downloadHandler.Start(); // Download SA-MP files.
-                        fileInfo = new FileInfo(SAMPZIPPath);
-
-                        if (File.Exists(SAMPZIPPath) == true && fileInfo.Length > 0)
-                        {
-                            this.backgroundWorker.ReportProgress(15, Localization.Text_ServerFilesUnpacking);
-                            Thread.Sleep(1000);
-
-                            ZipArchive Archive = ZipArchive.Open(SAMPZIPPath);
-
-                            foreach (ZipArchiveEntry archiveEntry in Archive.Entries)
-                            {
-                                if (archiveEntry.IsDirectory == false)
-                                {
-                                    archiveEntry.WriteToDirectory(TemporaryFolder, ExtractOptions.ExtractFullPath | ExtractOptions.Overwrite);
-                                }
-                            }
-
-                            Archive.Dispose();
-
-                            this.backgroundWorker.ReportProgress(15, Localization.Text_ServerFilesCopying);
-                            Thread.Sleep(1000);
-
-                            // Let's copy server includes.
-                            string[] Files = Directory.GetFiles(Path.Combine(TemporaryFolder, "pawno", "include"));
-
-                            foreach (string CurrentFile in Files)
-                            {
-                                File.Copy(CurrentFile, Path.Combine(ApplicationData.IncludesDirectory, Path.GetFileName(CurrentFile)), true);
-                            }
-
-                            this.backgroundWorker.ReportProgress(15, Localization.Text_ServerFilesCopied);
-                            Thread.Sleep(1000);
-                        }
-                        else
-                        {
-                            this.backgroundWorker.ReportProgress(15, Localization.Text_ServerFilesError);
-                            Thread.Sleep(2000);
-                        }
-
-                        this.backgroundWorker.ReportProgress(15, Localization.Text_CompilerFilesDownloading);
-                        Thread.Sleep(500);
-
-                        this.Invoke(new MethodInvoker(delegate
-                        {
-                            this.downloadControl = new DownloadControl();
-
-                            this.Height = 190;
-                            this.controlsPanel.Controls.Clear();
-                            this.controlsPanel.Controls.Add(this.downloadControl);
-                        }));
-
-                        downloadHandler.Start(); // Download ZEEX compiler files.
-                        fileInfo = new FileInfo(CompilerZIPPath);
-
-                        if (File.Exists(CompilerZIPPath) == true && fileInfo.Length > 0)
-                        {
-                            this.backgroundWorker.ReportProgress(15, Localization.Text_CompilerFilesUnpacking);
-                            Thread.Sleep(1000);
-
-                            ZipArchive Archive = ZipArchive.Open(CompilerZIPPath);
-
-                            foreach (ZipArchiveEntry archiveEntry in Archive.Entries)
-                            {
-                                if (archiveEntry.IsDirectory == false)
-                                {
-                                    archiveEntry.WriteToDirectory(TemporaryFolder, ExtractOptions.ExtractFullPath | ExtractOptions.Overwrite);
-                                }
-                            }
-
-                            Archive.Dispose();
-
-                            this.backgroundWorker.ReportProgress(15, Localization.Text_CompilerFilesCopying);
-                            Thread.Sleep(1000);
-
-                            // Let's copy PAWN files.
-                            File.Copy(Path.Combine(TemporaryFolder, CompilerZIPPath.Remove(CompilerZIPPath.Length - 4), "bin", "pawnc.dll"), Path.Combine(ApplicationData.PawnDirectory, Path.GetFileName("pawnc.dll")), true);
-                            File.Copy(Path.Combine(TemporaryFolder, CompilerZIPPath.Remove(CompilerZIPPath.Length - 4), "bin", "pawncc.exe"), Path.Combine(ApplicationData.PawnDirectory, Path.GetFileName("pawncc.exe")), true);
-
-                            this.backgroundWorker.ReportProgress(15, Localization.Text_CompilerFilesCopied);
-                            Thread.Sleep(1000);
-                        }
-                        else
-                        {
-                            this.backgroundWorker.ReportProgress(15, Localization.Text_CompilerFilesError);
-                            Thread.Sleep(2000);
-                        }
-
-                        // Let's delete the temporary folder, we don't need it from now.
-                        Directory.Delete(TemporaryFolder, true);
-
-                        downloadHandler.Dispose();
-                    }
-
-                    Thread.Sleep(50);
-                }
-                catch (Exception ex)
-                {
-                    ExceptionHandler.HandledException(ex);
+                    this.DownloadPawnFiles();
                 }
             }
 
@@ -269,6 +129,151 @@ namespace PawnPlus.Core.Forms
                 this.controlsPanel.Controls.Clear();
                 this.controlsPanel.Controls.Add(this.statusControl);
             }));
+        }
+
+        private void DownloadPawnFiles()
+        {
+            try
+            {
+                this.backgroundWorker.ReportProgress(10, Localization.Text_CheckingFiles);
+                Thread.Sleep(100);
+
+                string JSONString = string.Empty;
+
+                using (WebClient webClient = new WebClient())
+                {
+                    JSONString = webClient.DownloadString("https://raw.githubusercontent.com/WopsS/PawnPlus/master/Information.json");
+                }
+
+                InformationJSON applicationJSON = JsonConvert.DeserializeObject<InformationJSON>(JSONString);
+
+                FileInfo fileInfo = null;
+
+                string TemporaryFolder = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+                string SAMPZIPPath = Path.Combine(TemporaryFolder, applicationJSON.SAMPZIPName), CompilerZIPPath = Path.Combine(TemporaryFolder, applicationJSON.CompilerZIPName);
+
+                Directory.CreateDirectory(TemporaryFolder);
+
+                DownloadHandler downloadHandler = new DownloadHandler(new Tuple<Uri, string>[]
+                {
+                    Tuple.Create(new Uri(applicationJSON.SAMPFilesLink + "/" + applicationJSON.SAMPZIPName), SAMPZIPPath),
+                    Tuple.Create(new Uri(applicationJSON.CompilerLink + "/" + applicationJSON.CompilerZIPName), CompilerZIPPath),
+                });
+
+                downloadHandler.ProgressChanged += this.DownloadHandler_DownloadProgressChanged;
+                downloadHandler.FileCompleted += this.DownloadHandler_DownloadProgressComplete;
+
+                this.backgroundWorker.ReportProgress(15, Localization.Text_ServerFilesDownloading);
+                Thread.Sleep(500);
+
+                this.Invoke(new MethodInvoker(delegate
+                {
+                    this.downloadControl = new DownloadControl();
+
+                    this.Height = 190;
+                    this.controlsPanel.Controls.Clear();
+                    this.controlsPanel.Controls.Add(this.downloadControl);
+                }));
+
+                downloadHandler.Start(); // Download SA-MP files.
+                fileInfo = new FileInfo(SAMPZIPPath);
+
+                if (File.Exists(SAMPZIPPath) == true && fileInfo.Length > 0)
+                {
+                    this.backgroundWorker.ReportProgress(15, Localization.Text_ServerFilesUnpacking);
+                    Thread.Sleep(1000);
+
+                    ZipArchive Archive = ZipArchive.Open(SAMPZIPPath);
+
+                    foreach (ZipArchiveEntry archiveEntry in Archive.Entries)
+                    {
+                        if (archiveEntry.IsDirectory == false)
+                        {
+                            archiveEntry.WriteToDirectory(TemporaryFolder, ExtractOptions.ExtractFullPath | ExtractOptions.Overwrite);
+                        }
+                    }
+
+                    Archive.Dispose();
+
+                    this.backgroundWorker.ReportProgress(15, Localization.Text_ServerFilesCopying);
+                    Thread.Sleep(1000);
+
+                    // Let's copy server includes.
+                    string[] Files = Directory.GetFiles(Path.Combine(TemporaryFolder, "pawno", "include"));
+
+                    foreach (string CurrentFile in Files)
+                    {
+                        File.Copy(CurrentFile, Path.Combine(ApplicationData.IncludesDirectory, Path.GetFileName(CurrentFile)), true);
+                    }
+
+                    this.backgroundWorker.ReportProgress(15, Localization.Text_ServerFilesCopied);
+                    Thread.Sleep(1000);
+                }
+                else
+                {
+                    this.backgroundWorker.ReportProgress(15, Localization.Text_ServerFilesError);
+                    Thread.Sleep(2000);
+                }
+
+                this.backgroundWorker.ReportProgress(15, Localization.Text_CompilerFilesDownloading);
+                Thread.Sleep(500);
+
+                this.Invoke(new MethodInvoker(delegate
+                {
+                    this.downloadControl = new DownloadControl();
+
+                    this.Height = 190;
+                    this.controlsPanel.Controls.Clear();
+                    this.controlsPanel.Controls.Add(this.downloadControl);
+                }));
+
+                downloadHandler.Start(); // Download ZEEX compiler files.
+                fileInfo = new FileInfo(CompilerZIPPath);
+
+                if (File.Exists(CompilerZIPPath) == true && fileInfo.Length > 0)
+                {
+                    this.backgroundWorker.ReportProgress(15, Localization.Text_CompilerFilesUnpacking);
+                    Thread.Sleep(1000);
+
+                    ZipArchive Archive = ZipArchive.Open(CompilerZIPPath);
+
+                    foreach (ZipArchiveEntry archiveEntry in Archive.Entries)
+                    {
+                        if (archiveEntry.IsDirectory == false)
+                        {
+                            archiveEntry.WriteToDirectory(TemporaryFolder, ExtractOptions.ExtractFullPath | ExtractOptions.Overwrite);
+                        }
+                    }
+
+                    Archive.Dispose();
+
+                    this.backgroundWorker.ReportProgress(15, Localization.Text_CompilerFilesCopying);
+                    Thread.Sleep(1000);
+
+                    // Let's copy PAWN files.
+                    File.Copy(Path.Combine(TemporaryFolder, CompilerZIPPath.Remove(CompilerZIPPath.Length - 4), "bin", "pawnc.dll"), Path.Combine(ApplicationData.PawnDirectory, Path.GetFileName("pawnc.dll")), true);
+                    File.Copy(Path.Combine(TemporaryFolder, CompilerZIPPath.Remove(CompilerZIPPath.Length - 4), "bin", "pawncc.exe"), Path.Combine(ApplicationData.PawnDirectory, Path.GetFileName("pawncc.exe")), true);
+
+                    this.backgroundWorker.ReportProgress(15, Localization.Text_CompilerFilesCopied);
+                    Thread.Sleep(1000);
+                }
+                else
+                {
+                    this.backgroundWorker.ReportProgress(15, Localization.Text_CompilerFilesError);
+                    Thread.Sleep(2000);
+                }
+
+                // Let's delete the temporary folder, we don't need it from now.
+                Directory.Delete(TemporaryFolder, true);
+
+                downloadHandler.Dispose();
+
+                Thread.Sleep(50);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandledException(ex);
+            }
         }
     }
 }

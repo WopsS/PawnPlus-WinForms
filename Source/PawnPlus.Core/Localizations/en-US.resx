@@ -427,5 +427,11 @@ If you click continue the application will ignore this issue continue. </value>
   <data name="Text_UIException" xml:space="preserve">
     <value>UI Exception</value>
   </data>
+  <data name="Name_MissingFiles" xml:space="preserve">
+    <value>Missing files</value>
+  </data>
+  <data name="Text_MissingPawnFiles" xml:space="preserve">
+    <value>It seems you don&apos;t have default Pawn files, do you want to download them?</value>
+  </data>
 
 </root>

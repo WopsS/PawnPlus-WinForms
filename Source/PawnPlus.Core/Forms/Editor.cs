@@ -23,11 +23,11 @@ namespace PawnPlus.Core.Forms
         /// Path to the file which is edited.
         /// Empty by default.
         /// </summary>
-        public string FilePath
+        public string FileName
         {
             get
             {
-                return this.fileName;
+                return this.TextEditor.Document.FileName;
             }
 
             set
@@ -35,7 +35,7 @@ namespace PawnPlus.Core.Forms
                 this.Text = Path.GetFileName(value);
                 this.TextEditor.Load(value);
 
-                this.fileName = value;
+                this.TextEditor.Document.FileName = value;
             }
         }
 
@@ -47,8 +47,6 @@ namespace PawnPlus.Core.Forms
         public bool HasProject { get; set; }
 
         protected ElementHost elementHost = new ElementHost();
-
-        private string fileName = string.Empty;
 
         public Editor()
         {
@@ -67,7 +65,7 @@ namespace PawnPlus.Core.Forms
             ((IScrollInfo)this.TextEditor.TextArea).ScrollOwner.HorizontalScrollBarVisibility = ScrollBarVisibility.Visible;
             ((IScrollInfo)this.TextEditor.TextArea).ScrollOwner.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
 
-            string extenstion = Path.GetExtension(this.fileName);
+            string extenstion = Path.GetExtension(this.FileName);
 
             if (extenstion == ".pwn" || extenstion == ".inc")
             {
@@ -98,7 +96,7 @@ namespace PawnPlus.Core.Forms
 
         private void Editor_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Workspace.CloseFile(this.FilePath);
+            Workspace.CloseFile(this.FileName);
 
             this.TextEditor.Document.UpdateFinished -= textEditor_UpdateFinished;
             this.elementHost.Dispose();
@@ -146,7 +144,7 @@ namespace PawnPlus.Core.Forms
         /// <param name="fileName">Path to the file.</param>
         public void Open(string fileName)
         {
-            this.FilePath = fileName;
+            this.FileName = fileName;
 
             IntPtr hIcon;
 
@@ -177,7 +175,7 @@ namespace PawnPlus.Core.Forms
         /// </summary>
         public void Save()
         {
-            this.Save(this.FilePath);
+            this.Save(this.FileName);
         }
     }
 }

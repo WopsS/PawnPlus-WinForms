@@ -415,8 +415,8 @@ namespace PawnPlus.Core.Forms
                 Workspace.CurrentEditor = editor;
                 Status.SetLineColumn(Workspace.CurrentEditor.TextEditor.TextArea.Caret.Line, Workspace.CurrentEditor.TextEditor.TextArea.Caret.Column);
 
-                this.saveToolStripMenuItem.Text = string.Format(Localization.Text_Save, Path.GetFileName(editor.FilePath));
-                this.savesAsToolStripMenuItem.Text = string.Format(Localization.Text_SaveAs, Path.GetFileName(editor.FilePath));
+                this.saveToolStripMenuItem.Text = string.Format(Localization.Text_Save, Path.GetFileName(editor.FileName));
+                this.savesAsToolStripMenuItem.Text = string.Format(Localization.Text_SaveAs, Path.GetFileName(editor.FileName));
 
                 this.SetMenuStatus(true, false);
             }
@@ -578,7 +578,7 @@ namespace PawnPlus.Core.Forms
 
         private void compileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Workspace.Compilation.Start(Workspace.CurrentEditor.FilePath);        
+            Workspace.Compilation.Start(Workspace.CurrentEditor.FileName);        
         }
 
         private void compileOptionsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -589,6 +589,14 @@ namespace PawnPlus.Core.Forms
             {
                 PawnPlus.Properties.Settings.Default.Compiler_Arguments = value;
                 PawnPlus.Properties.Settings.Default.Save();
+            }
+        }
+
+        private void foldingTimer_Tick(object sender, EventArgs e)
+        {
+            if (Workspace.CurrentEditor != null && Workspace.CurrentEditor.TextEditor.FoldingManager != null)
+            {
+                Workspace.CurrentEditor.TextEditor.FoldingStrategy.UpdateFoldings(Workspace.CurrentEditor.TextEditor.FoldingManager, Workspace.CurrentEditor.TextEditor.Document);
             }
         }
 

@@ -245,7 +245,7 @@ namespace PawnPlus.Core
                 foreach (Editor editor in editors.ToList())
                 {
                     xmlElement = xmlFile.CreateElement("File");
-                    xmlElement.InnerText = editor.FilePath;
+                    xmlElement.InnerText = editor.FileName;
 
                     if (editor == Workspace.CurrentEditor)
                     {

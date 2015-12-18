@@ -1,15 +1,21 @@
-﻿using ICSharpCode.AvalonEdit.Document;
+﻿using ICSharpCode.AvalonEdit.CodeCompletion;
+using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Editing;
 using System;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace PawnPlus.Core.TextEditor.Completion
 {
-    public class CompletionData
+
+    public class CompletionData : ICompletionData
     {
         public ImageSource Image
         {
-            get { return null; }
+            get
+            {
+                return null;
+            }
         }
 
         public string Text { get; private set; }
@@ -19,15 +25,22 @@ namespace PawnPlus.Core.TextEditor.Completion
             get { return this.Text; }
         }
 
-        public object Description
+        public object Description { get; private set; }
+
+        public double Priority
         {
-            get { return "Description for " + this.Text; }
+            get
+            {
+                return 1.0;
+            }
         }
 
-        public CompletionData(string text)
+        public CompletionData(string text, string description)
         {
             this.Text = text;
+            this.Description = description;
         }
+
 
         public void Complete(TextArea textArea, ISegment completionSegment, EventArgs insertionRequestEventArgs)
         {

@@ -27,6 +27,12 @@ namespace PawnPlus.Core.TextEditor
 
         public void UpdateFoldings(FoldingManager foldingManager, TextDocument textDocument)
         {
+            // Clear foldings if the list isn't empty.
+            if (this.foldings.Foldings.Count > 0)
+            {
+                this.foldings.Foldings.Clear();
+            }
+
             CreateNewFoldings(textDocument);
             foldingManager.UpdateFoldings(this.foldings.Foldings, this.foldings.FirstErrorOffset);
         }

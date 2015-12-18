@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.principalPanel = new System.Windows.Forms.Panel();
             this.logoPanel = new System.Windows.Forms.Panel();
@@ -82,6 +83,7 @@
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.dockPanel = new WeifenLuo.WinFormsUI.Docking.DockPanel();
             this.vs2012LightTheme = new WeifenLuo.WinFormsUI.Docking.VS2012LightTheme();
+            this.foldingTimer = new System.Windows.Forms.Timer(this.components);
             this.principalPanel.SuspendLayout();
             this.ControlPanel.SuspendLayout();
             this.menuStrip.SuspendLayout();
@@ -556,6 +558,12 @@
             this.dockPanel.Theme = this.vs2012LightTheme;
             this.dockPanel.ActiveDocumentChanged += new System.EventHandler(this.dockPanel_ActiveDocumentChanged);
             // 
+            // foldingTimer
+            // 
+            this.foldingTimer.Enabled = true;
+            this.foldingTimer.Interval = 3000;
+            this.foldingTimer.Tick += new System.EventHandler(this.foldingTimer_Tick);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -645,5 +653,6 @@
         internal System.Windows.Forms.ToolStripMenuItem saveAllToolStripMenuItem;
         internal System.Windows.Forms.ToolStripMenuItem savesAsToolStripMenuItem;
         internal System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.Timer foldingTimer;
     }
 }

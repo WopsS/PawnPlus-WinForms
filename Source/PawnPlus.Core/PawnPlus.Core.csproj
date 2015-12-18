@@ -93,14 +93,15 @@
     <Compile Include="..\PawnPlus\Properties\Settings.Designer.cs">
       <Link>Properties\Settings.Designer.cs</Link>
     </Compile>
-    <Compile Include="TextEditor\Pawn\IndentationStrategy.cs" />
+    <Compile Include="TextEditor\Completion\PawnCompletion.cs" />
+    <Compile Include="TextEditor\IndentationStrategy.cs" />
     <Compile Include="ApplicationData.cs" />
     <Compile Include="Compilation.cs" />
     <Compile Include="TextEditor\Completion\CompletionData.cs" />
     <Compile Include="Events\Compilation.cs" />
     <Compile Include="TextEditor\Bracket\BracketSearcher.cs" />
     <Compile Include="TextEditor\Bracket\BracketSearchResult.cs" />
-    <Compile Include="TextEditor\Pawn\PawnFoldingStrategy.cs" />
+    <Compile Include="TextEditor\PawnFoldingStrategy.cs" />
     <Compile Include="TextEditor\SelectionColorizer.cs" />
     <Compile Include="CompilationResult.cs" />
     <Compile Include="DownloadHandler.cs" />

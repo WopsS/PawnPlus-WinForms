@@ -165,9 +165,9 @@ namespace PawnPlus.Core.Forms
                         foreach (Editor editor in Workspace.GetEditors().Values.ToList())
                         {
                             // Check if file path is greater or equal with modified path.
-                            if (editor.FilePath.Length >= oldPath.Length && editor.FilePath.Substring(0, oldPath.Length) == oldPath)
+                            if (editor.FileName.Length >= oldPath.Length && editor.FileName.Substring(0, oldPath.Length) == oldPath)
                             {
-                                string editorPath = editor.FilePath;
+                                string editorPath = editor.FileName;
 
                                 // Remove and add the editor.
                                 editor.Close();
@@ -302,7 +302,7 @@ namespace PawnPlus.Core.Forms
                 foreach (Editor editor in Workspace.GetEditors().Values.ToList())
                 {
                     // Check if file path is greater or equal with deleted path.
-                    if (editor.FilePath.Length >= path.Length && editor.FilePath.Substring(0, path.Length) == path)
+                    if (editor.FileName.Length >= path.Length && editor.FileName.Substring(0, path.Length) == path)
                     {
                         editor.Close();
                     }

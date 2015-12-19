@@ -27,9 +27,19 @@ namespace PawnPlus.Core
         public static event EventHandler<ProjectEventArgs> Closed;
 
         /// <summary>
+        /// Event raised when the project is being closed.
+        /// </summary>
+        public static event EventHandler<ProjectEventArgs> Closing;
+
+        /// <summary>
         /// Event raised when the project is opened.
         /// </summary>
         public static event EventHandler<ProjectEventArgs> Loaded;
+
+        /// <summary>
+        /// Event raised when the project is being loading.
+        /// </summary>
+        public static event EventHandler<ProjectEventArgs> Loading;
 
         public virtual string BaseDirectory
         {
@@ -58,6 +68,17 @@ namespace PawnPlus.Core
             {
                 ExceptionHandler.HandledException(new FileNotFoundException(string.Format(Localization.Exception_ProjectFileNotFound, fileName), fileName));
                 return null;
+            }
+
+            if (Loading != null)
+            {
+                ProjectEventArgs e = new ProjectEventArgs(Path.GetFileNameWithoutExtension(fileName), Path.GetDirectoryName(fileName));
+                Loading(null, e);
+
+                if (e.Handled == true)
+                {
+                    return null;
+                }
             }
 
             Project result = new Project(fileName);
@@ -209,6 +230,17 @@ namespace PawnPlus.Core
 
         public bool Close()
         {
+            if (Closing != null)
+            {
+                ProjectEventArgs e = new ProjectEventArgs(this.Name, this.BaseDirectory);
+                Closing(this, e);
+
+                if (e.Handled == true)
+                {
+                    return true;
+                }
+            }
+
             bool result = false;
 
             try

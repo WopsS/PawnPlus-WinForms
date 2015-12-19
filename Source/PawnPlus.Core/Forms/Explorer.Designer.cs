@@ -61,6 +61,6 @@
 
         #endregion
 
-        private System.Windows.Forms.TreeView projectFiles;
+        public System.Windows.Forms.TreeView projectFiles;
     }
 }

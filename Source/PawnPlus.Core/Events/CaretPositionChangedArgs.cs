@@ -4,9 +4,9 @@ namespace PawnPlus.Core.Events
 {
     public class CaretPositionChangedArgs : EventArgs
     {
-        public int Column { get; }
+        public virtual int Column { get; }
 
-        public int Line { get; }
+        public virtual int Line { get; }
 
         public CaretPositionChangedArgs(int line, int column)
         {

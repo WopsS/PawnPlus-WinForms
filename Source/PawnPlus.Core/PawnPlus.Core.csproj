@@ -93,23 +93,24 @@
     <Compile Include="..\PawnPlus\Properties\Settings.Designer.cs">
       <Link>Properties\Settings.Designer.cs</Link>
     </Compile>
+    <Compile Include="Events\ItemRenamedEventArgs.cs" />
     <Compile Include="TextEditor\Completion\PawnCompletion.cs" />
     <Compile Include="TextEditor\IndentationStrategy.cs" />
     <Compile Include="ApplicationData.cs" />
     <Compile Include="Compilation.cs" />
     <Compile Include="TextEditor\Completion\CompletionData.cs" />
-    <Compile Include="Events\Compilation.cs" />
+    <Compile Include="Events\CompilationEventArgs.cs" />
     <Compile Include="TextEditor\Bracket\BracketSearcher.cs" />
     <Compile Include="TextEditor\Bracket\BracketSearchResult.cs" />
     <Compile Include="TextEditor\PawnFoldingStrategy.cs" />
     <Compile Include="TextEditor\SelectionColorizer.cs" />
     <Compile Include="CompilationResult.cs" />
     <Compile Include="DownloadHandler.cs" />
-    <Compile Include="Events\Document.cs" />
-    <Compile Include="Events\Item.cs" />
-    <Compile Include="Events\Plugin.cs" />
-    <Compile Include="Events\Project.cs" />
-    <Compile Include="Events\Status.cs" />
+    <Compile Include="Events\DocumentChangedEventArgs.cs" />
+    <Compile Include="Events\ItemEventArgs.cs" />
+    <Compile Include="Events\PluginEventArgs.cs" />
+    <Compile Include="Events\ProjectEventArgs.cs" />
+    <Compile Include="Events\StatusChangedEventArgs.cs" />
     <Compile Include="Exceptions\InvalidPluginException.cs" />
     <Compile Include="Localization.cs">
       <AutoGen>True</AutoGen>
@@ -132,7 +133,7 @@
       <DependentUpon>InputBox.cs</DependentUpon>
     </Compile>
     <Compile Include="InformationJSON.cs" />
-    <Compile Include="Events\Download.cs" />
+    <Compile Include="Events\DownloadEventArgs.cs" />
     <Compile Include="Forms\GoToLine.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -186,7 +187,7 @@
     <Compile Include="Forms\Editor.Designer.cs">
       <DependentUpon>Editor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Events\Caret.cs" />
+    <Compile Include="Events\CaretPositionChangedArgs.cs" />
     <Compile Include="Forms\FindReplace.cs">
       <SubType>Form</SubType>
     </Compile>

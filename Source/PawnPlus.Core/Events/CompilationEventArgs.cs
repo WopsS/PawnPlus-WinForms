@@ -5,9 +5,11 @@ namespace PawnPlus.Core.Events
 {
     public class CompilationEventArgs : EventArgs
     {
-        public Editor Editor { get; }
+        public virtual Editor Editor { get; }
 
-        public string FileName { get; }
+        public virtual string FileName { get; }
+
+        public virtual bool Handled { get; set; }
 
         public CompilationEventArgs(Editor editor, string fileName)
         {

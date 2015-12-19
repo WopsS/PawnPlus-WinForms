@@ -31,6 +31,11 @@ namespace PawnPlus.Core
         /// </summary>
         public static event EventHandler<StatusChangedEventArgs> Changed;
 
+        /// <summary>
+        /// Event raised when application status is being changing.
+        /// </summary>
+        public static event EventHandler<StatusChangedEventArgs> Changing;
+
         private static Main mainForm = (Main)Application.OpenForms["Main"];
 
         private static StatusType oldType { get; set; } = StatusType.None;
@@ -62,6 +67,17 @@ namespace PawnPlus.Core
         /// <param name="resetTime">Reset time until status will be 'Ready'.</param>
         public static void Set(StatusType type, StatusReset resetTime, string text, params string[] parameters)
         {
+            if (Changing != null)
+            {
+                StatusChangedEventArgs e = new StatusChangedEventArgs(mainForm.statusLabel.Text, oldType, text, type);
+                Changed(null, e);
+
+                if (e.Handled == true)
+                {
+                    return;
+                }
+            }
+
             if (readyTimer.Enabled == true)
             {
                 readyTimer.Stop();

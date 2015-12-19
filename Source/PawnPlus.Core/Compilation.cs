@@ -17,6 +17,7 @@ namespace PawnPlus.Core
         EmptyText,
         InvalidFile,
         NotRunning,
+        Routed,
         Started
     }
 
@@ -147,7 +148,13 @@ namespace PawnPlus.Core
 
             if (Canceling != null)
             {
-                Canceling(this, new CompilationEventArgs(this.FileName));
+                CompilationEventArgs e = new CompilationEventArgs(this.FileName);
+                Canceling(this, e);
+
+                if (e.Handled == true)
+                {
+                    return CompilationStatus.Routed;
+                }
             }
 
             this.backgroundWorker.CancelAsync();
@@ -161,7 +168,13 @@ namespace PawnPlus.Core
 
             if (Starting != null)
             {
-                Starting(this, new CompilationEventArgs(editor, fileName));
+                CompilationEventArgs e = new CompilationEventArgs(this.FileName);
+                Starting(this, e);
+
+                if(e.Handled == true)
+                {
+                    return CompilationStatus.Routed;
+                }
             }
 
             this.FileName = fileName;

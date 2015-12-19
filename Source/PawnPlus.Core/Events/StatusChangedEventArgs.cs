@@ -4,6 +4,8 @@ namespace PawnPlus.Core.Events
 {
     public class StatusChangedEventArgs : EventArgs
     {
+        public virtual bool Handled { get; set; }
+
         public virtual string OldText { get; }
 
         public virtual StatusType OldType { get; }

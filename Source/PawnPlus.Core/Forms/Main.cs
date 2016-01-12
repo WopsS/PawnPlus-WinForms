@@ -225,9 +225,11 @@ namespace PawnPlus.Core.Forms
             }
             else
             {
+
                 this.WindowState = FormWindowState.Maximized;
                 this.MaximumSize = Screen.PrimaryScreen.WorkingArea.Size;
                 this.Padding = new Padding(0, 0, 0, 0);
+
             }
         }
 

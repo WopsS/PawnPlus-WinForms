@@ -43,8 +43,8 @@ namespace PawnPlus.Core.Forms
             {
                 string fileName = Environment.GetCommandLineArgs()[1];
                 string extension = Path.GetExtension(fileName);
-                
-                if(extension == Project.Extension)
+
+                if (extension == Project.Extension)
                 {
                     Project.Open(fileName);
                 }
@@ -53,8 +53,8 @@ namespace PawnPlus.Core.Forms
                     Workspace.OpenFile(fileName);
                 }
             }
-        }
 
+        }
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
             // Let's check if project is open and let's close files from Workspace.Project. After that let's close all files.
@@ -82,191 +82,41 @@ namespace PawnPlus.Core.Forms
 
         #region Main functions
 
-        private Rectangle[] Regions = new Rectangle[10];
-
+        /* 
+        Not necessary anymore
+        
         private Point FormStartResize, FormResizePoints, FormMousePosition;
-
+        private Rectangle[] Regions = new Rectangle[10];
         private bool FormMoving, FormRezising, FormRezisingLeft, FormRezisingRight, FormRezisingTop, FormRezisingBottom, FormRezisingTopRight, FormRezisingTopLeft, FormRezisingBottomRight, FormRezisingBottomLeft;
-
-        const int WS_MINIMIZEBOX = 0x20000, CS_DBLCLKS = 0x8;
+        */
+        private bool FormMoving;
+        private Point FormMousePosition;
+        private const int WS_MINIMIZEBOX = 0x20000, CS_DBLCLKS = 0x8;
+        private const int cGrip = 16;      // Grip size
 
         private void Main_MouseDown(object sender, MouseEventArgs e)
         {
-            switch (e.Button)
-            {
-                case MouseButtons.Left:
-                {
-                    if (Regions[1].Contains(FormMousePosition))
-                    {
-                        FormRezising = true;
-                        FormRezisingTopLeft = true;
-                        FormStartResize = PointToScreen(new Point(e.X, e.Y));
-                    }
-                    else if (Regions[2].Contains(FormMousePosition))
-                    {
-                        FormRezising = true;
-                        FormRezisingTop = true;
-                        FormStartResize = PointToScreen(new Point(e.X, e.Y));
-                    }
-                    else if (Regions[3].Contains(FormMousePosition))
-                    {
-                        FormRezising = true;
-                        FormRezisingTopRight = true;
-                        FormStartResize = PointToScreen(new Point(e.X, e.Y));
-                    }
-                    else if (Regions[4].Contains(FormMousePosition))
-                    {
-                        FormRezising = true;
-                        FormRezisingLeft = true;
-                        FormStartResize = PointToScreen(new Point(e.X, e.Y));
-                    }
-                    else if (Regions[6].Contains(FormMousePosition))
-                    {
-                        FormRezising = true;
-                        FormRezisingRight = true;
-                        FormStartResize = PointToScreen(new Point(e.X, e.Y));
-                    }
-                    else if (Regions[7].Contains(FormMousePosition))
-                    {
-                        FormRezising = true;
-                        FormRezisingBottomLeft = true;
-                        FormStartResize = PointToScreen(new Point(e.X, e.Y));
-                    }
-                    else if (Regions[8].Contains(FormMousePosition))
-                    {
-                        FormRezising = true;
-                        FormRezisingBottom = true;
-                        FormStartResize = PointToScreen(new Point(e.X, e.Y));
-                    }
-                    else if (Regions[9].Contains(FormMousePosition))
-                    {
-                        FormRezising = true;
-                        FormRezisingBottomRight = true;
-                        FormStartResize = PointToScreen(new Point(e.X, e.Y));
-                    }
-
-                    break;
-                }
-            }
+            // cleared for resizing performance
         }
 
         private void Main_MouseMove(object sender, MouseEventArgs e)
         {
-            FormResizePoints = PointToScreen(new Point(e.X, e.Y));
-            Regions[0] = this.Bounds;
-
-            if (Capture == true)
-            {
-                if (FormRezising == true)
-                {
-                    if (FormRezisingTopLeft)
-                        this.Bounds = new Rectangle(Regions[0].X + FormResizePoints.X - FormStartResize.X, Regions[0].Y + FormResizePoints.Y - FormStartResize.Y, Regions[0].Width - FormResizePoints.X + FormStartResize.X, Regions[0].Height - FormResizePoints.Y + FormStartResize.Y);
-                    else if (FormRezisingTop)
-                        this.Bounds = new Rectangle(Regions[0].X, Regions[0].Y + FormResizePoints.Y - FormStartResize.Y, Regions[0].Width, Regions[0].Height - FormResizePoints.Y + FormStartResize.Y);
-                    else if (FormRezisingTopRight)
-                        this.Bounds = new Rectangle(Regions[0].X, Regions[0].Y + FormResizePoints.Y - FormStartResize.Y, Regions[0].Width + FormResizePoints.X - FormStartResize.X, Regions[0].Height - FormResizePoints.Y + FormStartResize.Y);
-                    else if (FormRezisingLeft)
-                        this.Bounds = new Rectangle(Regions[0].X + FormResizePoints.X - FormStartResize.X, Regions[0].Y, Regions[0].Width - FormResizePoints.X + FormStartResize.X, Regions[0].Height);
-                    else if (FormRezisingRight)
-                        this.Bounds = new Rectangle(Regions[0].X, Regions[0].Y, Regions[0].Width + FormResizePoints.X - FormStartResize.X, Regions[0].Height);
-                    else if (FormRezisingBottomLeft)
-                        this.Bounds = new Rectangle(Regions[0].X + FormResizePoints.X - FormStartResize.X, Regions[0].Y, Regions[0].Width - FormResizePoints.X + FormStartResize.X, Regions[0].Height + FormResizePoints.Y - FormStartResize.Y);
-                    else if (FormRezisingBottom)
-                        this.Bounds = new Rectangle(Regions[0].X, Regions[0].Y, Regions[0].Width, Regions[0].Height + FormResizePoints.Y - FormStartResize.Y);
-                    else if (FormRezisingBottomRight)
-                        this.Bounds = new Rectangle(Regions[0].X, Regions[0].Y, Regions[0].Width + FormResizePoints.X - FormStartResize.X, Regions[0].Height + FormResizePoints.Y - FormStartResize.Y);
-
-                    FormStartResize = FormResizePoints;
-                    Refresh();
-                }
-            }
-            else
-            {
-                FormMousePosition = new Point(e.X, e.Y);
-
-                if (Regions[1].Contains(FormMousePosition))
-                    this.Cursor = Cursors.SizeNWSE;
-                else if (Regions[2].Contains(FormMousePosition))
-                    this.Cursor = Cursors.SizeNS;
-                else if (Regions[3].Contains(FormMousePosition))
-                    this.Cursor = Cursors.SizeNESW;
-                else if (Regions[4].Contains(FormMousePosition))
-                    this.Cursor = Cursors.SizeWE;
-                else if (Regions[5].Contains(FormMousePosition))
-                    this.Cursor = Cursors.Default;
-                else if (Regions[6].Contains(FormMousePosition))
-                    this.Cursor = Cursors.SizeWE;
-                else if (Regions[7].Contains(FormMousePosition))
-                    this.Cursor = Cursors.SizeNESW;
-                else if (Regions[8].Contains(FormMousePosition))
-                    this.Cursor = Cursors.SizeNS;
-                else if (Regions[9].Contains(FormMousePosition))
-                    this.Cursor = Cursors.SizeNWSE;
-            }
+            // cleared for resizing performance
         }
 
         private void Main_MouseUp(object sender, MouseEventArgs e)
         {
-            FormRezising = false;
-
-            FormRezisingLeft = false;
-            FormRezisingRight = false;
-
-            FormRezisingTop = false;
-            FormRezisingBottom = false;
-
-            FormRezisingTopRight = false;
-            FormRezisingTopLeft = false;
-
-            FormRezisingBottomRight = false;
-            FormRezisingBottomLeft = false;
-
-            Refresh();
+            // cleared for resizing performance
         }
 
         private void Main_Paint(object sender, PaintEventArgs e)
         {
-            if (this.WindowState == FormWindowState.Normal)
-            {
-                Regions[1] = new Rectangle(new Point(ClientRectangle.X, ClientRectangle.Y), new Size(3, 3));
-                Regions[2] = new Rectangle(new Point(ClientRectangle.X + Regions[1].Width, ClientRectangle.Y), new Size(ClientRectangle.Width - (Regions[1].Width * 2), Regions[1].Height));
-                Regions[3] = new Rectangle(new Point(ClientRectangle.X + Regions[1].Width + Regions[2].Width, ClientRectangle.Y), new Size(3, 3));
+            Graphics GFX = this.CreateGraphics();
 
-                Regions[4] = new Rectangle(new Point(ClientRectangle.X, ClientRectangle.Y + Regions[1].Height), new Size(Regions[1].Width, ClientRectangle.Height - (Regions[1].Width * 2)));
-                Regions[5] = new Rectangle(new Point(ClientRectangle.X + Regions[4].Width, ClientRectangle.Y + Regions[1].Height), new Size(Regions[2].Width, Regions[4].Height));
-                Regions[6] = new Rectangle(new Point(ClientRectangle.X + Regions[4].Width + Regions[5].Width, ClientRectangle.Y + Regions[1].Height), new Size(Regions[3].Width, Regions[4].Height));
-
-                Regions[7] = new Rectangle(new Point(ClientRectangle.X, ClientRectangle.Y + Regions[1].Height + Regions[4].Height), new Size(3, 3));
-                Regions[8] = new Rectangle(new Point(ClientRectangle.X + Regions[7].Width, ClientRectangle.Y + Regions[1].Height + Regions[4].Height), new Size(ClientRectangle.Width - (Regions[7].Width * 2), Regions[7].Height));
-                Regions[9] = new Rectangle(new Point(ClientRectangle.X + Regions[7].Width + Regions[8].Width, ClientRectangle.Y + Regions[1].Height + Regions[4].Height), new Size(3, 3));
-
-                Graphics GFX = e.Graphics;
-
-                SolidBrush Blue = new SolidBrush(Color.FromArgb(0, 122, 204));
-
-                GFX.FillRectangle(Blue, Regions[1]);
-                GFX.FillRectangle(Blue, Regions[2]);
-                GFX.FillRectangle(Blue, Regions[3]);
-                GFX.FillRectangle(Blue, Regions[4]);
-                GFX.FillRectangle(Blue, Regions[6]);
-                GFX.FillRectangle(Blue, Regions[7]);
-                GFX.FillRectangle(Blue, Regions[8]);
-                GFX.FillRectangle(Blue, Regions[9]);
-
-            }
-            else
-            {
-                Graphics GFX = e.Graphics;
-
-                GFX.FillRectangle(Brushes.Transparent, Regions[1]);
-                GFX.FillRectangle(Brushes.Transparent, Regions[2]);
-                GFX.FillRectangle(Brushes.Transparent, Regions[3]);
-                GFX.FillRectangle(Brushes.Transparent, Regions[4]);
-                GFX.FillRectangle(Brushes.Transparent, Regions[6]);
-                GFX.FillRectangle(Brushes.Transparent, Regions[7]);
-                GFX.FillRectangle(Brushes.Transparent, Regions[8]);
-                GFX.FillRectangle(Brushes.Transparent, Regions[9]);
-            }
+            Rectangle rc = new Rectangle(this.ClientSize.Width - cGrip, this.ClientSize.Height - cGrip, cGrip, cGrip);
+            ControlPaint.DrawSizeGrip(GFX, this.BackColor, rc);
+            rc = new Rectangle(0, 0, this.ClientSize.Width, this.Height);
+            GFX.FillRectangle(Brushes.Transparent, rc);
         }
 
         private void Main_Resize(object sender, EventArgs e)
@@ -279,6 +129,26 @@ namespace PawnPlus.Core.Forms
             {
                 this.Width = 350;
             }
+        }
+        
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == 0x84)
+            {
+                Point pos = new Point(m.LParam.ToInt32() & 0xffff, m.LParam.ToInt32() >> 16);
+                pos = this.PointToClient(pos);
+                if (pos.Y < 25)
+                {
+                    m.Result = (IntPtr)2;  // HTCAPTION
+                    return;
+                }
+                if (pos.X >= this.ClientSize.Width - cGrip && pos.Y >= this.ClientSize.Height - cGrip)
+                {
+                    m.Result = (IntPtr)17; // HTBOTTOMRIGHT
+                    return;
+                }
+            }
+            base.WndProc(ref m);
         }
 
         private void principalPanel_DoubleClick(object sender, EventArgs e)
@@ -301,8 +171,8 @@ namespace PawnPlus.Core.Forms
             else
             {
                 this.WindowState = FormWindowState.Maximized;
-                this.MaximumSize = Screen.PrimaryScreen.WorkingArea.Size;
                 this.Padding = new Padding(0, 0, 0, 0);
+                this.DesktopBounds.Offset(0, 0);
             }
         }
 
@@ -549,7 +419,7 @@ namespace PawnPlus.Core.Forms
         {
             Workspace.CurrentEditor.TextEditor.Paste();
         }
-
+        
         private void findToolStripMenuItem_Click(object sender, EventArgs e)
         {
             findReplace.ShowFind(this, Workspace.CurrentEditor.TextEditor.SelectedText);

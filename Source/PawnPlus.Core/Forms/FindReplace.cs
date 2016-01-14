@@ -48,6 +48,8 @@ namespace PawnPlus.Core.Forms
                     this.tabControl.Height -= 40;
                     findPageSize = true;
                 }
+
+                this.AcceptButton = this.findNextButton;
             }
             else
             {
@@ -58,6 +60,8 @@ namespace PawnPlus.Core.Forms
 
                     findPageSize = false;
                 }
+
+                this.AcceptButton = this.replaceButton;
             }
 
             this.optionPanel.Parent = this.tabControl.TabPages[this.tabControl.SelectedIndex];

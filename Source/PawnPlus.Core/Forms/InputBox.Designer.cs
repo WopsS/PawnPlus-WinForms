@@ -50,30 +50,32 @@
             this.textBox.Location = new System.Drawing.Point(12, 36);
             this.textBox.Name = "textBox";
             this.textBox.Size = new System.Drawing.Size(372, 20);
-            this.textBox.TabIndex = 2;
+            this.textBox.TabIndex = 1;
             // 
             // buttonOK
             // 
             this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOK.Location = new System.Drawing.Point(228, 72);
+            this.buttonOK.Location = new System.Drawing.Point(309, 72);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(75, 23);
-            this.buttonOK.TabIndex = 1;
+            this.buttonOK.TabIndex = 2;
             this.buttonOK.Text = "OK";
             // 
             // buttonCancel
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(309, 72);
+            this.buttonCancel.Location = new System.Drawing.Point(228, 72);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
-            this.buttonCancel.TabIndex = 0;
-            this.buttonCancel.Text = "OK";
+            this.buttonCancel.TabIndex = 3;
+            this.buttonCancel.Text = "Cancel";
             // 
             // InputBox
             // 
+            this.AcceptButton = this.buttonOK;
+            this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(396, 107);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);

@@ -1,4 +1,4 @@
-﻿using PawnPlus.Core.Windows;
+﻿using PawnPlus.Core.Views;
 using System;
 using System.Windows;
 
@@ -15,7 +15,7 @@ namespace PawnPlus
 
             try
             {
-                new Launcher().ShowDialog();
+                new Splash().ShowDialog();
                 Main mainWindow = new Main();
 
                 Current.ShutdownMode = ShutdownMode.OnMainWindowClose;

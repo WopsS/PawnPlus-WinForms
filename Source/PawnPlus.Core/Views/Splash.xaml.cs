@@ -3,16 +3,16 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 
-namespace PawnPlus.Core.Windows
+namespace PawnPlus.Core.Views
 {
     /// <summary>
     /// Interaction logic for Launcher.xaml
     /// </summary>
-    public partial class Launcher : Window
+    public partial class Splash : Window
     {
         private BackgroundWorker backgroundWorker = new BackgroundWorker();
 
-        public Launcher()
+        public Splash()
         {
             InitializeComponent();
         }
@@ -25,6 +25,8 @@ namespace PawnPlus.Core.Windows
             this.backgroundWorker.ProgressChanged += backgroundWorker_ProgressChanged;
 
             this.backgroundWorker.RunWorkerAsync();
+
+            this.progressBar.Visibility = Visibility.Collapsed;
         }
 
         private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)

@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace PawnPlus.Core.Windows
+namespace PawnPlus.Core.Views
 {
     /// <summary>
     /// Interaction logic for Main.xaml

@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PawnPlus", "PawnPlus\PawnPlus.csproj", "{6B6927DA-4CDD-461A-A9EA-26E8C60CCC9A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{18D11E66-DCD3-4665-8220-0B194323C3A6} = {18D11E66-DCD3-4665-8220-0B194323C3A6}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PawnPlus.Core", "PawnPlus.Core\PawnPlus.Core.csproj", "{18D11E66-DCD3-4665-8220-0B194323C3A6}"
 EndProject

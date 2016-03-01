@@ -11,5 +11,11 @@ namespace PawnPlus.Core.Views
         {
             InitializeComponent();
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.lineLabel.Visibility = Visibility.Hidden;
+            this.columnLabel.Visibility = Visibility.Hidden;
+        }
     }
 }

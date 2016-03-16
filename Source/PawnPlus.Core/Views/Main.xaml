@@ -29,19 +29,19 @@
                 <StatusBarItem x:Name="columnLabel" Grid.Column="3" Content="Column 1"/>
             </StatusBar>
             <Menu x:Name="menu" DockPanel.Dock="Top">
-                <MenuItem Header="File">
+                <MenuItem x:Name="File" Header="File">
                     <MenuItem Header="New">
                         <MenuItem Header="Project"/>
-                        <MenuItem Header="File"/>
+                        <MenuItem Header="File" Click="Menu_File_Click_File"/>
                     </MenuItem>
-                    <MenuItem Header="Open">
+                    <MenuItem x:Name="Open" Header="Open">
                         <MenuItem Header="Project"/>
                         <MenuItem Header="File"/>
                     </MenuItem>
                     <Separator/>
                     <MenuItem Header="Edit"/>
                     <Separator/>
-                    <MenuItem Header="Exit"/>
+                    <MenuItem x:Name="Exit" Header="Exit" Click="Menu_Exit_Click"/>
                 </MenuItem>
             </Menu>
             <xcad:DockingManager x:Name="dockingManager" />

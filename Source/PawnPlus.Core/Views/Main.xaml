@@ -31,12 +31,12 @@
             <Menu x:Name="menu" DockPanel.Dock="Top">
                 <MenuItem x:Name="File" Header="File">
                     <MenuItem Header="New">
-                        <MenuItem Header="Project"/>
+                        <MenuItem Header="Project" Click="Menu_File_Click_Project" />
                         <MenuItem Header="File" Click="Menu_File_Click_File"/>
                     </MenuItem>
                     <MenuItem x:Name="Open" Header="Open">
-                        <MenuItem Header="Project"/>
-                        <MenuItem Header="File"/>
+                        <MenuItem Header="Project" Click="Menu_Open_Click_Project"/>
+                        <MenuItem Header="File" Click="Menu_Open_Click_File"/>
                     </MenuItem>
                     <Separator/>
                     <MenuItem Header="Edit"/>

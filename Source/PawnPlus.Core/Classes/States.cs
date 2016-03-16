@@ -2,7 +2,9 @@
 {
     enum PawnFlags
     {
-        Saved = 0x1
+        Closeing = 0x1,
+        Saved = 0x2
+        
     };
 
 
@@ -13,10 +15,7 @@
 
         }
 
-        public static PawnFlags UIStates
-        {
-            get; set;
-        }
+        public static PawnFlags UIStates;
         
     }
 }

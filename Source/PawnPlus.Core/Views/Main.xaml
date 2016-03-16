@@ -4,9 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PawnPlus.Core.Views"
-        xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock" x:Class="PawnPlus.Core.Views.Main"
+        xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock" x:Name="PawnPlus_MainFrame" x:Class="PawnPlus.Core.Views.Main"
         mc:Ignorable="d"
-        Title="PawnPlus" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="/PawnPlus.Core;component/Resources/Icons/Icon.ico" Loaded="Window_Loaded" ResizeMode="CanResizeWithGrip">
+        Title="PawnPlus" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="/PawnPlus.Core;component/Resources/Icons/Icon.ico" Loaded="PawnPlus_Loaded" ResizeMode="CanResizeWithGrip" KeyDown="PawnPlus_KeyDown" Closing="PawnPlus_Closing">
     <Grid>
         <DockPanel Margin="0" Background="#FFF0F0F0">
             <StatusBar Margin="0" DockPanel.Dock="Bottom" Background="#FF007ACC" Foreground="White">
@@ -29,19 +29,19 @@
                 <StatusBarItem x:Name="columnLabel" Grid.Column="3" Content="Column 1"/>
             </StatusBar>
             <Menu x:Name="menu" DockPanel.Dock="Top">
-                <MenuItem Header="File">
+                <MenuItem x:Name="File" Header="File">
                     <MenuItem Header="New">
-                        <MenuItem Header="Project"/>
-                        <MenuItem Header="File"/>
+                        <MenuItem Header="Project" Click="Menu_File_Click_Project" />
+                        <MenuItem Header="File" Click="Menu_File_Click_File"/>
                     </MenuItem>
-                    <MenuItem Header="Open">
-                        <MenuItem Header="Project"/>
-                        <MenuItem Header="File"/>
+                    <MenuItem x:Name="Open" Header="Open">
+                        <MenuItem Header="Project" Click="Menu_Open_Click_Project"/>
+                        <MenuItem Header="File" Click="Menu_Open_Click_File"/>
                     </MenuItem>
                     <Separator/>
                     <MenuItem Header="Edit"/>
                     <Separator/>
-                    <MenuItem Header="Exit"/>
+                    <MenuItem x:Name="Exit" Header="Exit" Click="Menu_Exit_Click"/>
                 </MenuItem>
             </Menu>
             <xcad:DockingManager x:Name="dockingManager" />

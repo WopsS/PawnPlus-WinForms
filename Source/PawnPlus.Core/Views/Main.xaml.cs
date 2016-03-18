@@ -1,6 +1,8 @@
 ﻿using System.Windows;
 using PawnPlus.Core.Classes;
 using System.Windows.Input;
+using System.Xml;
+using System;
 
 namespace PawnPlus.Core.Views
 {
@@ -14,6 +16,22 @@ namespace PawnPlus.Core.Views
         public Main()
         {
             InitializeComponent();
+
+            /*if (System.IO.File.Exists(Info.config))
+            {
+                XmlReader reader = XmlReader.Create(Info.config);
+                while (reader.Read())
+                {
+                    if (reader.NodeType == XmlNodeType.Element)
+                    {
+                        switch (reader.Name)
+                        {
+                            case "WindowState": { }
+                                break;
+                        }
+                    }
+                }
+            }*/
         }
 
         private void PawnPlus_Loaded(object sender, RoutedEventArgs e)
@@ -51,6 +69,8 @@ namespace PawnPlus.Core.Views
 
         private void PawnPlus_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            /*Utility XML = new Utility();
+            XML.UpdateXML(Info.config, "WindowState", WindowState.ToString());*/
             if ((States.UIStates & PawnFlags.Closeing) != PawnFlags.Closeing)
             {
                 if ((States.UIStates & PawnFlags.Saved) != PawnFlags.Saved && (States.UIStates & PawnFlags.FileOpen) == PawnFlags.FileOpen)

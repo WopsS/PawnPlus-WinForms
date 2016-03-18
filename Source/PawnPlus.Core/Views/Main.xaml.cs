@@ -9,6 +9,8 @@ namespace PawnPlus.Core.Views
     /// </summary>
     public partial class Main : Window
     {
+        private States State;
+
         public Main()
         {
             InitializeComponent();
@@ -19,9 +21,8 @@ namespace PawnPlus.Core.Views
             this.lineLabel.Visibility = Visibility.Hidden;
             this.columnLabel.Visibility = Visibility.Hidden;
 
-            States.UIStates &= ~PawnFlags.Closeing;
-            States.UIStates &= ~PawnFlags.Saved;
-            States.UIStates &= ~PawnFlags.FileOpen;
+            State = new States();
+            State.Init_UIStates();
         }
 
         #region Menu
@@ -89,26 +90,22 @@ namespace PawnPlus.Core.Views
 
         private void Menu_File_Click_Project(object sender, RoutedEventArgs e)
         {
-            States.UIStates |= PawnFlags.FileOpen;
-            States.UIStates &= ~PawnFlags.Saved;
+            State.FileActive();
         }
 
         private void Menu_File_Click_File(object sender, RoutedEventArgs e)
         {
-            States.UIStates |= PawnFlags.FileOpen;
-            States.UIStates &= ~PawnFlags.Saved;
+            State.FileActive();
         }
 
         private void Menu_Open_Click_Project(object sender, RoutedEventArgs e)
         {
-            States.UIStates |= PawnFlags.FileOpen;
-            States.UIStates &= ~PawnFlags.Saved;
+            State.FileActive();
         }
 
         private void Menu_Open_Click_File(object sender, RoutedEventArgs e)
         {
-            States.UIStates |= PawnFlags.FileOpen;
-            States.UIStates &= ~PawnFlags.Saved;
+            State.FileActive();
         }
     }
 }

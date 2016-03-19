@@ -11,14 +11,15 @@ namespace PawnPlus.Core.Views
     public partial class Main : Window
     {
         private States State;
-        private XML XMLComponent;
+        //private XML XMLComponent;
 
         public Main()
         {
             InitializeComponent();
 
-            XMLComponent = new XML();
-            if (System.IO.File.Exists(Info.config) == false)
+           // XMLComponent = new XML();
+            WindowState = Properties.Settings.Default.WindowState;
+            /* (System.IO.File.Exists(Info.config) == false)
             {
                 XMLComponent.CreateSettings(Info.config);
             }
@@ -45,7 +46,7 @@ namespace PawnPlus.Core.Views
                         break;
                     }
                 }
-            }
+            }*/
         }
 
         private void PawnPlus_Loaded(object sender, RoutedEventArgs e)
@@ -83,8 +84,6 @@ namespace PawnPlus.Core.Views
 
         private void PawnPlus_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            /*Utility XML = new Utility();
-            XML.UpdateXML(Info.config, "WindowState", WindowState.ToString());*/
             if ((States.UIStates & PawnFlags.Closeing) != PawnFlags.Closeing)
             {
                 if ((States.UIStates & PawnFlags.Saved) != PawnFlags.Saved && (States.UIStates & PawnFlags.FileOpen) == PawnFlags.FileOpen)
@@ -144,15 +143,11 @@ namespace PawnPlus.Core.Views
 
         private void PawnPlus_MainFrame_StateChanged(object sender, EventArgs e)
         {
-            if(WindowState == WindowState.Normal)
+            if(WindowState == WindowState.Normal || WindowState == WindowState.Maximized)
             {
-                Info.Settings[Convert.ToInt32(settingslist.lastWindowState)] = "normal";
+                Properties.Settings.Default.WindowState = this.WindowState;
+                Properties.Settings.Default.Save();
             }
-            else if (WindowState == WindowState.Maximized)
-            {
-                Info.Settings[Convert.ToInt32(settingslist.lastWindowState)] = "maximized";
-            }
-            XMLComponent.UpdateXML(Info.config, "mainFrame", "lastWindowState", Info.Settings[Convert.ToInt32(settingslist.lastWindowState)]);
         }
     }
 }

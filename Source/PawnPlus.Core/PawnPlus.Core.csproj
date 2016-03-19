@@ -53,7 +53,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Info.cs" />
     <Compile Include="Classes\States.cs" />
+    <Compile Include="Classes\Utility.cs" />
+    <Compile Include="Classes\XML.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -1,8 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using PawnPlus.Core.Classes;
 using System.Windows.Input;
-using System.Xml;
-using System;
 
 namespace PawnPlus.Core.Views
 {
@@ -12,26 +11,41 @@ namespace PawnPlus.Core.Views
     public partial class Main : Window
     {
         private States State;
+        private XML XMLComponent;
 
         public Main()
         {
             InitializeComponent();
 
-            /*if (System.IO.File.Exists(Info.config))
+            XMLComponent = new XML();
+            if (System.IO.File.Exists(Info.config) == false)
             {
-                XmlReader reader = XmlReader.Create(Info.config);
-                while (reader.Read())
+                XMLComponent.CreateSettings(Info.config);
+            }
+            else
+            {
+                Info.Settings.AddRange(Enum.GetNames(typeof(settingslist)));
+                XMLComponent.ReadSettings(Info.config);
+
+                switch(Info.Settings[Convert.ToInt32(settingslist.lastWindowState)])
                 {
-                    if (reader.NodeType == XmlNodeType.Element)
+                    case "normal":
                     {
-                        switch (reader.Name)
-                        {
-                            case "WindowState": { }
-                                break;
-                        }
+                        WindowState = WindowState.Normal;
+                        break;
+                    }
+                    case "maximized":
+                    {
+                        WindowState = WindowState.Maximized;
+                        break;
+                    }
+                    default:
+                    {
+                        WindowState = WindowState.Normal;
+                        break;
                     }
                 }
-            }*/
+            }
         }
 
         private void PawnPlus_Loaded(object sender, RoutedEventArgs e)
@@ -126,6 +140,19 @@ namespace PawnPlus.Core.Views
         private void Menu_Open_Click_File(object sender, RoutedEventArgs e)
         {
             State.FileActive();
+        }
+
+        private void PawnPlus_MainFrame_StateChanged(object sender, EventArgs e)
+        {
+            if(WindowState == WindowState.Normal)
+            {
+                Info.Settings[Convert.ToInt32(settingslist.lastWindowState)] = "normal";
+            }
+            else if (WindowState == WindowState.Maximized)
+            {
+                Info.Settings[Convert.ToInt32(settingslist.lastWindowState)] = "maximized";
+            }
+            XMLComponent.UpdateXML(Info.config, "mainFrame", "lastWindowState", Info.Settings[Convert.ToInt32(settingslist.lastWindowState)]);
         }
     }
 }

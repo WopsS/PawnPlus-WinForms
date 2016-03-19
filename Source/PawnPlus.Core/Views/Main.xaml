@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PawnPlus.Core.Views"
         xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock" x:Name="PawnPlus_MainFrame" x:Class="PawnPlus.Core.Views.Main"
         mc:Ignorable="d"
-        Title="PawnPlus" WindowStartupLocation="CenterScreen" Icon="/PawnPlus.Core;component/Resources/Icons/Icon.ico" Loaded="PawnPlus_Loaded" ResizeMode="CanResizeWithGrip" KeyDown="PawnPlus_KeyDown" Closing="PawnPlus_Closing">
+        Title="PawnPlus" WindowStartupLocation="CenterScreen" Icon="/PawnPlus.Core;component/Resources/Icons/Icon.ico" Loaded="PawnPlus_Loaded" ResizeMode="CanResizeWithGrip" KeyDown="PawnPlus_KeyDown" Closing="PawnPlus_Closing" StateChanged="PawnPlus_MainFrame_StateChanged">
     <Grid>
         <DockPanel Margin="0" Background="#FFF0F0F0">
             <StatusBar Margin="0" DockPanel.Dock="Bottom" Background="#FF007ACC" Foreground="White">
@@ -44,7 +44,9 @@
                     <MenuItem x:Name="Exit" Header="Exit" Click="Menu_Exit_Click"/>
                 </MenuItem>
             </Menu>
+            
             <xcad:DockingManager x:Name="dockingManager" />
+
         </DockPanel>
 
 

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using PawnPlus.Core.Classes;
 using System.Windows.Input;
 
@@ -9,9 +10,43 @@ namespace PawnPlus.Core.Views
     /// </summary>
     public partial class Main : Window
     {
+        private States State;
+        //private XML XMLComponent;
+
         public Main()
         {
             InitializeComponent();
+
+           // XMLComponent = new XML();
+            WindowState = Properties.Settings.Default.WindowState;
+            /* (System.IO.File.Exists(Info.config) == false)
+            {
+                XMLComponent.CreateSettings(Info.config);
+            }
+            else
+            {
+                Info.Settings.AddRange(Enum.GetNames(typeof(settingslist)));
+                XMLComponent.ReadSettings(Info.config);
+
+                switch(Info.Settings[Convert.ToInt32(settingslist.lastWindowState)])
+                {
+                    case "normal":
+                    {
+                        WindowState = WindowState.Normal;
+                        break;
+                    }
+                    case "maximized":
+                    {
+                        WindowState = WindowState.Maximized;
+                        break;
+                    }
+                    default:
+                    {
+                        WindowState = WindowState.Normal;
+                        break;
+                    }
+                }
+            }*/
         }
 
         private void PawnPlus_Loaded(object sender, RoutedEventArgs e)
@@ -19,9 +54,8 @@ namespace PawnPlus.Core.Views
             this.lineLabel.Visibility = Visibility.Hidden;
             this.columnLabel.Visibility = Visibility.Hidden;
 
-            States.UIStates &= ~PawnFlags.Closeing;
-            States.UIStates &= ~PawnFlags.Saved;
-            States.UIStates &= ~PawnFlags.FileOpen;
+            State = new States();
+            State.Init_UIStates();
         }
 
         #region Menu
@@ -89,26 +123,31 @@ namespace PawnPlus.Core.Views
 
         private void Menu_File_Click_Project(object sender, RoutedEventArgs e)
         {
-            States.UIStates |= PawnFlags.FileOpen;
-            States.UIStates &= ~PawnFlags.Saved;
+            State.FileActive();
         }
 
         private void Menu_File_Click_File(object sender, RoutedEventArgs e)
         {
-            States.UIStates |= PawnFlags.FileOpen;
-            States.UIStates &= ~PawnFlags.Saved;
+            State.FileActive();
         }
 
         private void Menu_Open_Click_Project(object sender, RoutedEventArgs e)
         {
-            States.UIStates |= PawnFlags.FileOpen;
-            States.UIStates &= ~PawnFlags.Saved;
+            State.FileActive();
         }
 
         private void Menu_Open_Click_File(object sender, RoutedEventArgs e)
         {
-            States.UIStates |= PawnFlags.FileOpen;
-            States.UIStates &= ~PawnFlags.Saved;
+            State.FileActive();
+        }
+
+        private void PawnPlus_MainFrame_StateChanged(object sender, EventArgs e)
+        {
+            if(WindowState == WindowState.Normal || WindowState == WindowState.Maximized)
+            {
+                Properties.Settings.Default.WindowState = this.WindowState;
+                Properties.Settings.Default.Save();
+            }
         }
     }
 }

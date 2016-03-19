@@ -10,6 +10,18 @@
     class States
     {
         public States() { }
-        public static PawnFlags UIStates;
+        public static PawnFlags UIStates; // public Global Var
+
+        public void Init_UIStates()
+        {
+            UIStates &= ~PawnFlags.Closeing;
+            UIStates &= ~PawnFlags.Saved;
+            UIStates &= ~PawnFlags.FileOpen;
+        }
+        public void FileActive()
+        {
+            UIStates |= PawnFlags.FileOpen;
+            UIStates &= ~PawnFlags.Saved;
+        }
     }
 }
